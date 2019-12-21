@@ -222,5 +222,14 @@ class TestIntCode(unittest.TestCase):
         ic = self.run_case(program, [])
         self.assertEqual(ic.memory[4], 99)
 
-if __name__ == '__main__':
-    unittest.main()
+def part2():
+    memory = list(map(lambda m: int(m), open('5/input').readline().split(',')))
+    ic = IntCodeComputer(memory, [5])
+    while not ic.halted:
+        ic.step()
+    ic.print_memory()
+
+part2() # 11981754
+
+# if __name__ == '__main__':
+#     unittest.main()
