@@ -1,3 +1,4 @@
+IMMEDIATE_MODE = '1'
 class IntCodeComputer:
     def __init__(self, memory, inputs=[]):
         self.pc = 0
@@ -8,6 +9,7 @@ class IntCodeComputer:
         self.inputs = inputs
         self.inputs.reverse()
         self.outputs = []
+        self.relative_base = 0
 
     def decode_opcode(self, packed_opcode):
         """Returns [opcode, immediate1, 2, 3]."""
@@ -15,20 +17,26 @@ class IntCodeComputer:
         while(len(packed_opcode) != 5):
             packed_opcode = '0' + packed_opcode
 
-        return [int(packed_opcode[3:]), packed_opcode[2] == '1', packed_opcode[1] == '1', packed_opcode[0] == '1']
+        return [int(packed_opcode[3:]), packed_opcode[2], packed_opcode[1], packed_opcode[0]]
 
     def advance_pc(self):
         self.pc += 1
 
-    def read_pc(self, immediate):
-        at_pc = self.memory[self.pc]
-        if immediate:
+    def read_pc(self, param_mode):
+        at_pc = self.get_memory(self.pc)
+        if param_mode == '0':
+            return self.get_memory(at_pc)
+        if param_mode == '1':
             return at_pc
+        elif param_mode == '2':
+            return self.get_memory_relative(at_pc)
         else:
-            return self.memory[at_pc]
+            print(param_mode)
+            print('Unknown param mode: ' % (param_mode))
+            assert False, ('Unknown param mode: ' % (param_mode))
 
-    def eat_pc(self, immediate):
-        here = self.read_pc(immediate)
+    def eat_pc(self, param_mode):
+        here = self.read_pc(param_mode)
         self.advance_pc()
         return here
     
@@ -37,18 +45,24 @@ class IntCodeComputer:
             print('Setting memory at %d to %d' % (address, value))
         self.memory[address] = value
 
+    def get_memory(self, address):
+        return self.memory[address]
+
+    def get_memory_relative(self, relative):
+        return self.get_memory(relative + self.relative_base)
+
     def set_pc(self, new_pc):
         if self.debugging:
             print('Jumping from %d to %d' % (self.pc, new_pc))
         self.pc = new_pc
 
     def set_memory_pc_address(self, value):
-        self.set_memory(self.eat_pc(True), value)
+        self.set_memory(self.eat_pc(IMMEDIATE_MODE), value)
 
     def step(self):
         """Steps the machine 1 instruction, returning True if halted."""
         start_pc = self.pc
-        decoded_opcode = self.decode_opcode(self.eat_pc(True))
+        decoded_opcode = self.decode_opcode(self.eat_pc(IMMEDIATE_MODE))
         print('Step from PC=%d (%s)' % (start_pc, decoded_opcode))
         opcode = decoded_opcode[0]
         if 1 == opcode or 2 == opcode:
@@ -61,6 +75,8 @@ class IntCodeComputer:
             self.jump_instruction(decoded_opcode)
         elif 7 == opcode or 8 == opcode:
             self.compare_instruction(decoded_opcode)
+        elif 9 == opcode:
+            self.adjust_relative_base_instruction(decoded_opcode)
         elif 99 == opcode:
             self.halt_instruction(decoded_opcode)
         else:
@@ -75,8 +91,7 @@ class IntCodeComputer:
             result = input1 + input2
         else:
             result = input1 * input2
-        if decoded_opcode[3] == True:
-            raise AssertionError('Unexpected non positional store location.')
+        assert decoded_opcode[3] == '0','Unexpected non positional store location.'
         self.set_memory_pc_address(result)
 
     def input_instruction(self, decoded_opcode):
@@ -92,7 +107,13 @@ class IntCodeComputer:
         self.set_memory_pc_address(val)
 
     def output_instruction(self, decoded_opcode):
-        out = self.eat_pc(True) if decoded_opcode[1] else self.memory[self.eat_pc(True)]
+        param_mode = decoded_opcode[1]
+        if param_mode == '0':
+            out = self.get_memory(self.eat_pc(IMMEDIATE_MODE))
+        elif param_mode == '1':
+            out = self.eat_pc(IMMEDIATE_MODE)
+        elif param_mode == '2':
+            out = self.get_memory_relative(self.eat_pc(IMMEDIATE_MODE))
         print('*** Output: %d' % (out))
         self.outputs.append(out)
 
@@ -116,9 +137,12 @@ class IntCodeComputer:
         else:
             raise AssertionError('Unknown opcode')
         
-        if decoded_opcode[3] == True:
-            raise AssertionError('Unexpected non positional store location.')
+        assert decoded_opcode[3] == '0', 'Unexpected non-positional store location.'
         self.set_memory_pc_address(1 if condition else 0)
+
+    def adjust_relative_base_instruction(self, decoded_opcode):
+        delta = self.eat_pc(decoded_opcode[1])
+        self.relative_base += delta
 
     def print_memory(self):
         print(self.memory)
