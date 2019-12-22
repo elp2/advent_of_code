@@ -122,3 +122,7 @@ class IntCodeComputer:
 
     def print_memory(self):
         print(self.memory)
+
+    def run_until_halt(self):
+        while not self.halted:
+            self.step()
