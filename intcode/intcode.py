@@ -41,15 +41,25 @@ class IntCodeComputer:
         return here
     
     def set_memory(self, address, value):
+        self.extend_memory_to_address(address)
         if self.debugging:
             print('Setting memory at %d to %d' % (address, value))
         self.memory[address] = value
 
     def get_memory(self, address):
+        assert address >= 0, 'Negative memory address.'
+        self.extend_memory_to_address(address)
         return self.memory[address]
 
     def get_memory_relative(self, relative):
         return self.get_memory(relative + self.relative_base)
+
+    def extend_memory_to_address(self, address):
+        past_end = address - len(self.memory) + 1
+        if (past_end > 0):
+            empty_memory = [0] * past_end
+            self.memory += empty_memory
+            print('Extended memory by %d', len(empty_memory))
 
     def set_pc(self, new_pc):
         if self.debugging:
