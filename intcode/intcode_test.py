@@ -81,6 +81,26 @@ class TestIntCode(unittest.TestCase):
         ic = self.run_case(program, [])
         self.assertEqual(ic.memory[4], 99)
 
+    def test_output_copy(self):
+        program = '109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99'
+        ic = self.run_case(program, [])
+        self.assertEqual(ic.outputs, list(map(lambda ins: int(ins), program.split(','))))
+
+    def test_outputs_16_digit_number(self):
+        program = '1102,34915192,34915192,7,4,7,99,0'
+        ic = self.run_case(program, [])
+        self.assertEqual(ic.outputs, [1219070632396864])
+
+    def test_outputs_large_number(self):
+        program = '104,1125899906842624,99'
+        ic = self.run_case(program, [])
+        self.assertEqual(ic.outputs, [1125899906842624])
+
+    def test_203(self):
+        program = '109,7,203,0,204,0,99,123'
+        ic = self.run_case(program, [29])
+        self.assertEqual(ic.outputs, [29])
+        self.assertEqual(ic.memory[7], 29)
 
 if __name__ == '__main__':
     unittest.main()
