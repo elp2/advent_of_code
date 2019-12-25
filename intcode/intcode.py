@@ -73,8 +73,7 @@ class IntCodeComputer:
 
     def set_memory_pc_address(self, value, mode):
         assert mode != IMMEDIATE_MODE, 'Can''t set IMMEDIATE'
-        pc_value = self.eat_pc_value()
-        address = pc_value
+        address = self.eat_pc_value()
         if RELATIVE_MODE == mode:
             address += self.relative_base
         self.set_memory(address, value)
