@@ -96,6 +96,11 @@ class TestIntCode(unittest.TestCase):
         ic = self.run_case(program, [])
         self.assertEqual(ic.outputs, [1125899906842624])
 
+    def test_203(self):
+        program = '109,7,203,0,204,0,99,123'
+        ic = self.run_case(program, [29])
+        self.assertEqual(ic.outputs, [29])
+        self.assertEqual(ic.memory[7], 29)
 
 if __name__ == '__main__':
     unittest.main()

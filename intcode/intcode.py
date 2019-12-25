@@ -1,4 +1,7 @@
+POSITION_MODE = '0'
 IMMEDIATE_MODE = '1'
+RELATIVE_MODE = '2'
+
 class IntCodeComputer:
     def __init__(self, memory, inputs=[]):
         self.pc = 0
@@ -24,16 +27,19 @@ class IntCodeComputer:
 
     def read_pc(self, param_mode):
         at_pc = self.get_memory(self.pc)
-        if param_mode == '0':
+        if param_mode == POSITION_MODE:
             return self.get_memory(at_pc)
-        if param_mode == '1':
+        if param_mode == IMMEDIATE_MODE:
             return at_pc
-        elif param_mode == '2':
+        elif param_mode == RELATIVE_MODE:
             return self.get_memory_relative(at_pc)
         else:
-            print(param_mode)
-            print('Unknown param mode: ' % (param_mode))
             assert False, ('Unknown param mode: ' % (param_mode))
+
+    def eat_pc_value(self):
+        pc_value = self.memory[self.pc]
+        self.advance_pc()
+        return pc_value
 
     def eat_pc(self, param_mode):
         here = self.read_pc(param_mode)
@@ -66,13 +72,18 @@ class IntCodeComputer:
             print('Jumping from %d to %d' % (self.pc, new_pc))
         self.pc = new_pc
 
-    def set_memory_pc_address(self, value):
-        self.set_memory(self.eat_pc(IMMEDIATE_MODE), value)
+    def set_memory_pc_address(self, value, mode):
+        assert mode != IMMEDIATE_MODE, 'Can''t set IMMEDIATE'
+        pc_value = self.eat_pc_value()
+        address = pc_value
+        if RELATIVE_MODE == mode:
+            address += self.relative_base
+        self.set_memory(address, value)
 
     def step(self):
         """Steps the machine 1 instruction, returning True if halted."""
         start_pc = self.pc
-        decoded_opcode = self.decode_opcode(self.eat_pc(IMMEDIATE_MODE))
+        decoded_opcode = self.decode_opcode(self.eat_pc_value())
         print('Step from PC=%d (%s)' % (start_pc, decoded_opcode))
         opcode = decoded_opcode[0]
         if 1 == opcode or 2 == opcode:
@@ -90,8 +101,7 @@ class IntCodeComputer:
         elif 99 == opcode:
             self.halt_instruction(decoded_opcode)
         else:
-            print('Unknown opcode: ', opcode)
-            raise AssertionError('!')
+            raise AssertionError('Unknown opcode: %s', decoded_opcode)
         
     def add_multiply_instruction(self, decoded_opcode):
         # print('Starting add at %d' % (self.pc))
@@ -101,8 +111,8 @@ class IntCodeComputer:
             result = input1 + input2
         else:
             result = input1 * input2
-        assert decoded_opcode[3] == '0','Unexpected non positional store location.'
-        self.set_memory_pc_address(result)
+
+        self.set_memory_pc_address(result, decoded_opcode[3])
 
     def input_instruction(self, decoded_opcode):
         while True:
@@ -114,16 +124,17 @@ class IntCodeComputer:
                 break
             except ValueError:
                 print('Enter integer value.')
-        self.set_memory_pc_address(val)
+        self.set_memory_pc_address(val, decoded_opcode[1])
 
     def output_instruction(self, decoded_opcode):
         param_mode = decoded_opcode[1]
-        if param_mode == '0':
-            out = self.get_memory(self.eat_pc(IMMEDIATE_MODE))
-        elif param_mode == '1':
-            out = self.eat_pc(IMMEDIATE_MODE)
-        elif param_mode == '2':
-            out = self.get_memory_relative(self.eat_pc(IMMEDIATE_MODE))
+        pc_contents = self.eat_pc_value()
+        if param_mode == POSITION_MODE:
+            out = self.get_memory(pc_contents)
+        elif param_mode == IMMEDIATE_MODE:
+            out = pc_contents
+        elif param_mode == RELATIVE_MODE:
+            out = self.get_memory_relative(pc_contents)
         print('*** Output: %d' % (out))
         self.outputs.append(out)
 
@@ -147,8 +158,7 @@ class IntCodeComputer:
         else:
             raise AssertionError('Unknown opcode')
         
-        assert decoded_opcode[3] == '0', 'Unexpected non-positional store location.'
-        self.set_memory_pc_address(1 if condition else 0)
+        self.set_memory_pc_address(1 if condition else 0, decoded_opcode[3])
 
     def adjust_relative_base_instruction(self, decoded_opcode):
         delta = self.eat_pc(decoded_opcode[1])
