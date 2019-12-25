@@ -4,7 +4,6 @@ class IntCodeComputer:
         self.memory = memory
         self.halted = False
         self.debugging = True
-        print('Memory: len=%d' % (len(self.memory)))
         self.inputs = inputs
         self.inputs.reverse()
         self.outputs = []
@@ -49,7 +48,8 @@ class IntCodeComputer:
         """Steps the machine 1 instruction, returning True if halted."""
         start_pc = self.pc
         decoded_opcode = self.decode_opcode(self.eat_pc(True))
-        print('Step from PC=%d (%s)' % (start_pc, decoded_opcode))
+        if self.debugging:
+            print('Step from PC=%d (%s)' % (start_pc, decoded_opcode))
         opcode = decoded_opcode[0]
         if 1 == opcode or 2 == opcode:
             self.add_multiply_instruction(decoded_opcode)
@@ -98,6 +98,7 @@ class IntCodeComputer:
 
     def halt_instruction(self, decoded_opcode):
         self.halted = True
+        print('HALTED')
 
     def jump_instruction(self, decoded_opcode):
         condition = self.eat_pc(decoded_opcode[1])

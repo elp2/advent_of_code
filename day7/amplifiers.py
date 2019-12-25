@@ -33,10 +33,12 @@ class Amplifiers:
         max_output = 0
         max_powers = []
         for powers in power_combos:
+            print('Starting: ', powers)
             amp_input = 0
             ics = []
             for i in range(0, 5):
                 ic = IntCodeComputer(self.memory[:], [powers[i]])
+                ic.debugging = False
                 ics.append(ic)
             while ics[4].halted == False:
                 for i in range(0, 5):
@@ -44,6 +46,7 @@ class Amplifiers:
                     if ic.halted:
                         continue
                     ic.inputs.append(amp_input)
+                    print('Looping %d' % (i))
                     while True:
                         if ic.halted:
                             break
@@ -54,7 +57,7 @@ class Amplifiers:
                             break
                         ic.step()
                 
-                if i == 4 and amp_input > max_output:
+                if amp_input > max_output:
                     max_output = amp_input
                     max_powers = powers
                 
