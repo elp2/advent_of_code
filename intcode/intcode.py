@@ -7,7 +7,7 @@ class IntCodeComputer:
         self.pc = 0
         self.memory = memory
         self.halted = False
-        self.debugging = True
+        self.debugging = False
         self.inputs = inputs
         self.inputs.reverse()
         self.outputs = []
@@ -81,7 +81,7 @@ class IntCodeComputer:
         self.set_memory(address, value)
 
     def step(self):
-        """Steps the machine 1 instruction, returning True if halted."""
+        """Steps the machine 1 instruction, returning the opcode executed."""
         start_pc = self.pc
         decoded_opcode = self.decode_opcode(self.eat_pc_value())
         if self.debugging:
@@ -103,6 +103,7 @@ class IntCodeComputer:
             self.halt_instruction(decoded_opcode)
         else:
             raise AssertionError('Unknown opcode: %s', decoded_opcode)
+        return opcode
         
     def add_multiply_instruction(self, decoded_opcode):
         input1 = self.eat_pc(decoded_opcode[1])
@@ -172,3 +173,7 @@ class IntCodeComputer:
     def run_until_halt(self):
         while not self.halted:
             self.step()
+    
+    def next_opcode(self):
+        """Returns the next opcode which will be executed."""
+        return self.decode_opcode(self.get_memory(self.pc))[0]
