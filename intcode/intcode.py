@@ -135,7 +135,8 @@ class IntCodeComputer:
             out = pc_contents
         elif param_mode == RELATIVE_MODE:
             out = self.get_memory_relative(pc_contents)
-        print('*** Output: %d' % (out))
+        if self.debugging:
+            print('*** Output: %d' % (out))
         self.outputs.append(out)
 
     def halt_instruction(self, decoded_opcode):
