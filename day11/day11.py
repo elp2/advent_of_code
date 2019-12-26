@@ -6,3 +6,9 @@ def part1():
 
 # part1() # 2343
 
+def part2():
+    hpr = HullPaintingRobot(start_on_white=True)
+    hpr.paint_until_halt()
+    hpr.print_grid()
+
+part2()

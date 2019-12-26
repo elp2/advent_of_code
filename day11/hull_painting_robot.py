@@ -15,7 +15,7 @@ RIGHT = 1
 AROUND = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
 class HullPaintingRobot:
-    def __init__(self):
+    def __init__(self, start_on_white=False):
         self.ic = IntCodeComputer(list(map(lambda m: int(m), open('input').readline().split(','))))
         self.ic.debugging = False
         self.painted = []
@@ -24,11 +24,19 @@ class HullPaintingRobot:
             self.grid.append([BLACK] * (GRID_RADIUS * 2))
             self.painted.append([False] * (GRID_RADIUS * 2))
         self.pos = (GRID_RADIUS, GRID_RADIUS)
+        if start_on_white:
+            self.grid[self.pos[1]][self.pos[0]] = WHITE
         self.direction_index = 0
 
     def print_grid(self):
         for y in range(0, len(self.grid)):
-            print(''.join(self.grid[y]))
+            line = ''
+            for num in self.grid[y]:
+                if num == BLACK:
+                    line += ' '
+                else:
+                    line += '*'
+            print(line)
     
     def paint_until_halt(self):
         while self.ic.halted == False:
