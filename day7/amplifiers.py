@@ -46,7 +46,6 @@ class Amplifiers:
                     if ic.halted:
                         continue
                     ic.inputs.append(amp_input)
-                    print('Looping %d' % (i))
                     while True:
                         if ic.halted:
                             break
@@ -64,6 +63,6 @@ class Amplifiers:
         print('MAX FEEDBACK OUTPUT: %d' % (max_output))
         return [max_output, max_powers]
 
-
-a = Amplifiers(open('input').readline())
-a.find_highest_signal()
+if __name__ == "__main__":
+    a = Amplifiers(open('input').readline())
+    a.find_highest_signal()

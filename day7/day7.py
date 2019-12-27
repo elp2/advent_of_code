@@ -12,4 +12,4 @@ def part2():
     a = Amplifiers(program)
     print('Part2 %s' % (a.find_highest_feedback()))
 
-part2() # 206580
+part2() # [2299406, (6, 5, 9, 7, 8)]
