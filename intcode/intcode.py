@@ -9,7 +9,6 @@ class IntCodeComputer:
         self.halted = False
         self.debugging = False
         self.inputs = inputs
-        self.inputs.reverse()
         self.outputs = []
         self.relative_base = 0
 
@@ -118,7 +117,8 @@ class IntCodeComputer:
     def input_instruction(self, decoded_opcode):
         while True:
             if len(self.inputs):
-                val = self.inputs.pop()
+                val = self.inputs[0]
+                self.inputs = self.inputs[1:]
                 break
             try:
                 val = int(input('Enter value: '))

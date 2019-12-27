@@ -116,5 +116,21 @@ class TestIntCode(unittest.TestCase):
         opcode = ic.next_opcode()
         self.assertEqual(opcode, 9)
 
+    def test_input_order_init(self):
+        program = '3,9,3,10,4,9,4,10,99,0,0'
+        memory = list(map(lambda m: int(m), program.split(',')))
+        ic = self.run_case(program, [1,2])
+        self.assertEqual(ic.outputs, [1,2])
+
+    def test_input_order_init(self):
+        program = '3,9,3,10,4,9,4,10,99,0,0'
+        memory = list(map(lambda m: int(m), program.split(',')))
+        ic = IntCodeComputer(memory)
+        ic.inputs = [1, 2]
+        while ic.halted == False:
+            ic.step()
+        self.assertEqual(ic.outputs, [1, 2])
+
+
 if __name__ == '__main__':
     unittest.main()
