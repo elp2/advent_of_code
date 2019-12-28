@@ -2,8 +2,17 @@ POSITION_MODE = '0'
 IMMEDIATE_MODE = '1'
 RELATIVE_MODE = '2'
 
+
+def integer_input_provider():
+    while True:
+        try:
+            return int(input('Enter value: '))
+        except ValueError:
+            print('Value not an integer!')
+
 class IntCodeComputer:
-    def __init__(self, memory, inputs=[]):
+    def __init__(self, memory, inputs=[], input_provider=integer_input_provider):
+        """input_provider must return an aray of ints."""
         self.pc = 0
         self.memory = memory
         self.halted = False
@@ -11,6 +20,7 @@ class IntCodeComputer:
         self.inputs = inputs
         self.outputs = []
         self.relative_base = 0
+        self.input_provider = input_provider
 
     def decode_opcode(self, packed_opcode):
         """Returns [opcode, immediate1, 2, 3]."""
@@ -114,16 +124,14 @@ class IntCodeComputer:
         self.set_memory_pc_address(result, decoded_opcode[3])
 
     def input_instruction(self, decoded_opcode):
-        while True:
-            if len(self.inputs):
-                val = self.inputs[0]
-                self.inputs = self.inputs[1:]
-                break
-            try:
-                val = int(input('Enter value: '))
-                break
-            except ValueError:
-                print('Enter integer value.')
+        if len(self.inputs) == 0:
+            self.inputs = self.input_provider()
+            assert len(self.inputs) > 0
+
+        val = self.inputs[0]
+        self.inputs = self.inputs[1:]
+
+
         self.set_memory_pc_address(val, decoded_opcode[1])
 
     def output_instruction(self, decoded_opcode):

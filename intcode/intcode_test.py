@@ -131,6 +131,26 @@ class TestIntCode(unittest.TestCase):
             ic.step()
         self.assertEqual(ic.outputs, [1, 2])
 
+    def test_input_provider(self):
+        class Provider:
+            def __init__(self):
+                self.times = 0
+                self.inputs = [1, 2]
+            
+            def input_provider(self):                
+                inp = self.inputs[self.times]
+                self.times += 1
+                return [inp]
+
+        program = '3,9,3,10,4,9,4,10,99,0,0'
+        memory = list(map(lambda m: int(m), program.split(',')))
+        provider = Provider()
+        ic = IntCodeComputer(memory, input_provider=provider.input_provider)
+        while ic.halted == False:
+            ic.step()
+        self.assertEqual(ic.outputs, provider.inputs)
+        self.assertEqual(provider.times, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
