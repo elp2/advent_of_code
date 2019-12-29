@@ -6,7 +6,7 @@ RELATIVE_MODE = '2'
 def integer_input_provider():
     while True:
         try:
-            return int(input('Enter value: '))
+            return [int(input('Enter value: '))]
         except ValueError:
             print('Value not an integer!')
 
@@ -149,7 +149,8 @@ class IntCodeComputer:
 
     def halt_instruction(self, decoded_opcode):
         self.halted = True
-        print('HALTED')
+        if self.debugging:
+            print('HALTED')
 
     def jump_instruction(self, decoded_opcode):
         condition = self.eat_pc(decoded_opcode[1])
