@@ -14,6 +14,9 @@ class AsciiComputer:
 
         for char in self.ic.outputs:
             self.output_string += chr(char)
-        
+
         return self.output_string
 
+if __name__ == "__main__":
+    ac = AsciiComputer()
+    print(ac.run())
