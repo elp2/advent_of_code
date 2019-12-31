@@ -1,6 +1,6 @@
 from collections import defaultdict
 from copy import copy
-from math import ceil
+from math import ceil, floor
 
 def parse_item(item):
     [num, name] = item.strip().split(' ')
@@ -83,4 +83,29 @@ def part1():
         chemicals = expand(chemicals)
         print('Expanded: ', chemicals)
 
-part1() # 892207
+# part1() # 892207
+
+ONE_TRILLION = 1_000_000_000_000
+START_FUELS = floor(ONE_TRILLION / 892207)
+START_STEP = floor(START_FUELS / 2)
+
+def part2():
+    parse_input()
+    fuels = START_FUELS
+    step = START_STEP
+    while True:
+        chemicals = defaultdict(lambda: 0)
+        chemicals['FUEL'] = fuels + step
+        while list(chemicals.keys()) != ['ORE']:
+           chemicals = expand(chemicals)
+        ores = chemicals['ORE']
+        if ores == ONE_TRILLION or step == 0:
+            print('FUELS = ', fuels)
+            break
+        elif ores < ONE_TRILLION:
+            fuels += step
+        elif ores > ONE_TRILLION:
+            step = floor(step / 2)
+        print(ores - ONE_TRILLION, step)
+
+part2() # 1935265
