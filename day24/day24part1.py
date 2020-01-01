@@ -1,11 +1,13 @@
 BUG = '#'
 EMPTY = '.'
+LOWER_LEVEL = '?'
 
 def parse_board():
     board = []
     for line in open('input').readlines():
         for char in line.strip():
             board.append(char)
+    board[2*5 + 2] = LOWER_LEVEL
     return board
 
 def print_board(board):
@@ -18,26 +20,22 @@ def board_at(board, x, y):
         return None
     return board[idx]
 
-def evolve(board):
-    new = board[:]
-    for y in range(0, 5):
-        for x in range(0, 5):
-            bugs_around = 0
-            if board_at(board, x + 1, y) == BUG:
-                bugs_around += 1
-            if board_at(board, x - 1, y) == BUG:
-                bugs_around += 1
-            if board_at(board, x, y + 1) == BUG:
-                bugs_around += 1
-            if board_at(board, x, y - 1) == BUG:
-                bugs_around += 1
+def bugs_around(x, y, z, levels):
+    around = 0
 
-            here = board_at(board, x, y)
-            if here == BUG:
-                new[y * 5 + x] = BUG if bugs_around == 1 else EMPTY
-            else:
-                new[y * 5 + x] = BUG if (bugs_around == 1 or bugs_around == 2) else EMPTY
-            print('%d, %d [%d] (%s -> %s)' % (x, y, bugs_around, board_at(board, x,y), board_at(new, x, y)))
+def evolve(levels):
+    new = levels[:]
+    for z in range(0, len(levels)):
+        for y in range(0, 5):
+            for x in range(0, 5):
+                current = levels[z][y][x]
+                if current == LOWER_LEVEL:
+                    continue
+                around = bugs_around(x, y, z, levels)
+
+                if current == BUG:
+                    levels[z][y
+
     return new
 
 def part1():
@@ -68,4 +66,4 @@ def part1():
 # 16778801 too low
 # 14545834 too low - fix empty bug
 # 20751345 is juuust right! Fix overlapping into next row bug.
-part1()
+# part1()
