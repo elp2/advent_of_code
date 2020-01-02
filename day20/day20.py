@@ -26,7 +26,7 @@ def find_portals(lines):
                 portal = read_portal(lines, x, y, dir[0], dir[1])
                 if not portal:
                     continue
-                if portal in portals:
+                if portal in portal_to_pos:
                     portal = portal.lower()
                 portal_to_pos[portal] = (x, y)
                 pos_to_portal[(x, y)] = portal
@@ -53,6 +53,7 @@ def othercase(string):
 
 def bfs_lines(lines):
     [portal_to_pos, pos_to_portal] = find_portals(lines)
+    print(portal_to_pos)
     visited = [[False] * len(lines[0]) for y in range(len(lines))]
 
     search = [(portal_to_pos['AA'], 0)]
@@ -63,18 +64,23 @@ def bfs_lines(lines):
         if visited[pos[1]][pos[0]]:
             continue
         visited[pos[1]][pos[0]] = True
+        print(pos)
+
         if pos in pos_to_portal:
             portal = pos_to_portal[pos]
             if portal == 'ZZ':
                 print('Found: ', steps)
                 return
             paired_portal = othercase(portal)
-            search.append((portal_to_pos[paired_portal], steps + 1)
+            portal_pos = portal_to_pos[paired_portal]
+            search.append((portal_pos, steps + 1))
         else:
             around = get_around(pos, lines)
             for a in around:
-                search.append((a, steps+1))
+                search.append((a, steps + 1))
 
 def part1():
     lines = open('input').readlines()
     bfs_lines(lines)
+
+part1()
