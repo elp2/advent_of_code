@@ -1,20 +1,23 @@
 FLOOR = '.'
 
-def read_portal(lines, x, y, xdiff, ydiff):
+def read_portal(lines, x, y):
     """x,y is a potential portal spot."""
-    try:
-        if lines[y + ydiff][x + xdiff] == ' ':
-            return False
-        a = lines[y + ydiff][x + xdiff]
-        b = lines[y + 2 * ydiff][x + 2 * xdiff]
-        name = (a + b).strip()
-        if len(name) != 2:
-            return False
-        if '.' in name:
-            return False
-        return name
-    except:
-        return False
+    for (a,b) in [[(-2, 0), (-1, 0)], [(1,0), (2,0)], [(0, -2), (0, -1)], [(0, 1), (0, 2)]]:
+        try:
+            if lines[y][x] != '.':
+                return False
+            ac = lines[y + a[1]][x + a[0]]
+            bc = lines[y + b[1]][x + b[0]]
+
+            name = (ac + bc).strip()
+            if len(name) != 2:
+                continue
+            if '.' in name or '#' in name:
+                continue
+            return name
+        except:
+            continue
+    return False
 
 def find_portals(lines):
     portal_to_pos = {}
@@ -22,16 +25,20 @@ def find_portals(lines):
 
     for y in range(len(lines)):
         for x in range(len(lines[y])):
-            for dir in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                portal = read_portal(lines, x, y, dir[0], dir[1])
-                if not portal:
-                    continue
-                if portal in portal_to_pos:
-                    portal = portal.lower()
-                portal_to_pos[portal] = (x, y)
-                pos_to_portal[(x, y)] = portal
+            portal = read_portal(lines, x, y)
+            if not portal:
+                continue
+            if portal in portal_to_pos:
+                portal = portal.lower()
+            portal_to_pos[portal] = (x, y)
+            pos_to_portal[(x, y)] = portal
 
     return [portal_to_pos, pos_to_portal]
+
+def paired_portal(portal, portal_to_pos):
+    if othercase(portal) in portal_to_pos:
+        return portal_to_pos[othercase(portal)]
+    return False
 
 def get_around(pos, lines):
     around = []
@@ -52,9 +59,12 @@ def othercase(string):
         return string.upper()
 
 def bfs_lines(lines):
+    lines = split_lines(lines)
     [portal_to_pos, pos_to_portal] = find_portals(lines)
     print(portal_to_pos)
-    visited = [[False] * len(lines[0]) for y in range(len(lines))]
+    print(portal_to_pos['AA'], '->', portal_to_pos['ZZ'])
+    print(othercase('AA'), othercase('aa'))
+    visited = [[0] * len(lines[0]) for y in range(len(lines))]
 
     search = [(portal_to_pos['AA'], 0)]
     while search:
@@ -63,21 +73,38 @@ def bfs_lines(lines):
 
         if visited[pos[1]][pos[0]]:
             continue
-        visited[pos[1]][pos[0]] = True
-        print(pos)
+        visited[pos[1]][pos[0]] = steps + 1
 
         if pos in pos_to_portal:
             portal = pos_to_portal[pos]
             if portal == 'ZZ':
                 print('Found: ', steps)
-                return
-            paired_portal = othercase(portal)
-            portal_pos = portal_to_pos[paired_portal]
-            search.append((portal_pos, steps + 1))
-        else:
-            around = get_around(pos, lines)
-            for a in around:
-                search.append((a, steps + 1))
+                # return
+            pair = paired_portal(portal, portal_to_pos)
+            if pair:
+                print('Pair: %s -> %s' % (portal, pair))
+                search.append((pair, steps + 1))
+            else:
+                print('NO PAIR FOR %s' % (portal))
+        around = get_around(pos, lines)
+        for a in around:
+            search.append((a, steps + 1))
+
+    for y in range(len(lines)):
+        for x in range(len(lines[y])):
+            if visited[y][x]:
+                lines[y][x] = str(visited[y][x] % 10)
+    for y in range(len(lines)):
+        print(''.join(lines[y]).rstrip())
+
+def split_lines(lines):
+    board = []
+    for y in range(len(lines)):
+        line = []
+        for x in range(len(lines[y])):
+            line.append(lines[y][x])
+        board.append(line)
+    return board
 
 def part1():
     lines = open('input').readlines()
