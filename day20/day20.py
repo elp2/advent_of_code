@@ -1,3 +1,4 @@
+FLOOR = '.'
 
 def read_portal(lines, x, y, xdiff, ydiff):
     """x,y is a potential portal spot."""
@@ -16,7 +17,8 @@ def read_portal(lines, x, y, xdiff, ydiff):
         return False
 
 def find_portals(lines):
-    portals = {}
+    portal_to_pos = {}
+    pos_to_portal = {}
 
     for y in range(len(lines)):
         for x in range(len(lines[y])):
@@ -26,7 +28,53 @@ def find_portals(lines):
                     continue
                 if portal in portals:
                     portal = portal.lower()
-                portals[portal] = (x, y)
-    return portals
+                portal_to_pos[portal] = (x, y)
+                pos_to_portal[(x, y)] = portal
 
-print(find_portals(open('input').readlines()))
+    return [portal_to_pos, pos_to_portal]
+
+def get_around(pos, lines):
+    around = []
+    for dir in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+        try:
+            x = pos[0] + dir[0]
+            y = pos[1] + dir[1]
+            if lines[y][x] == FLOOR:
+                around.append((x, y))
+        except:
+            continue
+    return around
+
+def othercase(string):
+    if string.upper() == string:
+        return string.lower()
+    else:
+        return string.upper()
+
+def bfs_lines(lines):
+    [portal_to_pos, pos_to_portal] = find_portals(lines)
+    visited = [[False] * len(lines[0]) for y in range(len(lines))]
+
+    search = [(portal_to_pos['AA'], 0)]
+    while search:
+        [pos, steps] = search[0]
+        search = search[1:]
+
+        if visited[pos[1]][pos[0]]:
+            continue
+        visited[pos[1]][pos[0]] = True
+        if pos in pos_to_portal:
+            portal = pos_to_portal[pos]
+            if portal == 'ZZ':
+                print('Found: ', steps)
+                return
+            paired_portal = othercase(portal)
+            search.append((portal_to_pos[paired_portal], steps + 1)
+        else:
+            around = get_around(pos, lines)
+            for a in around:
+                search.append((a, steps+1))
+
+def part1():
+    lines = open('input').readlines()
+    bfs_lines(lines)
