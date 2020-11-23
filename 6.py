@@ -1,4 +1,4 @@
-SEEN = set()
+SEEN = {}
 
 def redistribute_until_seen(memory):
     steps = 0
@@ -22,12 +22,12 @@ def redistribute_until_seen(memory):
             maxm -= 1
         steps += 1
         if str(memory) in SEEN:
-            print(memory)
-            return steps
-        SEEN.add(str(memory))
+            prev = SEEN[str(memory)]
+            return steps - prev
+        SEEN[str(memory)] = steps
 
-assert 5 == redistribute_until_seen([0, 2, 7, 0])
+assert 4 == redistribute_until_seen([0, 2, 7, 0])
 
 memory = list(map(int, open("6.txt").readline().split("\t")))
 print(memory)
-print(redistribute_until_seen(memory)) # 4074
+print(redistribute_until_seen(memory)) # 2793
