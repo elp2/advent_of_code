@@ -49,3 +49,39 @@ for ws in whole_streams:
     assert score == expected
 
 print(get_score_line(open("9.txt").readline())) # 14190
+
+
+def count_removed_garbage(stream):
+    ret = ""
+    in_garbage = False
+    i = 0
+    removed = 0
+    while i < len(stream):
+        if stream[i] == "<":
+            if in_garbage:
+                removed += 1
+            in_garbage = True
+        elif stream[i] == "!":
+            assert in_garbage
+            i += 1
+        elif stream[i] == ">":
+            in_garbage = False
+        else:
+            if in_garbage:
+                removed += 1
+            else:
+                ret += stream[i]
+            
+        i += 1
+    return removed
+
+examples = ["<>", "<random characters>", "<<<<>", "<{!>}>", "<!!>", "<!!!>>", "<{o\"i!a,<{i<a>"]
+expecteds = [0, 17, 3, 2, 0, 0, 10]
+
+for i in range(len(examples)):
+    example = examples[i]
+    expected = expecteds[i]
+    actual = count_removed_garbage(example)
+    assert actual == expected
+
+print(count_removed_garbage(open("9.txt").readline())) # 7053
