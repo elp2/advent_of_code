@@ -8,16 +8,24 @@ def bfs_programs(lines):
     for line in lines:
         program = parse_line(line)
         programs[program["id"]] = program
-    
-    queue = [0]
-    seen = []
-    while len(queue):
-        next = queue.pop()
-        if next in seen:
-            continue
-        seen.append(next)
-        queue += programs[next]["connected"]
-    return len(seen)
 
-assert 6 == bfs_programs(open('12.sample').readlines())
-assert bfs_programs(open('12.txt').readlines()) == 378
+    groups = 0
+
+    seen = []
+    for root in list(programs.keys()):
+        if root in seen:
+            continue
+        groups += 1
+        queue = [root]
+        while len(queue):
+            next = queue.pop()
+            if next in seen:
+                continue
+            seen.append(next)
+            queue += programs[next]["connected"]
+    return groups
+
+assert 2 == bfs_programs(open('12.sample').readlines())
+
+answer = bfs_programs(open('12.txt').readlines())
+print(answer) # 204
