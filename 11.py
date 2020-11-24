@@ -1,6 +1,8 @@
 from collections import defaultdict
 
 INPUT=open("11.txt").readline().strip()
+STEPS=INPUT.strip().split(",")
+
 OPPOSITES={'n': 's', 's': 'n', 'ne': 'sw', 'sw': 'ne', 'nw': 'se', 'se': 'nw'}
 SUMS={('n', 'se'): 'ne', ('n', 'sw'): 'nw', ('s', 'nw'): 'sw', ('s', 'ne'): 'se'}
 
@@ -16,11 +18,9 @@ def add_dirs(a, b):
     return [a, b]
 
 
-def collapse_steps(string):
+def collapse_steps(steps):
     def ret_zero(): return 0
     collapsed = defaultdict(ret_zero)
-    steps = string.strip().split(",")
-    print(len(steps))
     for step in steps:
         opp = OPPOSITES[step]
         if collapsed[opp] > 0:
@@ -32,8 +32,6 @@ def collapse_steps(string):
         if collapsed[key] == 0:
             del collapsed[key]
     return collapsed
-
-print(collapse_steps(INPUT))
 
 def add_steps(collapsed):
     for ns in ['n', 's']:
@@ -48,4 +46,15 @@ def add_steps(collapsed):
                 collapsed[added[0]] += amt
     return collapsed
 
-print(sum(add_steps(collapse_steps(INPUT)).values())) # 812
+def distance(steps):
+    collapsed = collapse_steps(steps)
+    added = add_steps(collapsed)
+    return sum(added.values())
+
+
+assert distance(STEPS) == 812 # 812
+
+max_dist = 0
+for i in range(len(STEPS)):
+    max_dist = max(max_dist, distance(STEPS[:i+1]))
+print(max_dist) # 1603
