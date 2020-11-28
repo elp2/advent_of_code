@@ -5,20 +5,30 @@ SAMPLE_START=[65, 8921]
 FACTORS=[16807, 48271]
 DIVISOR=2147483647 # 0b1111111111111111111111111111111 2^31
 
-def next_value(val, factor):
-    return (val * factor) % DIVISOR
+def next_a_value(val, factor):
+    while True:
+        val = (val * factor) % DIVISOR
+        if val & 3 == 0:
+            return val
+
+
+def next_b_value(val, factor):
+    while True:
+        val = (val * factor) % DIVISOR
+        if val & 7 == 0:
+            return val
 
 
 def calc_16_bit_matches(times, start):
     matches = 0
     a, b = start
     for i in range(times):
-        a = next_value(a, FACTORS[0])
-        b = next_value(b, FACTORS[1])
-        if a % 65536 == b % 65536:
+        a = next_a_value(a, FACTORS[0])
+        b = next_b_value(b, FACTORS[1])
+        if a & 0b1111111111111111 == b & 0b1111111111111111:
             matches +=1
     return matches
 
-print(calc_16_bit_matches(40_000_000, REAL_START)) # 650
+print(calc_16_bit_matches(5_000_000, REAL_START)) # 336
 
 
