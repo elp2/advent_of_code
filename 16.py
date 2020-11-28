@@ -25,12 +25,38 @@ def apply_step(step, sequence):
     return sequence
 
 
-def part1(sequence, steps):
+def run(sequence, steps):
     for step in steps:
         sequence = apply_step(step, sequence)
-        print(sequence)
-    # print(sequence)
-    print("".join(sequence))
+    return sequence
 
-part1(["a", "b", "c", "d", "e"], SAMPLE)
-part1(list("abcdefghijklmnop"), REAL) # jcobhadfnmpkglie
+# part1(["a", "b", "c", "d", "e"], SAMPLE)
+# part1(list("abcdefghijklmnop"), REAL) # jcobhadfnmpkglie
+
+seen = {}
+
+start = "abcdefghijklmnop"
+seen[start] = 0
+seq = list(start)
+# Repeats every 60.
+step_num = 1_000_000_000 - (1_000_000_000 % 60)
+while True:
+    if step_num % 1_000_000_000 == 0:
+        print("".join(seq))
+        break
+    step_num += 1
+    seq = run(seq, REAL)
+    string = "".join(seq)
+    if string in seen:
+        print(step_num, "->", seen[string]) # pclhmengojfdkaib
+
+
+
+
+# def part2():
+#     start_sequence = list("abcdefghijklmnop")
+#     sequence = list("abcdefghijklmnop")
+#     steps = REAL
+#     for step in steps:
+#         sequence = apply_step(step, sequence)
+#         print(sequence)
