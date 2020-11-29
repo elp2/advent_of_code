@@ -13,11 +13,13 @@ def part1(board):
         return row[x]
 
     seen = ""
+    distance = -1
     px, py = None, None
     while True:
         here = square(x, y)
-        if here is None:
+        if here is None or here == " ":
             break
+        distance += 1
 
         if here in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
             seen += here
@@ -45,10 +47,10 @@ def part1(board):
         px, py = x, y
         x += dx
         y += dy
-        print(x, y, here, seen)
-    print(seen)
+        print(x, y, here, seen, distance)
+    print(seen, distance)
 
         
 SAMPLE = open("19.sample").readlines()
 REAL = open("19.txt").readlines()
-part1(REAL) # HATBMQJYZ
+part1(REAL) # 16334 too high, 16333 too high, 16331 low, 16332 juuust right. Bedtime.
