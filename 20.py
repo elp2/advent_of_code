@@ -26,17 +26,15 @@ def parse_particles(lines):
     return particles
 
 REAL=parse_particles(open("20.txt").readlines())
-SAMPLE=parse_particles(open("20.sample").readlines())
+SAMPLE2=parse_particles(open("20.sample2").readlines())
 
 
 def move_particle(particle):
     pos, vel, acc = particle
-    dist = 0
     for i in range(3):
         vel[i] += acc[i]
         pos[i] += vel[i]
-        dist += abs(pos[i])
-    return (particle, dist)
+    return (particle, (pos[0], pos[1], pos[2]))
 
 def find_closest_long_term(particles):
     print(particles)
@@ -71,5 +69,27 @@ def find_closest_long_term(particles):
         if manhattan_acc(part) == min_a:
             print(i, part, manhattan_vel(part), manhattan_pos(part))
 
-find_closest_long_term(REAL) # 161 lowest vel.
+# find_closest_long_term(REAL) # 161 lowest vel.
 
+from collections import defaultdict
+
+def part2(particles):
+    i = 0
+    def return_empty():
+        return []
+    while True:
+        i += 1
+        if i % 100_000:
+            print(len(particles))
+        new_particles = []
+        seen = defaultdict(return_empty)
+        for part in particles:
+            new_part, pos = move_particle(part)
+            seen[pos].append(new_part)
+        for pos, parts in seen.items():
+            if len(parts) != 1:
+                continue # collision
+            new_particles.append(parts[0])
+        particles = new_particles
+
+part2(REAL) # 438
