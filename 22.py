@@ -16,25 +16,39 @@ def read_board(lines):
 
 INFECTED="#"
 CLEAN="."
+WEAKENED="W"
+FLAGGED="F"
 def part1(lines):
     caused_infection = 0
     board = read_board(lines)
     pos = (0, 0)
     dirs = [(0, -1), (1, 0), (0, 1), (-1, 0)]
     dir = 0 # right +, left -
-    for burst in range(10_000):
+    for burst in range(10_000_000):
         # Turn if infected
         here = board[pos]
         if here == INFECTED:
             dir = (dir + 1) % len(dirs)
-        else:
+        # elif here == WEAKENED:
+        #     # nop
+        elif here == CLEAN:
             dir = (dir - 1 + len(dirs)) % len(dirs)
+        elif here == FLAGGED:
+            dir = (dir - 2 + len(dirs)) % len(dirs)
+        else:
+            assert here == WEAKENED         
         # Swap Clean / infected
-        if board[pos] == CLEAN:
+        if board[pos] == WEAKENED:
             caused_infection += 1
             board[pos] = INFECTED
-        else:
+        elif board[pos] == CLEAN:
+            board[pos] = WEAKENED
+        elif board[pos] == INFECTED:
+            board[pos] = FLAGGED
+        elif board[pos] == FLAGGED:
             board[pos] = CLEAN
+        else:
+            assert False
         # Move forward.
         dx, dy = dirs[dir]
         pos = (pos[0] + dx, pos[1] + dy)
@@ -43,4 +57,5 @@ def part1(lines):
 REAL=open("22.txt").readlines()
 SAMPLE=open("22.sample").readlines()
 
-part1(REAL)
+# part1(SAMPLE) # 2511944
+part1(REAL) # 2511776
