@@ -1,21 +1,23 @@
+from collections import defaultdict
+
+def return_default():
+    return 0
+
 REAL=open("1.txt").readlines()
 SAMPLE=open("1.sample").readlines()
 
 def parse_lines(lines):
+    return list(map(int, lines))
 
 
-def part1(lines):
+def solve(lines):
     parsed = parse_lines(lines)
     ret = 0
+
     return ret
 
-assert part1(SAMPLE) == 1
-print(part1(REAL))
+sample = solve(SAMPLE)
+assert sample == 1
+print("*** SAMPLE PASSED ***")
 
-def part2(lines):
-    parsed = parse_lines(lines)
-    ret = 0
-    return ret
-
-# assert part2(SAMPLE) == 1
-# print(part2(REAL))
+print(solve(REAL))

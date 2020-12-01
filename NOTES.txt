@@ -1,0 +1,11 @@
+Day 1.
+* Site went down, couldn't get input for about 7 mins.
+* Did all my work in the template instead of 1.py. Otherwise the template worked pretty well.
+* Forgot to parse the items as ints!
+* Didn't switch logic over to the part2() function, so it was failing the assert.
+* Didn't do a day1 branch.
+
+Tomorrow:
+* Get a day2 branch 2part1.py, 2part2.py 2.txt, 2.sample files ready in the other panes for easy pasting and reference.
+* Get a command to git add the part 1 ready.
+* Grab input first thing next time in case.
