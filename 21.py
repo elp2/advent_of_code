@@ -94,12 +94,13 @@ def part1(patterns, iterations = 5):
                     for x in range(new_step):
                         new_arr[y + iy * new_step][x + ix * new_step] = expanded[y][x]
 
-        print(new_arr)
+        # print(new_arr)
         arr_string = "\n".join(map(lambda row: "".join(row), new_arr))
-        print(arr_string, arr_string.count("#"))
+        # print(arr_string, arr_string.count("#"))
         arr = new_arr
 
+    print(arr_string.count("#"))
 
 
 # part1(SAMPLE, 2)
-part1(REAL, 5) # 203
+part1(REAL, 18) # 203 # 3342470 part2
