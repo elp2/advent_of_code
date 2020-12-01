@@ -1,3 +1,4 @@
+from itertools import combinations_with_replacement, combinations
 def flip_rotations(f):
     arr = list(map(list, f.split("/")))
     frs = [ "/".join(map(lambda r: "".join(r), arr))]
@@ -30,8 +31,11 @@ def flip_rotations(f):
                     new[ny][nx] = to[y][x]
             to = new
         return "/".join(map(lambda r: "".join(r), new))
-    for trans in [[mirror_x], [mirror_y], [mirror_y, mirror_x], [mirror_x, mirror_y], [rotate], [rotate, rotate], [rotate, rotate, rotate]]:
-        frs.append(apply_transforms(arr, trans))
+    all_transforms = [mirror_x, mirror_y, rotate]
+
+    for lens in range(6):
+        for trans in list(combinations_with_replacement(all_transforms, lens)):
+            frs.append(apply_transforms(arr, trans))
 
     rot4 = apply_transforms(arr, [rotate, rotate, rotate, rotate])
     assert rot4 == frs[0]
@@ -98,4 +102,4 @@ def part1(patterns, iterations = 5):
 
 
 # part1(SAMPLE, 2)
-part1(REAL, 5)
+part1(REAL, 5) # 203
