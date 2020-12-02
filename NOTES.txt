@@ -5,7 +5,12 @@ Day 1.
 * Didn't switch logic over to the part2() function, so it was failing the assert.
 * Didn't do a day1 branch.
 
-Tomorrow:
-* Get a day2 branch 2part1.py, 2part2.py 2.txt, 2.sample files ready in the other panes for easy pasting and reference.
-* Get a command to git add the part 1 ready.
+Day 2:
+* Pretty straightforward.
+* Separate windows and files worked smoothly.
+* Parsing was more complicated than necessary.
+* ^ for XOR :)
+
+Every Day Plan:
+* Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
 * Grab input first thing next time in case.

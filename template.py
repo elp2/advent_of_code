@@ -3,8 +3,10 @@ from collections import defaultdict
 def return_default():
     return 0
 
-REAL=open("1.txt").readlines()
-SAMPLE=open("1.sample").readlines()
+CHALLENGE_DAY = "3"
+REAL = open(CHALLENGE_DAY + ".txt").readlines()
+SAMPLE = open(CHALLENGE_DAY + ".sample").readlines()
+
 
 def parse_lines(lines):
     return list(map(int, lines))
