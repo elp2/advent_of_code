@@ -11,6 +11,11 @@ Day 2:
 * Parsing was more complicated than necessary.
 * ^ for XOR :)
 
+Day 3:
+* Forgot that the pattern repeated across.
+* Got stuck on wrong sample - copied the ones with X and Os filled in for trees and misses, not the top one.
+* Over complicated loop instead of just multiplying the output of all the funcs.
+
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
 * Grab input first thing next time in case.
