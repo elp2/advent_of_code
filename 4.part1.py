@@ -30,17 +30,12 @@ def solve(lines):
     ret = 0
     fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"]
     for port in parsed:
-        seen = []
-        for f in fields:
-            if f in port:
-                seen.append(f)
-        valid = False
-        if len(seen) == 8:
-            valid = True
-        if len(seen) == 7 and "cid" not in seen:
-            valid = True
-        if valid:
+        if set(port.keys()) == set(fields):
             ret += 1
+        else:
+            port["cid"] = True
+            if set(port.keys()) == set(fields):
+                ret += 1            
 
     return ret
 
@@ -49,3 +44,4 @@ assert sample == 2
 print("*** SAMPLE PASSED ***")
 
 print(solve(REAL))
+assert 204 == solve(REAL)

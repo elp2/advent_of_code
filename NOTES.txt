@@ -1,3 +1,10 @@
+      -------Part 1--------   -------Part 2--------
+Day       Time  Rank  Score       Time  Rank  Score
+  4   00:13:37  2450      0   00:34:51  1769      0
+  3   00:07:53  1610      0   00:12:58  1573      0
+  2   00:04:04   415      0   00:06:59   435      0
+  1   00:08:12  1254      0   00:11:10  1433      0
+
 Day 1.
 * Site went down, couldn't get input for about 7 mins.
 * Did all my work in the template instead of 1.py. Otherwise the template worked pretty well.
@@ -15,6 +22,14 @@ Day 3:
 * Forgot that the pattern repeated across.
 * Got stuck on wrong sample - copied the ones with X and Os filled in for trees and misses, not the top one.
 * Over complicated loop instead of just multiplying the output of all the funcs.
+
+Day 4:
+* Copy / Paste error on sample led me down a bunch of random paths, code was basically working to start.
+* Should have made valid_port() a separate function from the start since it was easier to return on invalids.
+* Should use if a <= var <= b more.
+* Splitting on "\n\n" was a little clearner, but still needed to turn \n in spanned ports into whitespace.
+* Looking back I'm surprised how long I took on Part 2 - it went way faster when I refactored into a func.
+* Another day where simple regex would have gone a long way.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.

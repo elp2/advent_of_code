@@ -4,46 +4,42 @@ def return_default():
     return 0
 
 CHALLENGE_DAY = "4"
-REAL = open(CHALLENGE_DAY + ".txt").readlines()
-SAMPLE = open(CHALLENGE_DAY + ".sample2").readlines()
+REAL = open(CHALLENGE_DAY + ".txt").read()
+SAMPLE = open(CHALLENGE_DAY + ".sample2").read()
 
 
 def parse_lines(lines):
     ports = []
-    port = {}
+    lines = lines.split("\n\n")
     for line in lines:
-        if len(line.strip()) == 0:
-            ports.append(port)
-            port = {}
-        else:
-            line = line.strip()
-            fields = line.split(" ")
-            for f in fields:
-                k, v = f.split(":")
-                port[k] = v
-    if len(port):
+        line = line.replace("\n", " ")
+        line = line.strip()
+        port = {}
+        fields = line.split(" ")
+        for f in fields:
+            k, v = f.split(":")
+            port[k] = v
         ports.append(port)
     return ports
 
+
 def valid_port(port):
     try:
-        byr = int(port["byr"])
-        if byr < 1920 or byr > 2002:
+        if not (1920 <= int(port["byr"]) <= 2002):
             return False
-        iyr = int(port["iyr"])
-        if iyr < 2010 or iyr >2020:
+        if not (2010 <= int(port["iyr"]) <= 2020):
             return False
-        eyr = int(port["eyr"])
-        if eyr < 2020 or eyr > 2030:
+        if not (2020 <= int(port["eyr"]) <= 2030):
             return False
+
         hgt = port["hgt"]
         unit = hgt[-2:]
         num = int(hgt[0:-2])
         if unit == "in":
-            if num < 59 or num > 76:
+            if not (59 <= num <= 76):
                 return False
         elif unit == "cm":
-            if num < 150 or num > 193:
+            if not (150 <= num <= 193):
                 return False
         else:
             return False
@@ -73,10 +69,6 @@ def solve(lines):
         for f in fields:
             if f in port:
                 seen.append(f)
-        # if len(seen) != 8:
-        #     continue
-        # if len(seen) == 7 and "cid" in seen:
-        #     continue
         if valid_port(port):
             ret += 1
         else:
@@ -89,3 +81,4 @@ assert 4 == sample
 print("*** SAMPLE PASSED ***")
 
 print(solve(REAL))
+assert 179 == solve(REAL)
