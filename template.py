@@ -23,5 +23,5 @@ assert sample == 1
 print("*** SAMPLE PASSED ***")
 
 solved = solve(REAL)
-print(solved)
+print("SOLUTION: ", solved)
 # assert solved

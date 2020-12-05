@@ -1,5 +1,6 @@
       -------Part 1--------   -------Part 2--------
 Day       Time  Rank  Score       Time  Rank  Score
+  5   00:10:34  1350      0   00:15:01  1297      0
   4   00:13:37  2450      0   00:34:51  1769      0
   3   00:07:53  1610      0   00:12:58  1573      0
   2   00:04:04   415      0   00:06:59   435      0
@@ -30,6 +31,14 @@ Day 4:
 * Splitting on "\n\n" was a little clearner, but still needed to turn \n in spanned ports into whitespace.
 * Looking back I'm surprised how long I took on Part 2 - it went way faster when I refactored into a func.
 * Another day where simple regex would have gone a long way.
+
+Day 5:
+* Ahhh... I'm in such a rush to read and implement it literally.
+* I missed that you were given 8 bits, and then 3 bits and could just convert like that.
+* Nevertheless, it was implemented pretty smoothly.
+* The website hung slightly on loading and getting input and submitting part1.
+* Too much printing caused a slowdown, made it hard to understand what my return value was. Will fix.
+* I found Part 2 somewhat hard to understand at first. I think I'm trying to skip over the prose and skip things.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
