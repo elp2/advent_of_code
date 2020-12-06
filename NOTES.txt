@@ -1,5 +1,6 @@
       -------Part 1--------   -------Part 2--------
 Day       Time  Rank  Score       Time  Rank  Score
+  6   00:05:50  1530      0   00:10:01  1115      0
   5   00:10:34  1350      0   00:15:01  1297      0
   4   00:13:37  2450      0   00:34:51  1769      0
   3   00:07:53  1610      0   00:12:58  1573      0
@@ -39,6 +40,11 @@ Day 5:
 * The website hung slightly on loading and getting input and submitting part1.
 * Too much printing caused a slowdown, made it hard to understand what my return value was. Will fix.
 * I found Part 2 somewhat hard to understand at first. I think I'm trying to skip over the prose and skip things.
+
+Day 6:
+* Group parsing using read().split("\n\n") worked well - will add to template.
+* Use a wider debug window, and make sure parsing happens properly if the sample fails.
+* Need to read instructions more carefully!
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.

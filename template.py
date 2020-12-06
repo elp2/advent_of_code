@@ -3,24 +3,41 @@ from collections import defaultdict
 def return_default():
     return 0
 
-CHALLENGE_DAY = "5"
-REAL = open(CHALLENGE_DAY + ".txt").readlines()
-SAMPLE = open(CHALLENGE_DAY + ".sample").readlines()
+def dd():
+    return defaultdict(return_default)
 
 
-def parse_lines(lines):
-    return list(map(int, lines))
+CHALLENGE_DAY = "7"
+REAL = open(CHALLENGE_DAY + ".txt").read()
+SAMPLE = open(CHALLENGE_DAY + ".sample").read()
+# SAMPLE_EXPECTED = None
+# SAMPLE_EXPECTED = 
 
 
-def solve(lines):
-    parsed = parse_lines(lines)
+def parse_lines(raw):
+    # Groups.
+    # split = raw.split("\n\n")
+    # return list(map(lambda group: group.split("\n"), split))
+
+    # split = raw.split("\n")
+
+    # return split
+    # return list(map(int, lines))
+    # return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
+
+def solve(raw):
+    parsed = parse_lines(raw)
+    # Debug here to make sure parsing is good.
     ret = 0
 
     return ret
 
 sample = solve(SAMPLE)
-assert sample == 1
-print("*** SAMPLE PASSED ***")
+if SAMPLE_EXPECTED is None:
+    print("*** SKIPPING SAMPLE! ***")
+else:
+    assert sample == SAMPLE_EXPECTED
+    print("*** SAMPLE PASSED ***")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
