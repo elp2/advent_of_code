@@ -32,6 +32,17 @@ def solve(raw):
 
     return ret
 
+def test_parsing(lines):
+    if isinstance(lines, list):
+        for i in range(min(5, len(lines))):
+            print(lines[i])
+    elif isinstance(lines, dict) or isinstance(lines, defaultdict):
+        nd = {}
+        for k in list(lines.keys())[0: 5]:
+            print("\"" + k + "\": " + str(lines[k]))
+test_parsing(parse_lines(SAMPLE))
+print("^^^^^^^^^PARSED SAMPLE SAMPLE^^^^^^^^^")
+
 sample = solve(SAMPLE)
 if SAMPLE_EXPECTED is None:
     print("*** SKIPPING SAMPLE! ***")
