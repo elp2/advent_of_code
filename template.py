@@ -9,7 +9,7 @@ def dd():
 
 CHALLENGE_DAY = "7"
 REAL = open(CHALLENGE_DAY + ".txt").read()
-SAMPLE = open(CHALLENGE_DAY + ".sample").read()
+SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
 # SAMPLE_EXPECTED = None
 # SAMPLE_EXPECTED = 
 

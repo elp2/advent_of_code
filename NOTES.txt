@@ -1,5 +1,6 @@
       -------Part 1--------   -------Part 2--------
 Day       Time  Rank  Score       Time  Rank  Score
+  7   00:13:40   413      0   00:30:12  1014      0
   6   00:05:50  1530      0   00:10:01  1115      0
   5   00:10:34  1350      0   00:15:01  1297      0
   4   00:13:37  2450      0   00:34:51  1769      0
@@ -45,6 +46,12 @@ Day 6:
 * Group parsing using read().split("\n\n") worked well - will add to template.
 * Use a wider debug window, and make sure parsing happens properly if the sample fails.
 * Need to read instructions more carefully!
+
+Day 7:
+* Parsing was OK... sorta.. wasted some time here. I should build a parser verifier!!!
+* Asserts were very helpful - kept me from submitting junk.
+* I should have used better variable names on the recursion.
+* Part 2 - I TOTALLY misread the question. I thought it was about how many bags could lead to a shiny bag and how many bags would they be holding.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
