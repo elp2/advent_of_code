@@ -13,7 +13,6 @@ CARTS = "^>v<"
 DIRS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
 
-
 def cart_positions(start, facing, board):
     poses = []
     pos = start
@@ -48,7 +47,7 @@ def cart_positions(start, facing, board):
         x += dx
         y += dy
         pos = (x, y)
-        if pos == start:
+        if pos == start and corners % 3 == 0:
             break
     return poses
 
