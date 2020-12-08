@@ -26,39 +26,31 @@ def parse_lines(raw):
     # return list(map(int, lines))
     # return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
 
-import copy
 
 def try_fix(instructions, line):
-    instructions = copy.deepcopy(instructions)
-    lfix = instructions[line]
-    if lfix[0] == "jmp":
-        instructions[line][0] = "nop"
-    elif lfix[1] == "nop":
-        instructions[line][0] = "jmp"
-    else:
-        return None
-
     pc = 0
+    seen = set()
     acc = 0
-    states = set()
     ticks = 0
     while pc < len(instructions):
         ticks += 1
         if ticks > 10000:
-            print("ticks")
             return None
-        state = (pc, acc)
-        if state in states:
+        if (pc, acc) in seen:
             return None
-        states.add(state)
-        ins = instructions[pc]
-        var = int(ins[1])
-        if ins[0] == "nop":
+        seen.add((pc, acc))
+        ins, var = instructions[pc]
+        if ins == "nop" and pc == line:
+            ins = "jmp"
+        elif ins == "jmp" and pc == line:
+            ins = "nop"
+        var = int(var)
+        if ins == "nop":
             pc += 1
-        elif "acc" == ins[0]:
+        elif "acc" == ins:
             pc += 1
             acc += var
-        elif "jmp" == ins[0]:
+        elif "jmp" == ins:
             pc += var
 
     return acc
