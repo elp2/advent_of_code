@@ -7,10 +7,10 @@ def dd():
     return defaultdict(return_default)
 
 
-CHALLENGE_DAY = "9"
+CHALLENGE_DAY = "8"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
-# SAMPLE_EXPECTED = None
+SAMPLE_EXPECTED = 5
 # SAMPLE_EXPECTED = 
 
 
@@ -19,17 +19,34 @@ def parse_lines(raw):
     # split = raw.split("\n\n")
     # return list(map(lambda group: group.split("\n"), split))
 
-    # split = raw.split("\n")
+    split = raw.split("\n")
+    return list(map(lambda l: l.split(" "), split))
 
-    # return split # raw
-    # return list(map(lambda l: l.split(" "), split)) # words.
+    # return split
     # return list(map(int, lines))
     # return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
 
 def solve(raw):
-    parsed = parse_lines(raw)
+    instructions = parse_lines(raw)
     # Debug here to make sure parsing is good.
     ret = 0
+    
+    pc = 0
+    seen = set()
+    acc = 0
+    while True:
+        if pc in seen:
+            return acc
+        seen.add(pc)
+        ins = instructions[pc]
+        var = int(ins[1])
+        if ins[0] == "nop":
+            pc += 1
+        elif "acc" == ins[0]:
+            pc += 1
+            acc += var
+        elif "jmp" == ins[0]:
+            pc += var
 
     return ret
 
