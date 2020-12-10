@@ -65,6 +65,15 @@ I was seriously tempted to not do the sample one this time. It made it a bit har
 I didn't do the sample on part 2 since it seemed so hard to screw up. And this helped me drop 1100 spots... seriously part 2 was pretty easy.
 * I forgot to insert the real.txt again. Will add an assert. Or maybe download directly!
 
+Day 10:
+* Forgot to adjust template to Day 10 (caught quickly). Int parsing worked well.
+* Read question pretty well, got jist relatively quickly.
+* Part 2... oh man. Had the idea to sum relatively quickly, but couldn't implement.
+* Unmemoized version took down my Ubuntu container with stack overflow presumably. Restared ok quickly.
+* Missed that you could start not just from 0 but from 2,3's. That's why sample1 passed but sample2 failed.
+* Printing the memoization helped me realize this.
+* Forgot about solutions auto getting copyied to clipboard.
+
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
 * Grab input first thing next time in case.
