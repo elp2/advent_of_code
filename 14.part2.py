@@ -11,38 +11,34 @@ def parse_lines(lines):
 
 def solve(target):
     tarr = list(map(int, str(target)))
-    tlen = len(tarr)
-    arr = [None] * (200 * 704321 + 20)
-    arr[0] = 3
-    arr[1] = 7
-    arrlen = 2
+    arr = [3, 7]
     i1 = 0
     i2 = 1
 
-    partial = []
     while True:
+        if len(arr) % 100000 == 0:
+            print(len(arr))
         here1 = arr[i1]
         here2 = arr[i2]
         summed = here1 + here2
         if summed >= 10:
-            arr[arrlen] = 1
-            arrlen += 1
+            arr.append(1)
+            if arr[-len(tarr):] == tarr:
+                return len(arr) - len(tarr)
             summed -= 10
-        arr[arrlen] = summed
-        arrlen += 1
-        i1 = (i1 + here1 + 1) % arrlen
-        i2 = (i2 + here2 + 1) % arrlen
-        if arr[arrlen - tlen:arrlen] == tarr:
-            return arrlen - tlen
+        arr.append(summed)
+        i1 = (i1 + here1 + 1) % len(arr)
+        i2 = (i2 + here2 + 1) % len(arr)
+        if arr[-len(tarr):] == tarr:
+            return len(arr) - len(tarr)
 
-    return ret
 
 for si in range(3):
     expected = [9, 18, 2018][si]
     sample = [51589, 92510, 59414][si]
     actual = solve(sample)
     assert actual == expected
-
+print("Solving")
 REAL=704321
 print("SOLVED: ", solve(REAL)) 
 # 126228040 too high 200 * 700k items
