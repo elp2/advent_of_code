@@ -74,6 +74,14 @@ Day 10:
 * Printing the memoization helped me realize this.
 * Forgot about solutions auto getting copyied to clipboard.
 
+Day 11:
+First part went pretty well. Minor mistakes, like not casting input.
+
+Second part followed very well from first with reusing function. 
+HOWEVER, I didn't account for the fact that you could hit a EMPTY seat before you could hit an OCCUPIED one.
+Added those 2 LOC and all done! 
+* Next time - when there's just a few conditions try adding an else!
+
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
 * Grab input first thing next time in case.
