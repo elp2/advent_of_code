@@ -1,5 +1,8 @@
       -------Part 1--------   -------Part 2--------
 Day       Time  Rank  Score       Time  Rank  Score
+ 12   00:08:39   540      0   00:15:42   343      0
+ 11   00:16:37   718      0   00:35:26  1201      0
+ 10   00:06:54   892      0   00:44:26  2308      0
   9   00:09:36  2003      0   00:12:57   870      0
   8   00:05:52   688      0   00:17:22  1233      0
   7   00:13:40   413      0   00:30:12  1014      0
@@ -81,6 +84,14 @@ Second part followed very well from first with reusing function.
 HOWEVER, I didn't account for the fact that you could hit a EMPTY seat before you could hit an OCCUPIED one.
 Added those 2 LOC and all done! 
 * Next time - when there's just a few conditions try adding an else!
+
+Day 12:
+Went pretty straightforward.
+How to be faster:
+* wx, wy rotation - could just keep swapping wy, wx every 90 instead of indexing:
+** R: x, y = y, -x.
+** L: x, y = -y, x 
+* There's no situation where dx, dy are both set.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
