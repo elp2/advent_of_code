@@ -1,5 +1,6 @@
-      -------Part 1--------   -------Part 2--------
-Day       Time  Rank  Score       Time  Rank  Score
+      -------Part 1--------   --------Part 2--------
+Day       Time  Rank  Score       Time   Rank  Score
+ 13   00:07:28   881      0   13:15:58 15262      0
  12   00:08:39   540      0   00:15:42   343      0
  11   00:16:37   718      0   00:35:26  1201      0
  10   00:06:54   892      0   00:44:26  2308      0
@@ -92,6 +93,12 @@ How to be faster:
 ** R: x, y = y, -x.
 ** L: x, y = -y, x 
 * There's no situation where dx, dy are both set.
+
+Day 13:
+* Found it hard to parse the first problem, but got it done in the end.
+* Variable names are horrible.
+* Got the general idea of matching them one by one, for part 2, couldn't make it happen before bed.
+* Woke up, wrote down in a notebook, and then pretty much solved it right away.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
