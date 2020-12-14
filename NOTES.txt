@@ -1,5 +1,6 @@
       -------Part 1--------   --------Part 2--------
 Day       Time  Rank  Score       Time   Rank  Score
+ 14   00:16:31  1028      0   02:14:25   5075      0
  13   00:07:28   881      0   13:15:58 15262      0
  12   00:08:39   540      0   00:15:42   343      0
  11   00:16:37   718      0   00:35:26  1201      0
@@ -99,6 +100,11 @@ Day 13:
 * Variable names are horrible.
 * Got the general idea of matching them one by one, for part 2, couldn't make it happen before bed.
 * Woke up, wrote down in a notebook, and then pretty much solved it right away.
+
+Day 14:
+* Went waaay too complicated on part 2. I assumed the brute force would be too slow, but in fact it was perfectly fine.
+* I should just try the brute force next time!
+* There's some bug in my elegant version, I'm not even 100% sure if it's workable.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
