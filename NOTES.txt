@@ -1,5 +1,6 @@
       -------Part 1--------   --------Part 2--------
 Day       Time  Rank  Score       Time   Rank  Score
+ 17   00:12:32   177      0   00:18:25    255      0
  16   00:14:25  1033      0   00:32:13    436      0
  15   00:30:26  3503      0   01:09:56   4578      0
  14   00:16:31  1028      0   02:14:25   5075      0
@@ -113,11 +114,20 @@ Day 15:
 * Got stuck on the faster algo for part1, then had to re-write for part2.
 * Knew 30 million would be in the range of brute force, so didn't do anything too tricky.
 
-Day 16.
+Day 16:
 * Could have parsed simpler by ignoring the sections, and using properties of the individual rows to see if it was a rule or not.
 * Could have stored sets of the rules, instead of the individual pieces, also overall min/max.
 * Didn't split the tickets into ints, wrote super ugly boilerplate code.
 * all(iterator) -> True if everything is true.
+
+Day 17:
+* So much went right today and the ranks showed it.
+* Parsing into grid worked fast. I even got an answer wrong when I forgot about the edges.
+* The trick was just to allocate enough empties at the edges. However, I created so many extra edges that it took forever to run.
+* When I'm brute forcing, it's important not to run in the debugger. In fact, I should have run it:
+** with sample in a terminal
+** without sample in a terminal
+As it was, I had to wait for the sample to finish. I don't think this cost me a SIGNIFICANT number of spots though.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
