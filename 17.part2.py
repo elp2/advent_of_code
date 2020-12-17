@@ -27,6 +27,7 @@ def parse_lines(raw):
     return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
 
 
+
 def active_neighbors(x, y, z, w, space):
     deltas = [-1, 0, 1]
     actives = 0
@@ -52,49 +53,39 @@ def solve(raw):
     parsed = parse_lines(raw)
     # Debug here to make sure parsing is good.
 
-    space = {}
-    z = 0
+    space = set()
     for y in range(len(parsed)):
-        for x in range(len(parsed[y])):
-            here = parsed[y][x]
-            if here == "#":
-                active = 1
-            else:
-                active = 0
-            space[(x, y, z, 0)] = active
+        for x in range(len(parsed[0])):
+            if parsed[y][x] == "#":
+                space.add((x, y, 0, 0))
     
-    upto = len(parsed[0]) + 8
-    for z in range(-8, upto):
-        for y in range(-8, upto):
-            for x in range(-8, upto):
-                for w in range(-8, upto):
-                    key = (x, y, z, w)
-                    if key not in space:
-                        space[key] = 0
-
-    for times in range(6):
-        print(times)
-        new_space = {}
-        for (x, y, z, w), active in space.items():
-            ans = active_neighbors(x, y, z, w, space)
-            if active == 1:
-                if ans in [2,3]:
-                    nact = 1
-                else:
-                    nact = 0
-            else:
-                if ans == 3:
-                    nact = 1
-                else:
-                    nact = 0
-            new_space[(x, y, z, w)] = nact
-
+    for t in range(6):
+        print(t)
+        dneg = -1 * t - 1
+        dist = len(parsed[0]) + t + 1
+        new_space = set()
+        for w in range(dneg, dist):
+            for y in range(dneg, dist):
+                for x in range(dneg, dist):
+                    for z in range(dneg, dist):
+                        act = 0
+                        key = (x, y, z, w)
+                        for dw in [-1, 0, 1]:
+                            for dz in [-1, 0, 1]:
+                                for dy in [-1, 0, 1]:
+                                    for dx in [-1, 0, 1]:
+                                        ka = (x + dx, y + dy, z + dz, w + dw)
+                                        if key == ka:
+                                            continue
+                                        if ka in space:
+                                            act += 1
+                        if key in space and act in [2, 3]:
+                            new_space.add(key)
+                        elif key not in space and act == 3:
+                            new_space.add(key)
         space = new_space
+    return len(space)
 
-
-    ret = sum(space.values())
-
-    return ret
 
 def test_parsing(lines):
     if isinstance(lines, list):
