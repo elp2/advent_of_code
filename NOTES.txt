@@ -1,5 +1,6 @@
       -------Part 1--------   --------Part 2--------
 Day       Time  Rank  Score       Time   Rank  Score
+ 18   00:58:43  3152      0   13:32:52  13102      0
  17   00:12:32   177      0   00:18:25    255      0
  16   00:14:25  1033      0   00:32:13    436      0
  15   00:30:26  3503      0   01:09:56   4578      0
@@ -128,6 +129,10 @@ Day 17:
 ** with sample in a terminal
 ** without sample in a terminal
 As it was, I had to wait for the sample to finish. I don't think this cost me a SIGNIFICANT number of spots though.
+
+Day 18:
+* Weak stack skills.
+* Creating an ElfNum with swapped operators (and evalling) was about 100x easier.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.

@@ -119,13 +119,46 @@ def calc_tokens(tokens, do_op):
             q.append(a + c)
     return q
 
+class ElfNum:
+    def __init__(self, num):
+        assert type(num) == int
+        self.num = num
+    
+    def __mul__(self, o):
+        return ElfNum(self.num + o.num)
+    
+    def __add__(self, o):
+        return ElfNum(self.num * o.num)
+
+    def toint(self):
+        return self.num
+
+
+def calc_elf(line):
+    line = line.replace("*", "?")
+    line = line.replace("+", "*")
+    line = line.replace("?", "+")
+    line = line.replace("(", " ( ")
+    line = line.replace(")", " ) ")
+    line = line.replace("  ", " ")
+    s = line.split(" ")
+    elfed = []
+    for e in line.split(" "):
+        if e.isdigit():
+            elfed.append("ElfNum(" + e + ")")
+        else:
+            elfed.append(e)
+    
+    return eval("".join(elfed)).toint()
+
+
 def solve(raw):
     parsed = parse_lines(raw)
     # Debug here to make sure parsing is good.
 
     ret = 0
     for i, l in enumerate(parsed):
-        calced = calc(l)
+        calced = calc_elf(l)
         ret += calced
         print("!!! ", l, " => ", calced)
         print("-----------------")
@@ -166,4 +199,5 @@ import pandas as pd
 df=pd.DataFrame([str(solved)])
 df.to_clipboard(index=False,header=False)
 print("COPIED TO CLIPBOARD")
+assert solved == 201376568795521
 # assert solved 189131946425341 too low
