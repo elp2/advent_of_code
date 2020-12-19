@@ -134,6 +134,11 @@ Day 18:
 * Weak stack skills.
 * Creating an ElfNum with swapped operators (and evalling) was about 100x easier.
 
+Day 19:
+* Even weaker regex skills.
+* TBH I'm amazed how easily it solved that, I originally didn't even try that since I thought it might be too slow.
+* I learned a lot!
+
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
 * Grab input first thing next time in case.
