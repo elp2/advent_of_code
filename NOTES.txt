@@ -1,5 +1,6 @@
       --------Part 1--------   --------Part 2--------
 Day       Time   Rank  Score       Time   Rank  Score
+ 21   00:14:28    212      0   00:21:48    266      0
  20   00:41:54    910      0   13:14:48   3886      0
  19   16:05:33  12226      0   16:26:22   9164      0
  18   00:58:43  3152      0   13:32:52  13102      0
@@ -145,6 +146,11 @@ Day 20:
 * Part 1 approach allowed me to find the corners pretty quickly, but it didn't build the map.
 * My complexity of my Part 2 spiraled out of control, and I couldn't make the faster version work in the end.
 * Some sleep, a bit of class refactoring and some list comprehensions, and it went fast!
+
+Day 21:
+* Wow... so easy today! Maybe they're going easy on us after yesterday.
+* DISGUSTING variable names, I'm shocked I didn't get confused, but the problem was simple enough to not trip me up.
+* My template is kinda not helping me anymore. I will trim it down.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
