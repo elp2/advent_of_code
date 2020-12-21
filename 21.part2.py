@@ -9,28 +9,21 @@ SAMPLE_EXPECTED = "mxmxvkd,sqjhc,fvjkl"
 
 
 def parse_lines(raw):
-    # Groups.
-    # groups = raw.split("\n\n")
-    # return list(map(lambda group: group.split("\n"), groups))
-
-    allergens = {}
+    allergens = defaultdict(set)
     all_words = defaultdict(lambda: 0)
 
     lines = raw.split("\n")
     for line in lines:
-        parts = line.split(" (")
-        ingredients = set(parts[0].split(" "))
+        istr, astr = line.split(" (contains")
+        ingredients = set(re.findall(r"\w+", istr))
         for i in ingredients:
             all_words[i] += 1
 
-        atmp = parts[1]
-        atmp = atmp.replace("contains", "").replace(")", "").replace(",", "").strip().split(" ")
-
-        for a in atmp:
+        for a in re.findall(r"\w+", astr):
             if a in allergens:
-                allergens[a] &= set(parts[0].split(" "))
+                allergens[a] &= ingredients
             else:
-                allergens[a] = set(parts[0].split(" "))
+                allergens[a] |= ingredients
         print(line, allergens)
 
     return allergens, all_words
