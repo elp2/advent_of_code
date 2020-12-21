@@ -1,101 +1,68 @@
-from collections import defaultdict
-
-def return_default():
-    return 0
-
-def dd():
-    return defaultdict(return_default)
-
+from collections import defaultdict, deque
+import re
 
 CHALLENGE_DAY = "21"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
-SAMPLE_EXPECTED = 5
+SAMPLE_EXPECTED = "mxmxvkd,sqjhc,fvjkl"
 # SAMPLE_EXPECTED = 
 
 
 def parse_lines(raw):
     # Groups.
-    # split = raw.split("\n\n")
-    # return list(map(lambda group: group.split("\n"), split))
+    # groups = raw.split("\n\n")
+    # return list(map(lambda group: group.split("\n"), groups))
 
-    split = raw.split("\n")
+    allergens = {}
+    all_words = defaultdict(lambda: 0)
 
-    adict = {}
-    words = defaultdict(return_default)
-    for line in split:
-        ls = line.strip().split(" (")
-        ingredients = set(ls[0].split(" "))
+    lines = raw.split("\n")
+    for line in lines:
+        parts = line.split(" (")
+        ingredients = set(parts[0].split(" "))
         for i in ingredients:
-            words[i] += 1
-        c = ls[1]
-        c = c[c.index(" ") + 1: -1]
-        c = c.replace(",", "")
-        allergens = c.split(" ")
-        for a in allergens:
-            print(a)
-            if a in adict:
-                known = adict[a]
-                adict[a] = known & ingredients
-                print(a, adict[a])
+            all_words[i] += 1
+
+        atmp = parts[1]
+        atmp = atmp.replace("contains", "").replace(")", "").replace(",", "").strip().split(" ")
+
+        for a in atmp:
+            if a in allergens:
+                allergens[a] &= set(parts[0].split(" "))
             else:
-                adict[a] = ingredients
-        print(line, adict)
-    
-    return adict, words
-    # return split # raw
-    # return list(map(lambda l: l.split(" "), split)) # words.
-    # return list(map(int, split))
-    # return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
+                allergens[a] = set(parts[0].split(" "))
+        print(line, allergens)
+
+    return allergens, all_words
 
 def solve(raw):
-    adict, words = parse_lines(raw)
-    # Debug here to make sure parsing is good.
-    ret = 0
-
-    allwords = set(words.keys())
-    for v in adict.values():
-        allwords -= v
+    allergens, all_words = parse_lines(raw)
 
     solved = {}
     changed = True
     while changed:
         changed = False
-
-        for a, poss in adict.items():
-            if len(poss) == 1:
-                solved[a] = list(poss)[0]
-                del(adict[a])
-                for k, v in adict.items():
-                    if k != a:
-                        v -= poss
+        for ak, aw in allergens.items():
+            if len(aw) == 1:
+                solved[ak] = list(aw)[0]
                 changed = True
+                del(allergens[ak])
+                for rk in allergens.keys():
+                    allergens[rk] -= aw
                 break
-    
-    ret = []
+
     sk = list(solved.keys())
     sk.sort()
-    for key in sk:
-        ret.append(solved[key])
+    ret = []
+    for k in sk:
+        ret.append(solved[k])
     return ",".join(ret)
 
-def test_parsing(lines):
-    if isinstance(lines, list):
-        for i in range(min(5, len(lines))):
-            print(lines[i])
-    elif isinstance(lines, dict) or isinstance(lines, defaultdict):
-        nd = {}
-        for k in list(lines.keys())[0: 5]:
-            print("\"" + k + "\": " + str(lines[k]))
-test_parsing(parse_lines(SAMPLE))
-print("^^^^^^^^^PARSED SAMPLE SAMPLE^^^^^^^^^")
-
 sample = solve(SAMPLE)
-if SAMPLE_EXPECTED is None:
-    print("*** SKIPPING SAMPLE! ***")
-else:
-    assert sample == "mxmxvkd,sqjhc,fvjkl"
-    print("*** SAMPLE PASSED ***")
+if sample != SAMPLE_EXPECTED:
+    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
+assert sample == SAMPLE_EXPECTED
+print("\n*** SAMPLE PASSED ***\n")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
@@ -103,4 +70,3 @@ import pandas as pd
 df=pd.DataFrame([str(solved)])
 df.to_clipboard(index=False,header=False)
 print("COPIED TO CLIPBOARD")
-# assert solved

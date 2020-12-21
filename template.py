@@ -10,14 +10,14 @@ SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
 
 def parse_lines(raw):
     # Groups.
-    # split = raw.split("\n\n")
-    # return list(map(lambda group: group.split("\n"), split))
+    # groups = raw.split("\n\n")
+    # return list(map(lambda group: group.split("\n"), groups))
     
-    # split = raw.split("\n")
-    # return split # raw
-    # return list(map(lambda l: l.split(" "), split)) # words.
-    # return list(map(int, split))
-    # return list(map(lambda l: l.strip(), split)) # beware leading / trailing WS
+    # lines = raw.split("\n")
+    # return lines # raw
+    # return list(map(lambda l: l.split(" "), lines)) # words.
+    # return list(map(int, lines))
+    # return list(map(lambda l: l.strip(), lines)) # beware leading / trailing WS
 
 def solve(raw):
     parsed = parse_lines(raw)
