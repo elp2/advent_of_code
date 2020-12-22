@@ -5,7 +5,7 @@ import copy
 CHALLENGE_DAY = "22"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 SAMPLE = open(CHALLENGE_DAY + ".sample2.txt").read()
-SAMPLE_EXPECTED = 291
+SAMPLE_EXPECTED = 105
 # SAMPLE_EXPECTED = 
 
 
@@ -28,15 +28,16 @@ def parse_lines(raw):
 
 def play_game(p1, p2, game=0):
     # print("Game ", game)
-    seen_states = []
+    seen_states = set()
 
     while p1 and p2:
         # print(p1, p2)
-        state = [list(p1), list(p2)]
+        state = (tuple(p1), tuple(p2))
+
         if state in seen_states:
             # print("seen", state)
             return p1, 1
-        seen_states.append(state)
+        seen_states.add(state)
         
         c1 = p1.popleft()
         c2 = p2.popleft()
