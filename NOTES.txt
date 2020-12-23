@@ -1,5 +1,6 @@
       --------Part 1--------   --------Part 2--------
 Day       Time   Rank  Score       Time   Rank  Score
+ 23   00:35:44   1332      0   01:56:21   1393      0
  22   00:05:54    280      0   00:49:49   1281      0
  21   00:14:28    212      0   00:21:48    266      0
  20   00:41:54    910      0   13:14:48   3886      0
@@ -158,6 +159,11 @@ Day 21:
 * This was generally pretty easy once I cleared up, and made sure I didn't confuse my 1's and 2's.
 * I was ABOUT to cancel my part2, because I was sure I screwed something up, but then suddenly it completed RIGHT before my Control-C.
 * TIL tuple(list) is order preserving. Caching it saves tons of time. Arrays even with slicing would have been fast enough, and lead to cleaner + [c1, c2] syntax.
+
+Day 23:
+* I was afraid that I was going to have to re-learn modular arithmetic but then I realized a linked list would work!
+* Once I got that going, it was like "linked list goes brrrrrrrr".
+* First part was just riddled with stupid bugs on my part.
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
