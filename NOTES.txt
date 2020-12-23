@@ -154,7 +154,7 @@ Day 21:
 * DISGUSTING variable names, I'm shocked I didn't get confused, but the problem was simple enough to not trip me up.
 * My template is kinda not helping me anymore. I will trim it down.
 
-Day 21:
+Day 22:
 * I feel that they gave tons of huge hints on these. I think you could pretty much just walk through it.
 * This was generally pretty easy once I cleared up, and made sure I didn't confuse my 1's and 2's.
 * I was ABOUT to cancel my part2, because I was sure I screwed something up, but then suddenly it completed RIGHT before my Control-C.
