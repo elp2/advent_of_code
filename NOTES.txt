@@ -1,5 +1,6 @@
       --------Part 1--------   --------Part 2--------
 Day       Time   Rank  Score       Time   Rank  Score
+ 25   00:15:07    911      0   00:15:11    755      0
  24   00:59:26   2946      0   01:29:29   2455      0
  23   00:35:44   1332      0   01:56:21   1393      0
  22   00:05:54    280      0   00:49:49   1281      0
@@ -171,6 +172,10 @@ Day 24:
 * At the same time, I did come up with my own solution here completely on my own.
 * Part 2 was slowed by my completely horrible names and inconsistent variable types.
 * P2 ran slowly, but finished in a semi-reasonable time.
+
+Day 25:
+* Done! An easy one :)
+* Wasted time trying to run two slow versions in pararallel instead of being smart and continuing to loop!
 
 Every Day Plan:
 * Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
