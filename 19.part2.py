@@ -1,113 +1,99 @@
-def addr(cpu, a, b, c):
-  cpu[c] = cpu[a] + cpu[b]
-  return cpu
+def solve_part1(a):
+    if a == 1:
+      # ['seti', '0', '0', '3'] [0, 0, 10551340, 0, 10550400] ip= 35
+      c = 10550400
+      a = 0
+    else:
+      c = 940
 
-def addi(cpu, a, b, c):
-  cpu[c] = cpu[a] + b
-  return cpu
-
-def mulr(cpu, a, b, c):
-  cpu[c] = cpu[a] * cpu[b]
-  return cpu
-
-def muli(cpu, a, b, c):
-  cpu[c] = cpu[a] * b
-  return cpu
-
-def banr(cpu, a, b, c):
-  cpu[c] = cpu[a] & cpu[b]
-  return cpu
-
-def bani(cpu, a, b, c):
-  cpu[c] = cpu[a] & b
-  return cpu
-
-def borr(cpu, a, b, c):
-  cpu[c] = cpu[a] | cpu[b]
-  return cpu
-
-def bori(cpu, a, b, c):
-  cpu[c] = cpu[a] | b
-  return cpu
-
-def setr(cpu, a, b, c):
-  cpu[c] = cpu[a]
-  return cpu
-
-def seti(cpu, a, b, c):
-  cpu[c] = a
-  return cpu
-
-def gtir(cpu, a, b, c):
-  if a > cpu[b]:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
-
-def gtri(cpu, a, b, c):
-  if cpu[a] > b:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
-
-def gtrr(cpu, a, b, c):
-  if cpu[a] > cpu[b]:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
-
-def eqir(cpu, a, b, c):
-  if a == cpu[b]:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
-
-def eqri(cpu, a, b, c):
-  if cpu[a] == b:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
-
-def eqrr(cpu, a, b, c):
-  if cpu[a] == cpu[b]:
-    cpu[c] = 1
-  else:
-    cpu[c] = 0
-  return cpu
+    a = 0
+    b = 0
+    d = 0
+    e = 0
 
 
-def part1(fname):
-  lines = open(fname).readlines()
-  ips = lines[0].split(" ")
-  assert ips[0] == "#ip"
-  ip = int(ips[1])
+    d = 1
+    while d <= c:
+        b = 1
+        while c >= b:
+            e = d * b
+            if e == c:
+              a += d
+              b += 1
+            else:
+              b += 1
 
-  instructions = lines[1:]
-  cpu = [0] * 6
-  cpu[0] = 1
-  while 0 <= cpu[ip] < len(instructions):
-    ins = instructions[cpu[ip]].split(" ")
-    ins_strings = ["addr", "addi", "mulr", "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"]
-    fns = [addr, addi, mulr, muli, banr, bani, borr, bori, setr, seti, gtir, gtri, gtrr, eqir, eqri, eqrr]
+        # print(a, d)
+        d += 1
+    return a
 
-    if len(fns) != 16:
-      raise AssertionError('not16')
+def solve_part1_2(a):
+    if a == 1:
+      # ['seti', '0', '0', '3'] [0, 0, 10551340, 0, 10550400] ip= 35
+      a = 0
+      b = 0
+      c = 10551340
+      d = 0
+      e = 10550400
+    elif a == 0:
+        a = 0
+        b = 0
+        d = 0
+        e = 0
+        c = 940
+    else:
+        assert False
 
-    a, b, c = list(map(int, ins[1:]))
-    ins_i = ins_strings.index(ins[0])
-    fns[ins_i](cpu, a, b, c)
 
-    cpu[ip] += 1
+    old_a = a
 
-  return cpu[0]
+    d = 1
+    while c >= d:
+        b = 1
+        while c >= b:
+            if c % d == 0:
+                a += d
+                break
+            break
+            
+            # e = d * b
+            # if e == c:
+            #   b += 1
+            # else:
+            #   b += 1
+
+        if old_a != a:
+            print(a, d)
+        old_a = a
+        d += 1
+    return a
+
+def prime_factor_solve(a):
+    if a == 1:
+        c = 10551340
+        a = 0
+    else:
+        c = 940
+    for d in range(1, c+1):
+        if c % d == 0:
+            a += d
+            print(a, d)
+    return a
 
 
-# assert part1('19.sample') == 6
-# print('Calculated SAMPLE')
-print(part1('19.txt'))
+part1 = solve_part1(0)
+assert solve_part1_2(0) == part1
+assert part1 == 2016 # Solves SUPER fast.
+# print(solve_part1(1)) # Still to slow.
+assert prime_factor_solve(0) == 2016
+print(solve_part1_2(1))
+# print(prime_factor_solve(1)) # 39967680 too high # 29417280 too high??? That's the step before.
 
+# a, d
+# 15877600 1758400
+# 17987680 2110080
+# 20625280 2637600
+# 24142080 3516800
+# 29417280 5275200
+# 39967680 10550400
+# 39967680
