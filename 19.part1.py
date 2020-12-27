@@ -89,8 +89,10 @@ def part1(fname):
 
   instructions = lines[1:]
   cpu = [0] * 6
+  cpu[0] = 1
   while 0 <= cpu[ip] < len(instructions):
-    ins = instructions[cpu[ip]].split(" ")
+    ins = instructions[cpu[ip]].strip().split(" ")
+    print(ins, cpu, "ip=", cpu[ip])
     ins_strings = ["addr", "addi", "mulr", "muli", "banr", "bani", "borr", "bori", "setr", "seti", "gtir", "gtri", "gtrr", "eqir", "eqri", "eqrr"]
     fns = [addr, addi, mulr, muli, banr, bani, borr, bori, setr, seti, gtir, gtri, gtrr, eqir, eqri, eqrr]
 
