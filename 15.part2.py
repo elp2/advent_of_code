@@ -150,7 +150,6 @@ class Fighter:
 CHALLENGE_DAY = "15"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 SAMPLE = open(CHALLENGE_DAY + ".sample").read()
-SAMPLE_EXPECTED = 4988
 # SAMPLE_EXPECTED = 
 
 
@@ -192,12 +191,22 @@ def find_teams(fighters):
 def run_battle(elf_attack, board):
     # print("Elf attack -> ", elf_attack)
     fighters = find_fighters(board, elf_attack)
+    num_elves = len(find_teams(fighters)["E"])
+
     bround = 0
     while True:
         bround_finished = run_bround(fighters, board)
+        elf_fighters = find_teams(fighters)["E"]
+        if len(elf_fighters) != num_elves:
+            print(f"Expected {num_elves} elves, got {len(elf_fighters)}")
+            return None
+
         if bround_finished:
             if elves_won(fighters):
                 elf_fighters = find_teams(fighters)["E"]
+                if len(elf_fighters) != num_elves:
+                    print(f"Expected {num_elves} elves, got {len(elf_fighters)}")
+                    return None
                 elf_fighters[0].draw_board(elf_fighters, board)
                 for tf in elf_fighters:
                     print (tf.team, tf.hp)
@@ -267,17 +276,20 @@ def elves_won(fighters):
 def solve(raw):
     board = parse_lines(raw)
 
-    elf_attack = 3
+    elf_attack = 4
     while True:
         print("Battling at ", elf_attack)
         battle = run_battle(elf_attack, copy.deepcopy(board))
         if battle:
             fighters, bbround = battle
             print("WIN AT rpimd: ", bbround, "attack: ", elf_attack)
-            return find_winners(fighters, bbround)
+            return elf_attack, find_winners(fighters, bbround)
         else:
             elf_attack += 1
+            print("-----ADVANCING to", elf_attack, 
+            "----------")
 
+SAMPLE_EXPECTED = (15, 4988)
 sample = solve(SAMPLE)
 if SAMPLE_EXPECTED is None:
     print("*** SKIPPING SAMPLE! ***")
