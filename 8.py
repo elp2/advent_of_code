@@ -4,7 +4,7 @@ import re
 CHALLENGE_DAY = "8"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
-SAMPLE_EXPECTED = 12
+SAMPLE_EXPECTED = 19
 
 def parse_lines(raw):
     # Groups.
@@ -43,6 +43,23 @@ def unquote(literal):
         i += 1
     return "".join(transformed)
 
+def encode(literal):
+    transformed = ["\""]
+    i = 0
+    while i < len(literal):
+        c = literal[i]
+        if c == "\"":
+            transformed.append("\\\"")
+        elif c == "\\":
+            transformed.append("\\\\")
+        else:
+            transformed.append(c)
+        i += 1
+    
+    transformed.append("\"")
+
+    return "".join(transformed)
+
 def solve(raw):
     parsed = parse_lines(raw)
     # Debug here to make sure parsing is good.
@@ -50,9 +67,9 @@ def solve(raw):
 
     for line in parsed:
         line = line.strip()
-        u = unquote(line)
-        print(line, "->", u, len(u))
-        ret += (len(line) - len(u))
+        e = encode(line)
+        print(line, "->", e, len(e), len(line))
+        ret += (len(e) - len(line))
 
     return ret
 
