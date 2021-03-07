@@ -21,7 +21,17 @@ def solve(raw):
     parsed = parse_lines(raw)
 
     wires = {}
+    wires = run_loop(wires, parsed[:])
+    wires = {'b': wires['a']}
+    assert wires['b'] == 16076
 
+    print("Round2")
+    parsed = parse_lines(raw)    
+    wires = run_loop(wires, parsed[:])
+    return wires['a']
+
+
+def run_loop(wires, parsed):
     resolved = 0
     while resolved != len(parsed):
         for i in range(len(parsed)):
@@ -49,15 +59,12 @@ def solve(raw):
                 val = translated[0]
                 if val == None:
                     continue
-                else:
-                    wires[destination] = val
             elif len(translated) == 2:
                 [op, val] = translated
                 assert "NOT" == op
                 if val == None:
                     continue
-                else:
-                    wires[destination] = ~val
+                val = ~val
             else:
                 assert len(translated) == 3
                 a, op, b = translated
@@ -74,19 +81,25 @@ def solve(raw):
                         val = a << b
                     else:
                         assert False
-                assert val != None
+
+            assert val != None
+            if destination in wires:
+                print("Avoiding setting %s to %d since it is already set!" % (destination, val))
+            else:
                 wires[destination] = val
+
             for w, v in wires.items():
                 # Convert to unsigned ints.
                 wires[w] = v & 0xffff
-            print(wires)
+            # print(wires)
             resolved += 1
+            assert parsed[i][1] == False
             parsed[i][1] = True
-            print("Resolved: ", i, resolved, len(parsed))
+            print("Resolved [%d] #%d / %d" % (i, resolved, len(parsed)))
 
     for p in parsed:
         assert p[1] == True
-    return wires['a']
+    return wires
 
 # sample = solve(SAMPLE)
 # if sample != SAMPLE_EXPECTED:
@@ -94,7 +107,7 @@ def solve(raw):
 # assert sample == SAMPLE_EXPECTED
 # print("\n*** SAMPLE PASSED ***\n")
 
-solved = solve(REAL)
+solved = solve(REAL) # 16076 too high
 print("SOLUTION: ", solved)
 import pandas as pd
 df=pd.DataFrame([str(solved)])
