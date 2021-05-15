@@ -37,10 +37,7 @@ def inc(password):
             i -= 1
     return password
 
-def solve():
-    parsed = "hxbxwxba"
-    # Debug here to make sure parsing is good.
-
+def solve(parsed):
     password = list(map(lambda c: ord(c) - ord('a'), parsed))
     while True:
         password = inc(password)
@@ -51,8 +48,11 @@ def solve():
     alpha = "".join(map(lambda c: chr(c + ord('a')), password))
     return alpha
 
-solved = solve()
+solved = solve("hxbxwxba")
 print("SOLUTION: ", solved) # hxbxxyzz
+solved = solve(solved)
+print("Part2: ", solved) # hxbxxyzz
+
 import pandas as pd
 df=pd.DataFrame([str(solved)])
 df.to_clipboard(index=False,header=False)
