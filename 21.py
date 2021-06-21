@@ -75,15 +75,16 @@ def battle(weapon_index, armor_index, ring_indexes, boss_hp, boss_damage, boss_a
     if hp > 0:
         print("WIN", cost, hp, boss_hp)
         assert boss_hp <= 0
-        return cost
+        return cost, True
     else:
         print("LOSE", cost, hp, boss_hp)
 
-        return 1000000000
+        return cost, False
 
 
 def solve():
-    ret = 1000000000
+    cheapest_win = 1000000000
+    expensevist_loss = 0
 
     bhp = 109
     bd = 8
@@ -98,9 +99,12 @@ def solve():
                 rings.append(rc)
 
             for r in rings:
-                ret = min(ret, battle(weapon_index, armor_index, r, bhp, bd, ba))
-            print(ret)
-    return ret
+                cost, won = battle(weapon_index, armor_index, r, bhp, bd, ba)
+                if won:
+                    cheapest_win = min(cheapest_win, cost)
+                else:
+                    expensevist_loss = max(cost, expensevist_loss)
+    return cheapest_win, expensevist_loss
 
-solved = solve()
-print("SOLUTION: ", solved) # 111
+cheapest_win, expensevist_loss = solve()
+print("SOLUTION: ", cheapest_win, expensevist_loss) # 111, 188
