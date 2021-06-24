@@ -10,8 +10,8 @@ def parse_lines(raw):
     lines = raw.split("\n")
     return lines
 
-def solve(raw):
-    a = b = 0
+def solve(raw, a = 0):
+    b = 0
     pc = 0
     parsed = parse_lines(raw)
     while pc < len(parsed):
@@ -61,3 +61,6 @@ print("\n*** SAMPLE PASSED ***\n")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved) # 170
+
+solved = solve(REAL, 1)
+print("SOLUTION: ", solved) # 247
