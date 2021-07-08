@@ -31,7 +31,12 @@ def battle(hp, bosshp, boss_damage, mana, shield_turns=0, poison_turns=0, rechar
             return False, mana_spent
         else:
             return battle(hp, bosshp, boss_damage, mana, shield_turns, poison_turns, recharge_turns, mana_spent, True)
-    
+
+    # Part 2 hard mode.
+    hp -= 1
+    if hp <= 0:
+        return False, mana_spent
+
     results = []
     # Otherwise, try one of each action, assuming that it isn't already active
     if not shield_turns:

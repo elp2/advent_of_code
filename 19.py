@@ -39,4 +39,38 @@ def solve(raw):
 
 
 solved = solve(REAL)
-print("SOLUTION: ", solved)
+print("SOLUTION: ", solved)    
+
+
+def part2(raw):
+    rules, molecule = parse_lines(raw)
+
+    seen = set()
+    steps = 0
+
+    here = ["e"]
+    while True:
+        evolutions = []
+        print(steps, len(here))
+        for h in here:
+            for rule in rules:
+                f, t = rule
+                if f not in h:
+                    continue
+                start = 0
+                while True:
+                    pos = h.find(f, start)
+                    if pos == -1:
+                        break
+                    fixed = h[0:pos] + t + h[pos + len(f):]
+                    if fixed == h:
+                        return steps
+                    if fixed not in seen and len(fixed) < len(molecule) + 5:
+                        evolutions.append(fixed)
+                    seen.add(fixed)
+                    start = pos + 1
+
+        here = evolutions
+        steps += 1
+
+print("Part 2:", part2(REAL))
