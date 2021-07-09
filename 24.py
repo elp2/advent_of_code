@@ -1,74 +1,43 @@
 from collections import defaultdict, deque
-import re
 from itertools import combinations
+from functools import reduce
+from operator import add, mul
 
-CHALLENGE_DAY = "1"
+import re
+
+CHALLENGE_DAY = "24"
 REAL = open(CHALLENGE_DAY + ".txt").read()
+SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
+SAMPLE_EXPECTED = 99
 
-PACKAGES="""1
-2
-3
-7
-11
-13
-17
-19
-23
-31
-37
-41
-43
-47
-53
-59
-61
-67
-71
-73
-79
-83
-89
-97
-101
-103
-107
-109
-113"""
-PACKAGES = list(map(int, PACKAGES.split("\n")))
+def parse_lines(raw):
+    lines = raw.split("\n")
+    return list(map(int, lines))
 
+def quantum_entanglement(arr):
+    return reduce(mul, arr)
 
+def solve(raw, num_compartments):
+    parsed = parse_lines(raw)
 
+    target = sum(parsed) // num_compartments
+    for smallest_size in range(len(parsed)):
+        print(smallest_size)
+        poss = [g for g in combinations(parsed, smallest_size) if sum(g) == target]
+        if len(poss):
+            qes = map(quantum_entanglement, poss)
+            return min(qes)
 
-def quantum_entanglement(l):
-    ret = l[0]
-    for i in range(1, len(l)):
-        ret *= ret[i]
-    return ret
+    assert False
 
+sample = solve(SAMPLE, 3)
+if sample != SAMPLE_EXPECTED:
+    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
+assert sample == SAMPLE_EXPECTED
+print("\n*** SAMPLE PASSED ***\n")
 
-def solve():
-    third = int(sum(PACKAGES) / 3)
+solved = solve(REAL, 3)
+print("Part1: ", solved) # 405925792351 high - max not min d'oh. # 11846773891
 
-    all = set()
-
-    num = 3
-    while num < len(PACKAGES):
-        tot = 0
-        num += 1
-        for it in combinations(PACKAGES, num):
-            if sum(it) == third:
-                tot += 1
-                all.add(it)
-        print(num, tot)
-
-    best = 100000000
-    for a in all:
-        bc = PACKAGES - a
-        
-
-
-    return best
-
-
-solved = solve()
-print("SOLUTION: ", solved)
+solved = solve(REAL, 4)
+print("Part2: ", solved) # 405925792351 high - max not min d'oh. # 11846773891
