@@ -35,3 +35,7 @@ def part1(lines):
     return board
 
 print("part 1:", np.sum(part1(open("8.in").readlines())))
+
+board = part1(open("8.in").readlines())
+for y in range(len(board)):
+    print("".join("*" if x else " " for x in board[y]))
