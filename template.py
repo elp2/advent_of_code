@@ -9,20 +9,12 @@ def flatten(t):
 ON_TEXT = '\u2588'
 OFF_TEXT = '\u2592'
 
-DAY = "9"
+DAY = "11"
 REAL = open(DAY + ".in").read()
 
 SAMPLE_EXPECTED = None
 
-def parse_line(line):
-    ret = re.findall(r'([a-z-]+)(\d+)\[([a-z]+)', line)
-    ret[1] = int(ret[1])
-
-def parse_lines(raw):
-    return [parse_line(line) for line in raw.split("\n")]
-
 def solve(raw):
-    parsed = parse_lines(raw)
     ret = 0
 
     return ret
