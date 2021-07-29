@@ -1,15 +1,17 @@
-from collections import defaultdict, deque
+from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
 import math
 import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
+
 def flatten(t):
     return [item for sublist in t for item in sublist]
+
 ON_TEXT = '\u2588'
 OFF_TEXT = '\u2592'
 
-DAY = "11"
+DAY = "13"
 REAL = open(DAY + ".in").read()
 
 SAMPLE_EXPECTED = None
@@ -29,8 +31,11 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-solved = solve(REAL)
-print("SOLUTION: ", solved)
+part1 = solve(REAL)
+print("Part 1: ", part1)
+
+part2 = solve(REAL)
+print("Part 2: ", part2)
 
 try:
     import pandas as pd
