@@ -15,3 +15,7 @@ len(set({comprehension to get indexes 1,2,3})) == 1 is easier to write than a[0]
 
 ## Day 15.
 Brute force fallback was more than fast enough when LCM method didn't work properly.
+
+## Day 16.
+Simple with one miss where I didn't reverse the "b" string initially.
+Didn't need any optimization for Part 2.
