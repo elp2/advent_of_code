@@ -19,3 +19,9 @@ Brute force fallback was more than fast enough when LCM method didn't work prope
 ## Day 16.
 Simple with one miss where I didn't reverse the "b" string initially.
 Didn't need any optimization for Part 2.
+
+## Day 17.
+Easy once I fixed a bug in Part 2 where I wasn't ending solutions which reached the goal.
+
+## Day 18.
+Easy. Didn't even need to optimize for part 2 by caching.
