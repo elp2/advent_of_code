@@ -25,3 +25,6 @@ Easy once I fixed a bug in Part 2 where I wasn't ending solutions which reached 
 
 ## Day 18.
 Easy. Didn't even need to optimize for part 2 by caching.
+
+## Day 19.
+Did a linked list for first part. My computer couldn't handle the full number of elves so I had to optimize the first round. I couldn't scale this to part 2 so had to come up with a crossing off approach.
