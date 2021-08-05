@@ -28,3 +28,6 @@ Easy. Didn't even need to optimize for part 2 by caching.
 
 ## Day 19.
 Did a linked list for first part. My computer couldn't handle the full number of elves so I had to optimize the first round. I couldn't scale this to part 2 so had to come up with a crossing off approach.
+
+# Day 21.
+Finally spent some time with np and it made things way easier. For Part 2 I started doing some complicated reversing logic, realized it was a dead end because some things are un-reversable, and then just did the simple brute force check. 
