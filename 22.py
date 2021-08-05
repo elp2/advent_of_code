@@ -47,15 +47,50 @@ def viable(a, b):
 def solve(raw):
     nodes = get_nodes(raw)
     viables = []
+    vdict = {}
     dupes = 0
+    zero = None
     for (a, b) in combinations(nodes, 2):
+        if a.used == 0:
+            zero = a
         if viable(a, b):
             viables.append((a, b))
+            vdict[(a.x, a.y)] = a
         if viable(b, a):
             viables.append((b, a))
+            vdict[(b.x, b.y)] = b
 
     print("part 1:", len(viables),   dupes)
-    return ret
+
+    maxx = max(map(lambda d: d.x, vdict.values()))
+    maxy = max(map(lambda d: d.y, vdict.values()))
+
+    print(maxx, maxy)
+    target = (maxx, 0)
+
+    for y in range(maxy + 1):
+        row = ""
+        for x in range(maxx + 1):
+            if x == zero.x and y == zero.y:
+                row += '_'
+            elif (x, y) in vdict:
+                row += "."
+            else:
+                row += "#"
+        print(row)
+    # ..................................
+    # ..................................
+    # ..................................
+    # ..................................
+    # ..................................
+    # ........##########################
+    # ................._................
+    part2 = 10 # move past edge
+    part2 += 6 # move to top row
+    part2 += 25 # move to in front of max x, y=0
+    part2 += 1 # move data one left
+    part2 += 32 * 5 # a sequence of 5 moves the empty around, and the target over one
+    print("Part2: ", part2)
 
 if SAMPLE_EXPECTED != None:
     SAMPLE = open(DAY + ".sample").read()
@@ -67,11 +102,7 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-part1 = solve(REAL)
-print("Part 1: ", part1)
-
-part2 = solve(REAL)
-print("Part 2: ", part2)
+solve(REAL)
 
 try:
     import pandas as pd

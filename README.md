@@ -33,4 +33,4 @@ Did a linked list for first part. My computer couldn't handle the full number of
 Finally spent some time with np and it made things way easier. For Part 2 I started doing some complicated reversing logic, realized it was a dead end because some things are un-reversable, and then just did the simple brute force check. 
 
 # Day 22.
-First part should have been easy if I had remembered that combinations does not expose both orderings a, b and b, a!
+First part should have been easy if I had remembered that combinations does not expose both orderings a, b and b, a! Part 2 was pretty easy when I broke down the steps.
