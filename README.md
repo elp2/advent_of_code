@@ -37,3 +37,6 @@ First part should have been easy if I had remembered that combinations does not 
 
 # Day 23.
 Another assembly lang optimization with the same tricks as last time.
+
+# Day 24.
+Everything came together here really smoothly after a small problem forgetting about walls.
