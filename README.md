@@ -34,3 +34,6 @@ Finally spent some time with np and it made things way easier. For Part 2 I star
 
 # Day 22.
 First part should have been easy if I had remembered that combinations does not expose both orderings a, b and b, a! Part 2 was pretty easy when I broke down the steps.
+
+# Day 23.
+Another assembly lang optimization with the same tricks as last time.

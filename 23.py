@@ -20,7 +20,7 @@ SAMPLE_EXPECTED = 3
 # jnz x y jumps to an instruction y away (positive means forward; negative means backward), but only if x is not zero.
 # tgl x toggles the instruction x away (pointing at instructions like jnz does: positive means forward; negative means backward):
 
-def solve(raw, a=0):
+def solve(raw, a=0, optimized=False):
     regs = {'a': a}
     lines = raw.split("\n")
     pc = 0
@@ -43,10 +43,19 @@ def solve(raw, a=0):
         if pc >= len(lines):
             break
         # print(pc, toggles[pc], lines[pc], regs)
-        ats[pc] += 1
+        toggled = toggles[pc] != 0
+        ats[str(pc) + "_" + str(toggled)] += 1
+        if iteratitions > 100000:
+            print(ats.most_common(10))
+            # print(list(ats.elements()))
+            return None
+        if pc == 4 and optimized:
+            if toggles[4:10] == [0] * 6:
+                regs['a'] = regs['d'] * regs['b']
+                pc = 10
+                continue
         offset = 1
         s = lines[pc].split(" ")
-        toggled = toggles[pc] != 0
         oper = s[0]
         if toggled:
             if oper in ["inc"]:
@@ -96,8 +105,11 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-solved = solve(REAL, 7)
-print("Part 1: ", solved)
+assert 14160 == solve(REAL, 7, True)
+# print("Part 1: ", solved) # 14160
+
+solved = solve(REAL, 12, True)
+print("Part 2: ", solved)
 
 try:
     import pandas as pd

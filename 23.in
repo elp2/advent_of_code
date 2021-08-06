@@ -1,13 +1,13 @@
 cpy a b
 dec b
-cpy a d
-cpy 0 a
-cpy b c
-inc a
-dec c
-jnz c -2
-dec d
-jnz d -5
+cpy a d # d = a
+cpy 0 a # a = 0
+cpy b c # c = b LABEL START
+inc a   # a++ LABEL APLUS
+dec c   # c--
+jnz c -2 # if c != 0 GOTO APLUS
+dec d    # d--
+jnz d -5 # if d != 0 GOTO START # b *
 dec b
 cpy b c
 cpy c d
