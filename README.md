@@ -40,3 +40,6 @@ Another assembly lang optimization with the same tricks as last time.
 
 # Day 24.
 Everything came together here really smoothly after a small problem forgetting about walls.
+
+# Day 25.
+Pretty easy - add the new operation, iterate against an expected list and found it quickly.
