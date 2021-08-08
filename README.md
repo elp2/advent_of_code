@@ -32,6 +32,9 @@ OK with the class I created, although fancier parsing practice would probably be
 ## Day 10
 I had some copy/paste errors from the low/high and handling robots and outputs separately - probably easiest to just all treat them as buckets and differentiate based on names.
 
+# Day 11
+Definitely the hardest one for me. I had problems getting Part 1 to even work - turned out that I misread the instructions and the elevator didn't protect against radiation - I thought they specifically said it did. I created a validation againt the example to make sure the algorithm was correct. For Part 2 it kept getting to stage 17 or so where there were a million states and then it would OOM. The key was creating a hash which was a bit more general and allowed similar states to match even if they didn't have the same items in the same spots. After this it reached a max of around 250k states to consider in one depth and finished afer a while.
+
 ## Day 12
 Love these intcode puzzles! Optimizing was pretty easy.
 

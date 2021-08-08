@@ -94,6 +94,9 @@ F1 .  .  .  .  . """
 # The fourth floor contains nothing relevant.
 REAL = [set(["SG", "SM", "PG", "PM"]),
         set(["TG", "RG", "RM", "CG", "CM"]), set(["TM"]), set()]
+REAL2 = [set(["SG", "SM", "PG", "PM", "EG", "EM", "DG", "DM"]),
+         set(["TG", "RG", "RM", "CG", "CM"]), set(["TM"]), set()]
+
 # F4 .  .  .  .  .
 # F3 .  .  .  LG .
 # F2 .  HG .  .  .
@@ -129,12 +132,12 @@ def moves_for_state(state, floor):
                     break
             if valid:
                 if floor > 0:
-                    move = deepcopy(state)
+                    move = [items.copy() for items in state]
                     move[floor] = after
                     move[floor - 1] |= p
                     moves.append((move, floor - 1))
                 if floor < 3:
-                    move = deepcopy(state)
+                    move = [items.copy() for items in state]
                     move[floor] = after
                     move[floor + 1] |= p
                     moves.append((move, floor + 1))
@@ -177,6 +180,7 @@ def get_expecteds():
 
 
 
+OTHER={"G": "M", "M": "G"}
 
 def solve(raw, check_expecteds=False):
     ret = 0
@@ -191,9 +195,30 @@ def solve(raw, check_expecteds=False):
     expected = get_expecteds()
     print("Expect: ", len(expected))
 
+    def best_key(m, f):
+        key = []
+        remap = []
+        for mfs in m:
+            hf = []
+            for i in mfs:
+                try:
+                    ii = remap.index(i[0])
+                    ok = str(ii) + OTHER[i[1]]
+                    if ok in hf:
+                        hf[hf.index(ok)] = "*"
+                        continue
+                except ValueError:
+                    remap.append(i[0])
+                    ii = len(remap) - 1
+                hf.append(str(ii) + i[1])
+            key += hf
+            key.append("_")
+
+        return ",".join(key) + str(f)
+
     while True:
-        print("----- ", depth, "-----")
         if check_expecteds:
+            print("----- ", depth, "-----")
             if expected[depth] not in moves:
                 print("Want: ", expected[depth])
                 print("Fail depth=", depth)
@@ -205,32 +230,37 @@ def solve(raw, check_expecteds=False):
         print(depth, len(moves))
         new_moves = []
         for m, floor in moves:
-            assert len(flatten(m)) == target
+            # assert len(flatten(m)) == target
             if len(m[3]) == target:
                 print("Done at ", m, floor, depth)
                 return depth
-            if str(m) + str(floor) in bests:
-                # print("Already seen: ", m)
-                continue
-            bests.add(str(m) + str(floor))
-            new_moves += moves_for_state(m, floor)
+
+            for nm, nf in moves_for_state(m, floor):
+                bk = best_key(nm, nf)
+                # print(bk)
+                if bk in bests:
+                    continue
+                bests.add(bk)
+                new_moves.append((nm, nf))
 
         moves = new_moves
         depth += 1
 
     return ret
 
-if SAMPLE_EXPECTED != None:
-    sample = solve(SAMPLE, True)
-    if sample != SAMPLE_EXPECTED:
-        print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
-    assert sample == SAMPLE_EXPECTED
-    print("\n*** SAMPLE PASSED ***\n")
-else:
-    print("Skipping sample")
+# if SAMPLE_EXPECTED != None:
+#     sample = solve(SAMPLE, True)
+#     if sample != SAMPLE_EXPECTED:
+#         print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
+#     assert sample == SAMPLE_EXPECTED
+#     print("\n*** SAMPLE PASSED ***\n")
+# else:
+#     print("Skipping sample")
 
 solved = solve(REAL)
-print("SOLUTION: ", solved)
+print("Part 1: ", solved)
+
+print("P2", solve(REAL2))
 
 try:
     import pandas as pd
