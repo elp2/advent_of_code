@@ -1,0 +1,93 @@
+from collections import defaultdict
+
+def return_default():
+    return 0
+
+REAL=open("13.txt").readlines()
+SAMPLE=open("13.sample").readlines()
+
+def parse_lines(lines):
+    return list(map(list, lines))
+
+CARTS = "^>v<"
+DIRS = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+
+
+
+def cart_positions(start, facing, board):
+    poses = []
+    pos = start
+    corners = 0
+    fidx = DIRS.index(facing)
+
+    while True:
+        poses.append(pos)
+        x, y = pos
+        here = board[y][x]
+        delta = 0
+        if here == "\\":
+            delta = [-1, 1, -1, 1][fidx]
+        elif here == "/":
+            delta = [1, -1, 1, -1][fidx]
+        elif here == "+":
+            cmod = corners % 3
+            if cmod == 0:
+                delta = -1
+            elif cmod == 1:
+                delta = 0
+            elif cmod == 2:
+                delta = 1
+            corners += 1
+        else:
+            assert here in CARTS or here in "|-+"
+
+        fidx = (fidx + len(DIRS) + delta) % len(DIRS)
+        facing = DIRS[fidx]
+
+        dx, dy = facing
+        x += dx
+        y += dy
+        pos = (x, y)
+        if pos == start:
+            break
+    return poses
+
+def solve(lines):
+    carts = []
+    parsed = parse_lines(lines)
+
+    ats = {}
+
+    for y in range(len(lines)):
+        for x in range(len(lines[y])):
+            here = parsed[y][x]
+            if here in CARTS:
+                facing = DIRS[CARTS.index(here)]
+                pos = (x, y)
+                carts.append(cart_positions(pos, facing, parsed))
+                ats[pos] = len(carts) - 1
+    t = 0
+    while True:
+        ignore = set()
+        for y in range(len(parsed)):
+            for x in range(len(parsed[y])):
+                if (x, y) not in ats or (x, y) in ignore:
+                    continue
+                cidx = ats[(x, y)]
+                cart = carts[cidx]
+                cart_next = cart[(t + 1) % len(cart)]
+                ignore.add(cart_next)
+                if cart_next in ats:
+                    return str(cart_next[0]) + "," + str(cart_next[1])
+                else:
+                    ats[cart_next] = cidx
+                    del ats[(x, y)]
+        assert len(ats) == len(carts)
+        t += 1
+    return collisions(carts)
+
+sample = solve(SAMPLE)
+assert sample == "7,3"
+print("*** SAMPLE PASSED ***")
+
+print(solve(REAL)) # not 112,69 <- didn't do intersection rule
