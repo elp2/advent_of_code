@@ -1,0 +1,182 @@
+      --------Part 1--------   --------Part 2--------
+Day       Time   Rank  Score       Time   Rank  Score
+ 25   00:15:07    911      0   00:15:11    755      0
+ 24   00:59:26   2946      0   01:29:29   2455      0
+ 23   00:35:44   1332      0   01:56:21   1393      0
+ 22   00:05:54    280      0   00:49:49   1281      0
+ 21   00:14:28    212      0   00:21:48    266      0
+ 20   00:41:54    910      0   13:14:48   3886      0
+ 19   16:05:33  12226      0   16:26:22   9164      0
+ 18   00:58:43  3152      0   13:32:52  13102      0
+ 17   00:12:32   177      0   00:18:25    255      0
+ 16   00:14:25  1033      0   00:32:13    436      0
+ 15   00:30:26  3503      0   01:09:56   4578      0
+ 14   00:16:31  1028      0   02:14:25   5075      0
+ 13   00:07:28   881      0   13:15:58 15262      0
+ 12   00:08:39   540      0   00:15:42   343      0
+ 11   00:16:37   718      0   00:35:26  1201      0
+ 10   00:06:54   892      0   00:44:26  2308      0
+  9   00:09:36  2003      0   00:12:57   870      0
+  8   00:05:52   688      0   00:17:22  1233      0
+  7   00:13:40   413      0   00:30:12  1014      0
+  6   00:05:50  1530      0   00:10:01  1115      0
+  5   00:10:34  1350      0   00:15:01  1297      0
+  4   00:13:37  2450      0   00:34:51  1769      0
+  3   00:07:53  1610      0   00:12:58  1573      0
+  2   00:04:04   415      0   00:06:59   435      0
+  1   00:08:12  1254      0   00:11:10  1433      0
+
+Day 1.
+* Site went down, couldn't get input for about 7 mins.
+* Did all my work in the template instead of 1.py. Otherwise the template worked pretty well.
+* Forgot to parse the items as ints!
+* Didn't switch logic over to the part2() function, so it was failing the assert.
+* Didn't do a day1 branch.
+
+Day 2:
+* Pretty straightforward.
+* Separate windows and files worked smoothly.
+* Parsing was more complicated than necessary.
+* ^ for XOR :)
+
+Day 3:
+* Forgot that the pattern repeated across.
+* Got stuck on wrong sample - copied the ones with X and Os filled in for trees and misses, not the top one.
+* Over complicated loop instead of just multiplying the output of all the funcs.
+
+Day 4:
+* Copy / Paste error on sample led me down a bunch of random paths, code was basically working to start.
+* Should have made valid_port() a separate function from the start since it was easier to return on invalids.
+* Should use if a <= var <= b more.
+* Splitting on "\n\n" was a little clearner, but still needed to turn \n in spanned ports into whitespace.
+* Looking back I'm surprised how long I took on Part 2 - it went way faster when I refactored into a func.
+* Another day where simple regex would have gone a long way.
+
+Day 5:
+* Ahhh... I'm in such a rush to read and implement it literally.
+* I missed that you were given 8 bits, and then 3 bits and could just convert like that.
+* Nevertheless, it was implemented pretty smoothly.
+* The website hung slightly on loading and getting input and submitting part1.
+* Too much printing caused a slowdown, made it hard to understand what my return value was. Will fix.
+* I found Part 2 somewhat hard to understand at first. I think I'm trying to skip over the prose and skip things.
+
+Day 6:
+* Group parsing using read().split("\n\n") worked well - will add to template.
+* Use a wider debug window, and make sure parsing happens properly if the sample fails.
+* Need to read instructions more carefully!
+
+Day 7:
+* Parsing was OK... sorta.. wasted some time here. I should build a parser verifier!!!
+* Asserts were very helpful - kept me from submitting junk.
+* I should have used better variable names on the recursion.
+* Part 2 - I TOTALLY misread the question. I thought it was about how many bags could lead to a shiny bag and how many bags would they be holding.
+
+Day 8:
+* Emulator Question!
+* Didn't copy the input in, which lead to an empty file which was a slighlty confusing error.
+* Wasted time on part 2 because I just did a .copy() but I needed a copy.deepcopy() since I had sub arrays.
+
+Day 9:
+I was seriously tempted to not do the sample one this time. It made it a bit harder, since I needed to use a different window length. I should have at least done it with a hacky CONSTANT.
+I didn't do the sample on part 2 since it seemed so hard to screw up. And this helped me drop 1100 spots... seriously part 2 was pretty easy.
+* I forgot to insert the real.txt again. Will add an assert. Or maybe download directly!
+
+Day 10:
+* Forgot to adjust template to Day 10 (caught quickly). Int parsing worked well.
+* Read question pretty well, got jist relatively quickly.
+* Part 2... oh man. Had the idea to sum relatively quickly, but couldn't implement.
+* Unmemoized version took down my Ubuntu container with stack overflow presumably. Restared ok quickly.
+* Missed that you could start not just from 0 but from 2,3's. That's why sample1 passed but sample2 failed.
+* Printing the memoization helped me realize this.
+* Forgot about solutions auto getting copyied to clipboard.
+
+Day 11:
+First part went pretty well. Minor mistakes, like not casting input.
+
+Second part followed very well from first with reusing function. 
+HOWEVER, I didn't account for the fact that you could hit a EMPTY seat before you could hit an OCCUPIED one.
+Added those 2 LOC and all done! 
+* Next time - when there's just a few conditions try adding an else!
+
+Day 12:
+Went pretty straightforward.
+How to be faster:
+* wx, wy rotation - could just keep swapping wy, wx every 90 instead of indexing:
+** R: x, y = y, -x.
+** L: x, y = -y, x 
+* There's no situation where dx, dy are both set.
+
+Day 13:
+* Found it hard to parse the first problem, but got it done in the end.
+* Variable names are horrible.
+* Got the general idea of matching them one by one, for part 2, couldn't make it happen before bed.
+* Woke up, wrote down in a notebook, and then pretty much solved it right away.
+
+Day 14:
+* Went waaay too complicated on part 2. I assumed the brute force would be too slow, but in fact it was perfectly fine.
+* I should just try the brute force next time!
+* There's some bug in my elegant version, I'm not even 100% sure if it's workable.
+
+Day 15:
+* So tired. Horrible performance.
+* Got stuck on the faster algo for part1, then had to re-write for part2.
+* Knew 30 million would be in the range of brute force, so didn't do anything too tricky.
+
+Day 16:
+* Could have parsed simpler by ignoring the sections, and using properties of the individual rows to see if it was a rule or not.
+* Could have stored sets of the rules, instead of the individual pieces, also overall min/max.
+* Didn't split the tickets into ints, wrote super ugly boilerplate code.
+* all(iterator) -> True if everything is true.
+
+Day 17:
+* So much went right today and the ranks showed it.
+* Parsing into grid worked fast. I even got an answer wrong when I forgot about the edges.
+* The trick was just to allocate enough empties at the edges. However, I created so many extra edges that it took forever to run.
+* When I'm brute forcing, it's important not to run in the debugger. In fact, I should have run it:
+** with sample in a terminal
+** without sample in a terminal
+As it was, I had to wait for the sample to finish. I don't think this cost me a SIGNIFICANT number of spots though.
+
+Day 18:
+* Weak stack skills.
+* Creating an ElfNum with swapped operators (and evalling) was about 100x easier.
+
+Day 19:
+* Even weaker regex skills.
+* TBH I'm amazed how easily it solved that, I originally didn't even try that since I thought it might be too slow.
+* I learned a lot!
+
+Day 20:
+* Part 1 approach allowed me to find the corners pretty quickly, but it didn't build the map.
+* My complexity of my Part 2 spiraled out of control, and I couldn't make the faster version work in the end.
+* Some sleep, a bit of class refactoring and some list comprehensions, and it went fast!
+
+Day 21:
+* Wow... so easy today! Maybe they're going easy on us after yesterday.
+* DISGUSTING variable names, I'm shocked I didn't get confused, but the problem was simple enough to not trip me up.
+* My template is kinda not helping me anymore. I will trim it down.
+
+Day 22:
+* I feel that they gave tons of huge hints on these. I think you could pretty much just walk through it.
+* This was generally pretty easy once I cleared up, and made sure I didn't confuse my 1's and 2's.
+* I was ABOUT to cancel my part2, because I was sure I screwed something up, but then suddenly it completed RIGHT before my Control-C.
+* TIL tuple(list) is order preserving. Caching it saves tons of time. Arrays even with slicing would have been fast enough, and lead to cleaner + [c1, c2] syntax.
+
+Day 23:
+* I was afraid that I was going to have to re-learn modular arithmetic but then I realized a linked list would work!
+* Once I got that going, it was like "linked list goes brrrrrrrr".
+* First part was just riddled with stupid bugs on my part.
+
+Day 24:
+* Part 1 was thrown off by a bunch of false starts. Eventually I got there with my offsets.
+* At the same time, I did come up with my own solution here completely on my own.
+* Part 2 was slowed by my completely horrible names and inconsistent variable types.
+* P2 ran slowly, but finished in a semi-reasonable time.
+
+Day 25:
+* Done! An easy one :)
+* Wasted time trying to run two slow versions in pararallel instead of being smart and continuing to loop!
+
+Every Day Plan:
+* Get a dayX branch X.part1.py, X.part2.py X.txt, X.sample files ready in the other panes for easy pasting and reference.
+* Grab input first thing next time in case.
