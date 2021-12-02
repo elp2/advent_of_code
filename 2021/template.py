@@ -5,10 +5,11 @@ import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
 
-CHALLENGE_DAY = "1"
+CHALLENGE_DAY = "2"
 REAL = open(CHALLENGE_DAY + ".txt").read()
-SAMPLE = open(CHALLENGE_DAY + ".sample.txt").read()
-# SAMPLE_EXPECTED = None
+SAMPLE_EXPECTED = None
+if SAMPLE_EXPECTED:
+    SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
 # SAMPLE_EXPECTED = 
 
 
@@ -29,11 +30,14 @@ def solve(raw):
 
     return ret
 
-sample = solve(SAMPLE)
-if sample != SAMPLE_EXPECTED:
-    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
-assert sample == SAMPLE_EXPECTED
-print("\n*** SAMPLE PASSED ***\n")
+if SAMPLE_EXPECTED != None:
+    sample = solve(SAMPLE)
+    if sample != SAMPLE_EXPECTED:
+        print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
+    assert sample == SAMPLE_EXPECTED
+    print("\n*** SAMPLE PASSED ***\n")
+else:
+    print("Skipping sample")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
