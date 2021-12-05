@@ -1,21 +1,21 @@
 from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
 import math
-import numpy as np
+# import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
 
-CHALLENGE_DAY = "2"
+CHALLENGE_DAY = "6"
 REAL = open(CHALLENGE_DAY + ".txt").read()
+
 SAMPLE_EXPECTED = None
 if SAMPLE_EXPECTED:
     SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
-# SAMPLE_EXPECTED = 
 
 
 def parse_lines(raw):
     # Groups.
-    groups = raw.split("\n\n")
+    # groups = raw.split("\n\n")
     # return list(map(lambda group: group.split("\n"), groups))
     # lines = raw.split("\n")
     # return lines # raw
