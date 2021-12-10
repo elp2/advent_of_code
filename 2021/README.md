@@ -22,7 +22,10 @@ The parsing took a bit longer, and the delta took a bit longer than needed. But 
 
 Had some minor problems understanding the 6/8 new fish in the beginning. Samples kept me on track. I had a feeling that the array method would be too slow! :) I overcomplicated the part 2 with a separate babies variable, and forgot to account for multiple not just one fish at each gestatation stage.
 
-
 # Day 7
 
 Wow. This is what happens when you try to program while watching Curb Your Enthusiasm. Not recommended.
+
+# Day 10
+
+Generally happy with this one, although I made some dumb mistakes keeping my various mappings straight.
