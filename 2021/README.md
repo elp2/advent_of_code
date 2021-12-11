@@ -29,3 +29,7 @@ Wow. This is what happens when you try to program while watching Curb Your Enthu
 # Day 10
 
 Generally happy with this one, although I made some dumb mistakes keeping my various mappings straight.
+
+# Day 11
+
+Breaking down into sub functions inside the solve loop made things easier. Made an otherwise dumb mistake around >= 9 rather than correct >= 10.
