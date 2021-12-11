@@ -65,35 +65,108 @@ def guess_ordering(actual, ordering, orig_poss):
             return False
     return poss
 
-def all_guesses(actuals):
+def all_guesses(g_orig, fives, sixes):
+    for f in fives:
+        assert(len(f)) == 5
+    for s in sixes:
+        assert(len(s)) == 6
+    for fc in permutations(fives, len(fives)):
+        for sc in permutations(sixes, len(sixes)):
+            guesses = g_orig.copy()
+            guesses[0] = sc[0]
+            guesses[2] = fc[0]
+            guesses[3] = fc[1]
+            guesses[5] = fc[2]
+            guesses[6] = sc[1]
+            guesses[9] = sc[2]
+
+            yield guesses
     
 
 def decode(seen):
-    actual_by_len = DefaultDict(lambda: [])
-    for a in seen:
-        actual_by_len[len(a)].append(a)
+    guesses = [None] * 10
 
-    for guess in all_guesses(actual_by_len):
-        poss = {}
-        for l in "abcdefg":
-            poss[l] = set(l).remove(l)
-        for alen, lenguesses in guess.items():
-            for l in 
+    fives = []
+    sixes = []
+    for s in seen:
+        if len(s) == 5:
+            fives.append(s)
+        elif len(s) == 6:
+            sixes.append(s)
+        elif len(s) == 2:
+            guesses[1] = s
+        elif len(s) == 4:
+            guesses[4] = s
+        elif len(s) == 3:
+            guesses[7] = s
+        elif len(s) == 7:
+            guesses[8] = s
+    
+    work = []
+    for g in all_guesses(guesses, fives, sixes):
+        def safe_first(s):
+            if len(s) == 0:
+                return set(["z"])
+            else:
+                return set([list(s)[0]])
 
+        for i in range(10):
+            assert len(g[i]) == len(LIGHTS[i])
 
+        def valid(g):
+            wiring = {}
+            wiring["d"] = set(g[8]) - set(g[0])
+            wiring["a"] = set(g[7]) - set(g[1])
+            wiring["e"] = set(g[8]) - set(g[9])
+            wiring["c"] = set(g[1]) - set(g[5])
+            wiring["g"] = set(g[5]) - set(g[4]) - set(g[7])
+            wiring["b"] = set(g[5]) - set(g[3])
+            if len(wiring["c"]) != 1:
+                return False
+            wiring["f"] = set(g[1]) - wiring["c"]
 
-    return poss
+            all_values = set()
+            for v in wiring.values():
+                all_values |= v
+            if all_values == set(list("abcdefg")) and all([len(v) == 1 for v in wiring.values()]):
+                for gi in range(0, 10): #TODO
+                    mapped = set()
+                    for w in LIGHTS[gi]:
+                        mapped |= wiring[w]
+                    if set(g[gi]) != mapped:
+                        return False
+
+                print(wiring)
+                return True
+            else:
+                return False
+
+        if valid(g):
+            work.append(["".join(sorted(list(gx))) for gx in g])
+
+    assert len(work) == 1
+    print(work)
+    return work[0]
 
 def solve(raw):
     mapping = parse_lines(raw)
 
     ret = 0
     for k, v in mapping.items():
-        val = decode(k.split(" "))
-        print(k, val)
+        wirings = decode(k.split(" "))
+        val = 0
+        for num in v:
+            num = "".join(sorted(list(num)))
+            val *= 10
+            val += wirings.index(num)
+        print(v, val)
         ret += val
 
     return ret
+
+
+wirings_test = decode("acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab".split(" "))
+
 
 if SAMPLE_EXPECTED != None:
     sample = solve(SAMPLE)

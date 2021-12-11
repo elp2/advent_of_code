@@ -5,7 +5,15 @@ import math
 from operator import add, mul, itemgetter, attrgetter
 import re
 
-CHALLENGE_DAY = "6"
+DS = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+DS8 = DS + [[-1, -1], [1, -1], [-1, 1], [1, 1]]
+def arounds_inside(x, y, diagonals, w, h):
+    ret = []
+    for dx, dy in DS8 if diagonals else DS:
+        ret.append((x + dx, y + dy))
+
+
+CHALLENGE_DAY = "12"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 
 SAMPLE_EXPECTED = None
