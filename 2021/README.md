@@ -42,3 +42,13 @@ Generally happy with this one, although I made some dumb mistakes keeping my var
 # Day 11
 
 Breaking down into sub functions inside the solve loop made things easier. Made an otherwise dumb mistake around >= 9 rather than correct >= 10.
+
+# Day 12
+
+I did a gross path brute forcing which ran super fast anyway.
+
+Mistakes:
+* Forgetting that we could go from/to things when a path was listed
+* Going back to start (inf loop)
+* Both questions I wasted time chasing a bug which was really me using the wrong pairing of sample / expected values
+* Reading part 2 too speedily and assuming we could go to small caves 2x - I was so close to the original solution it shoudln't have taken me 11 minutes.
