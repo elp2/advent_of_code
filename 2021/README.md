@@ -52,3 +52,10 @@ Mistakes:
 * Going back to start (inf loop)
 * Both questions I wasted time chasing a bug which was really me using the wrong pairing of sample / expected values
 * Reading part 2 too speedily and assuming we could go to small caves 2x - I was so close to the original solution it shoudln't have taken me 11 minutes.
+
+# Day 13
+
+Hoooh boy. Some silly ones here.
+Copied and pasted my x code into my y folds code, so I was folding based on y coord. Samples saved me here though TBH.
+Forgot that I was looking at more than just the first item, thought I broke something between P1/P2.
+Parsing worked pretty much first time which was a win.
