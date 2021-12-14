@@ -59,3 +59,7 @@ Hoooh boy. Some silly ones here.
 Copied and pasted my x code into my y folds code, so I was folding based on y coord. Samples saved me here though TBH.
 Forgot that I was looking at more than just the first item, thought I broke something between P1/P2.
 Parsing worked pretty much first time which was a win.
+
+# Day 14
+
+Got through Part 1 with a minimal number of typos. Then realized the approach obviously wouldn't work for a giant size. Went and got some eggnog, and then came up with this pairwise version. It could have been simpler in hindsight by not doing the special case for the first item, but it worked out OK.
