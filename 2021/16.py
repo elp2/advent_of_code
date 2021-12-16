@@ -1,6 +1,7 @@
 from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
 import math
+from functools import reduce
 # import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
@@ -28,58 +29,63 @@ def parse_lines(raw):
         while len(binned) < 4:
             binned = "0" + binned
         ret.append(binned)
-    return "".join(ret)
+    d = deque()
+    for r in "".join(ret):
+        d.append(r)
+    return d
 
-def parse_literal(packet, i):
+
+def read_n(packet, n):
+    ret = ""
+    for _ in range(n):
+        ret += packet.popleft()
+    return ret
+
+def parse_literal(packet):
     num = ""
     while True:
-        five = packet[i:i+5]
+        five = read_n(packet, 5)
         assert len(five) == 5
-        i += 5
         num += five[1:]
         if "0" == five[0]:
             break
-    return (int(num, 2), i)
+    return int(num, 2)
 
 
 def depacket(packet, pstart=0):
-    version = int(packet[pstart + 0:pstart + 3], 2)
-    id = int(packet[pstart + 3:pstart + 6], 2)
-    num = ""
-    data_start = pstart + 6
+    version = int(read_n(packet, 3), 2)
+    id = int(read_n(packet, 3), 2)
     if id == 4:
-        num, at = parse_literal(packet, data_start)
-        print("literal: ", (version, id, num, at))
-        return (version, id, num, at)
+        num = parse_literal(packet)
+        print("literal: ", (version, id, num))
+        return (version, id, num)
     else:
-        len_type_id = packet[data_start]
+        len_type_id = read_n(packet, 1)
         if len_type_id == "0":
-            subpacket_len = packet[data_start + 1:data_start + 16]
+            subpacket_len = read_n(packet, 15)
             assert 15 == len(subpacket_len)
             spl = int(subpacket_len, 2)
-            endlen = data_start + 1 + 15 + spl
-            pat = data_start + 1 + 15
             sp = []
-            while True:
-                v, pid, p, pat = depacket(packet, pat)
-                sp.append((v, pid, p, pat))
-                if endlen == pat:
-                    break
-                elif endlen < pat:
-                    assert False
-            print("packet_by_len: @", pstart, (version, id, sp, pat))
-            return (version, id, sp, pat)
+
+            subpacket = deque()
+            for _ in range(spl):
+                subpacket.append(read_n(packet, 1))
+            while len(subpacket) != 0:
+                v, pid, p = depacket(subpacket)
+                sp.append((v, pid, p))
+
+            print("packet_by_len: @", pstart, (version, id, sp))
+            return (version, id, sp)
         elif len_type_id == "1":
-            num_subpackets = packet[data_start + 1:data_start + 12]
+            num_subpackets = read_n(packet, 11)
             assert 11 == len(num_subpackets)
             num_subpackets = int(num_subpackets, 2)
             sp = []
-            pat = data_start + 1 + 11
             while len(sp) != num_subpackets:
-                v, pid, p, pat = depacket(packet, pat)
-                sp.append((v, pid, p, pat))
-            print("packet_by_num_sp: @", pstart, (version, id, sp, pat))
-            return (version, id, sp, pat)
+                v, pid, p = depacket(packet)
+                sp.append((v, pid, p))
+            print("packet_by_num_sp: @", pstart, (version, id, sp))
+            return (version, id, sp)
         else:
             assert False
 
@@ -94,37 +100,30 @@ def part1(packets):
       return ret
 
 def part2(packets):
-    version, id, contents, _ = packets
+    version, id, contents = packets
     if id == 4:
         return contents
     
+    vals = [part2(p) for p in contents]
     if id == 0:
-        summed = 0
-        for p in contents:
-            summed += part2(p)
-        return summed
+        return reduce(add, vals)
     elif id == 1:
-        mul = 1
-        for p in contents:
-            mul *= part2(p)
-        return mul
+        return reduce(mul, vals)
     elif id == 2:
-        return min([part2(p) for p in contents])
+        return reduce(min, vals)
     elif id == 3:
-        return max([part2(p) for p in contents])
+        return reduce(max, vals)
     elif id == 5:
-        vals = [part2(p) for p in contents]
-        assert 2 == len(vals)
+        assert len(vals) == 2
         return 1 if vals[0] > vals[1] else 0       
     elif id == 6:
-        vals = [part2(p) for p in contents]
-        assert 2 == len(vals)
+        assert len(vals) == 2
         return 1 if vals[0] < vals[1] else 0       
     elif id == 7:
-        vals = [part2(p) for p in contents]
         assert 2 == len(vals)
         return 1 if vals[0] == vals[1] else 0       
-        
+    else:
+        assert False
 
 
 def solve(raw):

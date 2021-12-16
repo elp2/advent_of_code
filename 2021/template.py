@@ -1,5 +1,6 @@
 from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
+from functools import reduce
 import math
 # import numpy as np
 from operator import add, mul, itemgetter, attrgetter
