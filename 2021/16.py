@@ -16,7 +16,7 @@ def arounds_inside(x, y, diagonals, w, h):
 CHALLENGE_DAY = "16"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 
-SAMPLE_EXPECTED = 16
+SAMPLE_EXPECTED = 3
 if SAMPLE_EXPECTED:
     SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
 
@@ -93,6 +93,39 @@ def part1(packets):
           ret += part1(c)
       return ret
 
+def part2(packets):
+    version, id, contents, _ = packets
+    if id == 4:
+        return contents
+    
+    if id == 0:
+        summed = 0
+        for p in contents:
+            summed += part2(p)
+        return summed
+    elif id == 1:
+        mul = 1
+        for p in contents:
+            mul *= part2(p)
+        return mul
+    elif id == 2:
+        return min([part2(p) for p in contents])
+    elif id == 3:
+        return max([part2(p) for p in contents])
+    elif id == 5:
+        vals = [part2(p) for p in contents]
+        assert 2 == len(vals)
+        return 1 if vals[0] > vals[1] else 0       
+    elif id == 6:
+        vals = [part2(p) for p in contents]
+        assert 2 == len(vals)
+        return 1 if vals[0] < vals[1] else 0       
+    elif id == 7:
+        vals = [part2(p) for p in contents]
+        assert 2 == len(vals)
+        return 1 if vals[0] == vals[1] else 0       
+        
+
 
 def solve(raw):
     parsed = parse_lines(raw)
@@ -100,7 +133,7 @@ def solve(raw):
     ret = 0
     dp = depacket(parsed)
 
-    return part1(dp)
+    return part2(dp)
 
 if SAMPLE_EXPECTED != None:
     sample = solve(SAMPLE)
