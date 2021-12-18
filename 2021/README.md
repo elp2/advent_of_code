@@ -73,3 +73,11 @@ Took a while to run, but ended up with the right answers.
 # Day 16
 
 I enjoyed this one. It became a lot easier when I realized you never needed to go back, and could just grab out of the array. Then you didn't need to be as careful with the indexes.
+
+# Day 17
+
+I made this one about 100x harder than it needed to be but I had fun.
+
+# Day 18
+
+Ultimately, I'm pretty happy with my solution except I missed the instructions that you needed to keep exploding, until you split. Breaking the explode into before/after arrays was simpler than trying to create after the fact. And easier to verify.
