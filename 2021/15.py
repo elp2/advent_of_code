@@ -43,54 +43,34 @@ def solve(raw):
         assert y <= 5 * h
         bx = x % w
         by = y % h
-        base = parsed[bx][by]
+        base = parsed[by][bx]
         adj = base + (x - bx) // w + (y - by) // h
         if adj <= 9:
             return adj
         else:
-            return adj - 9
+            while adj > 9:
+                adj -= 9
+            return adj
     # Debug here to make sure parsing is good.
     ret = 0
 
-    bests = DefaultDict(lambda: (1000000, []))
+    bests = DefaultDict(lambda: 1000000000)
 
-    visit = {(0, 0): (0, [])}
-
-    dest = (w, h)
-
-    visited = 0
-    while len(visit) != 0:
-        nvisit = DefaultDict(lambda: (1000000, []))
-        for (x, y), (cost, path) in visit.items():
-            if x < 0 or y < 0 or y >= 5 * h or x >= 5 * w:
+    q = {(0, 0): -parsed[0][0]}
+    while len(q) != 0:
+        print(len(q))
+        nq = DefaultDict(lambda: 10000000)
+        for (x, y), cost in q.items():
+            cost += risk_at(x, y)
+            if bests[(x, y)] <= cost:
                 continue
-            if bests[(x, y)][0] < cost:
-                continue
-            bests[(x, y)] = (cost, path)
-
-            visited += 1
-            if visited % 1000 == 0:
-                print(x, y, cost, visited)
-
+            bests[(x, y)] = cost
             for ax, ay in arounds_inside(x, y, False, 5 * w, 5 * h):
-                exit_cost = cost + risk_at(x, y)
-                if nvisit[(ax, ay)][0] > exit_cost:
-                    new_path = path + [(ax, ay)]
-                    nvisit[(ax, ay)] = (exit_cost, new_path)
-        visit = nvisit
-
+                nq[(ax, ay)] = min(cost, nq[(ax, ay)])
+        q = nq
     ret = bests[(5 * w - 1, 5 * h - 1)]
-    print(ret)
-    check = 0
-    for (x, y) in ret[1]:
-        check += risk_at(x, y)
-    for i in range(1, len(ret[1])):
-        px, py = ret[1][i - 1]
-        cx, cy = ret[1][i]
-        assert abs(px - cx) + abs(py - cy) == 1
 
-    # assert check == ret[0] # 487 for p1
-    return check # ret[0]
+    return ret
 
 if SAMPLE_EXPECTED != None:
     sample = solve(SAMPLE)

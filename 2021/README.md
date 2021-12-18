@@ -63,3 +63,13 @@ Parsing worked pretty much first time which was a win.
 # Day 14
 
 Got through Part 1 with a minimal number of typos. Then realized the approach obviously wouldn't work for a giant size. Went and got some eggnog, and then came up with this pairwise version. It could have been simpler in hindsight by not doing the special case for the first item, but it worked out OK.
+
+# Day 15
+
+Yuck. I found this way harder than it needed to be. In the end, this was the trick for me:
+* Write a BFS without bugs
+Took a while to run, but ended up with the right answers.
+
+# Day 16
+
+I enjoyed this one. It became a lot easier when I realized you never needed to go back, and could just grab out of the array. Then you didn't need to be as careful with the indexes.
