@@ -18,7 +18,7 @@ def arounds_inside(x, y, diagonals, w, h):
 CHALLENGE_DAY = "19"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 
-SAMPLE_EXPECTED = None
+SAMPLE_EXPECTED = (79, 3621)
 if SAMPLE_EXPECTED:
     SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
 
@@ -85,6 +85,7 @@ def mapping_given(a1, a2, b1, b2):
 
     assert mapping(b1) == a1
     assert mapping(b2) == a2
+    assert mapping((0, 0, 0)) == tuple(bina)
 
     return mapping
 
@@ -93,7 +94,7 @@ mg = mapping_given((0, 0, 0), (1, 2, 3), (1, 1, 1), (2, 3, 4))
 print(mg((1,2,3)))
 # assert mg((3,3,3)) == (2, 2, 2)
 
-def loop(scanners):
+def loop(scanners, slocs):
     def scanner_pairs(scanner):
         ret = DefaultDict(lambda: [])
         for i, j in combinations(range(len(scanner)), 2):
@@ -104,8 +105,9 @@ def loop(scanners):
 
     sps = [scanner_pairs(x) for x in scanners]
 
-    lens = list(map(lambda l: len(l), scanners))
-    i = lens.index(min(lens))
+    # lens = list(map(lambda l: len(l), scanners))
+    # i = lens.index(min(lens))
+    i = 0 
 
     for j in range(len(scanners)):
         if i == j:
@@ -126,30 +128,34 @@ def loop(scanners):
                     for bso in bs:
                         if bso not in scanners[i]:
                             scanners[i].append(bso)
-                    scanners = [scanners[n] for n in range(len(scanners)) if n != j]
+                    
+                    for sl in slocs[j]:
+                        slocs[i].append(mapping(sl))
+                    slocs[i].append(mapping((0, 0, 0)))
+                    print(i, j, slocs[i])
 
+                    scanners = [scanners[n] for n in range(len(scanners)) if n != j]
+                    slocs = [slocs[n] for n in range(len(slocs)) if n != j]
+
+                    assert len(scanners) == len(slocs)
                     print("intersection!", len(scanners))
                     print(list(map(lambda l: len(l), scanners)))
-                    return scanners
+                    return scanners, slocs
     assert False
 
 def solve(raw):
     scanners = parse_lines(raw)
+    slocs = [[] for _ in range(len(scanners))]
 
     while len(scanners) != 1:
-        scanners = loop(scanners)
+        scanners, slocs = loop(scanners, slocs)
 
+    maxdiff = 0
+    print(slocs[0])
+    for a, b in combinations(slocs[0], 2):
+        maxdiff = max(maxdiff, abs(a[0] - b[0]) + abs(a[1] - b[1]) + abs(a[2] - b[2]))
 
-            # Pick an a beacon, and a potentially mapping b beacon.
-
-            # Given these mappings, find the appropriate translations.
-
-            # Translate all items in b into the perspective of a.
-            # If >= 12, merge them into a, remove b, and then restart the combinations.
-
-    ret = 0
-
-    return len(scanners[0])
+    return (len(scanners[0]), maxdiff)
 
 if SAMPLE_EXPECTED != None:
     sample = solve(SAMPLE)
