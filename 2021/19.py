@@ -5,6 +5,7 @@ import math
 # import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
+from typing import DefaultDict
 
 DS = [[-1, 0], [1, 0], [0, 1], [0, -1]]
 DS8 = DS + [[-1, -1], [1, -1], [-1, 1], [1, 1]]
@@ -17,13 +18,13 @@ def arounds_inside(x, y, diagonals, w, h):
 CHALLENGE_DAY = "19"
 REAL = open(CHALLENGE_DAY + ".txt").read()
 
-SAMPLE_EXPECTED = 79
+SAMPLE_EXPECTED = None
 if SAMPLE_EXPECTED:
     SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
 
 
 def abmatchabledelta(a, b):
-    return sorted((abs(a[0] - b[0]), abs(a[1] - b[1]), abs(a[2] - b[2])))
+    return tuple(sorted((abs(a[0] - b[0]), abs(a[1] - b[1]), abs(a[2] - b[2]))))
 
 
 def parse_lines(raw):
@@ -94,25 +95,28 @@ print(mg((1,2,3)))
 
 def loop(scanners):
     def scanner_pairs(scanner):
-        ret = {}
+        ret = DefaultDict(lambda: [])
         for i, j in combinations(range(len(scanner)), 2):
             a = scanner[i]
             b = scanner[j]
-            ret[(i, j)] = abmatchabledelta(a, b)
+            ret[abmatchabledelta(a, b)].append((i, j))
         return ret
 
     sps = [scanner_pairs(x) for x in scanners]
 
-    for i, j in combinations(range(len(scanners)), 2):
+    lens = list(map(lambda l: len(l), scanners))
+    i = lens.index(min(lens))
+
+    for j in range(len(scanners)):
+        if i == j:
+            continue
         a = scanners[i]
         b = scanners[j]
-        overlaps = {}
 
-        for ak, ad in sps[i].items():
-            for bk, bd in sps[j].items():
-                if ad != bd:
-                    continue
-
+        for ad in sps[i].keys():
+            if ad not in sps[j]:
+                continue
+            for ak, bk in zip(sps[i][ad], sps[j][ad]):
                 mapping = mapping_given(a[ak[0]], a[ak[1]], b[bk[0]], b[bk[1]])
                 if None == mapping:
                     continue
@@ -125,6 +129,7 @@ def loop(scanners):
                     scanners = [scanners[n] for n in range(len(scanners)) if n != j]
 
                     print("intersection!", len(scanners))
+                    print(list(map(lambda l: len(l), scanners)))
                     return scanners
     assert False
 
@@ -155,9 +160,5 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-solved = solve(REAL) # 353 ?
+solved = solve(REAL) # 353 ? On a plane so can't check :/ !
 print("SOLUTION: ", solved)
-import pandas as pd
-df=pd.DataFrame([str(solved)])
-df.to_clipboard(index=False,header=False)
-print("COPIED TO CLIPBOARD")
