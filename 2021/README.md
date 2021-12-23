@@ -81,3 +81,7 @@ I made this one about 100x harder than it needed to be but I had fun.
 # Day 18
 
 Ultimately, I'm pretty happy with my solution except I missed the instructions that you needed to keep exploding, until you split. Breaking the explode into before/after arrays was simpler than trying to create after the fact. And easier to verify.
+
+# Day 22
+
+I originally had a different "subtract" method of dividing which I couldn't get to work. This one made it a lot simpler by considering the all the possible boxes resulting from the subtraction and removing the ones which were not valid.
