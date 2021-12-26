@@ -37,25 +37,22 @@ def solve(raw):
     truew = max(px for px, _ in pixels)
     trueh = max(py for _, py in pixels)
 
-    for round in range(2):
+    for round in range(50):
         boundary_expected = 1 if round % 2 == 1 and 0 in algo else 0
 
 
-        bw1 = min(px for px, _ in pixels) - 1 - round
-        bh1 = min(py for _, py in pixels) - 1 - round
-        bw2 = max(px for px, _ in pixels) + 1 + round
-        bh2 = max(py for _, py in pixels) + 1 + round
-        print(sw, sh, w, h)
+        bw1 = min(px for px, _ in pixels) - 1
+        bh1 = min(py for _, py in pixels) - 1
+        bw2 = max(px for px, _ in pixels) + 1
+        bh2 = max(py for _, py in pixels) + 1
+        print(bw1, bh1, bw2, bh2)
 
         def value(pixels, x, y):
-            if x <= sw or x >= w or y <= sh or y >= h:
+            if x <= bw1 or x >= bw2 or y <= bh1 or y >= bh2:
                 return boundary_expected
             else:
                 return 1 if (x, y) in pixels else 0
             
-        for y in range(-3, trueh - 3):
-            print("".join(["#" if value(pixels, x, y) else "." for x in range(-3, truew + 3)]))
-
         next = set()
 
 
@@ -68,13 +65,22 @@ def solve(raw):
                     nx = x + dx
                     ny = y + dy
                     ret = ret << 1
-                    ret |= value(pixels, x, y)
+                    ret |= value(pixels, nx, ny)
             return ret
         
-        for y in range(sh, h + 1):
-            for x in range(sw, w + 1):
+        for y in range(bh1, bh2 + 1):
+            for x in range(bw1, bw2 + 1):
+                if x == bw1 and y == bh1:
+                    print("min", x, y)
+
+                if x == bw2 and y == bh2:
+                    print("max", x, y)
                 if conv_key(x, y) in algo:
                     next.add((x, y))
+
+
+        for y in range(-3, trueh - 3):
+            print("".join(["#" if value(next, x, y) else "." for x in range(-3, truew + 3)]))
 
         pixels = next
     return (len(pixels), None)
