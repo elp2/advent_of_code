@@ -169,7 +169,7 @@ def solve_backwards(raw, num_funcs, end_target):
                 zps = back_funcs[depth][1](target, w)
                 for zp in zps:
                     here = str(w) + history
-                    if zp not in bpnew or int(bpnew[zp]) < int(here):
+                    if zp not in bpnew or int(bpnew[zp]) > int(here):
                         bpnew[zp] = here
         best_path = bpnew
         print("back: ", depth, len(best_path))
@@ -177,12 +177,12 @@ def solve_backwards(raw, num_funcs, end_target):
 
 
     def it(l):
-        num = int(l * "9")
+        num = int(l * "1")
 
-        while num > int((l-1) * "9"):
+        while num < int((l+1) * "1"):
             yield str(num)
             while True:
-                num -= 1
+                num += 1
                 if "0" not in str(num):
                     break            
 
@@ -259,7 +259,7 @@ def test(raw):
     parsed, funcs = parse_lines(raw)
     nf = 8
     x = y = z = w = 0
-    path = "99971192"
+    path = "11121112"
     for i in range(nf):
         w, x, y, z = funcs[i][0](int(path[i]), x, y, z)
         print(i, z)
@@ -276,7 +276,9 @@ def test(raw):
 test(REAL)
 # brute(REAL)
 solved = solve_backwards(REAL, 14, 0)
-assert int(solved) < 93792949489995
-assert int(solved) == 92793949489995
+# assert int(solved) < 93792949489995
+# assert int(solved) == 92793949489995
+
+assert int(solved) < 51133616189981
 
 print("SOLUTION: ", solved)
