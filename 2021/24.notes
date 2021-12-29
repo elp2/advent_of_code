@@ -1,0 +1,19 @@
+Obviously, we could just generate all 9^14 combos. But that would take a long time and be no fun.
+We need to do better.
+
+Ideas
+* We could generate the first few digits. We could probably easily do the first 5. The correct prefix would be in here, but it would be hard to determine which one would generate there.
+* We could start from the end, and see what combos of incoming do. In practice, it's hard to tell what the bounding of z is. It doesn't seem infine since we're constantly dividing it by 26 and stuff at the end, 
+* Each section is basically the same as the section before it, just the 
+
+
+x=z
+x = z % 26
+z //= 26
+x -= 12
+if x == w: x = 1 else 0
+if x == 0, x = 1 else 0
+-> if x != w x= 1 else 0
+y = 25
+y *= x
+y += 1 <- if 
