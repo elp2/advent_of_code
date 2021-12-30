@@ -82,6 +82,18 @@ I made this one about 100x harder than it needed to be but I had fun.
 
 Ultimately, I'm pretty happy with my solution except I missed the instructions that you needed to keep exploding, until you split. Breaking the explode into before/after arrays was simpler than trying to create after the fact. And easier to verify.
 
+# Day 19
+
+This was a fun one. I solved Part 1 on a plane.
+
+# Day 20
+
+This was actually somewhat tricky since the empty spaces "flashed" on and off. I had some boundry issues.
+
+# Day 21
+
+I originally had problems with this since I forgot to reset the global variables I was using for the part 1 dice. Otherwise part 2 fell quickly as soon as I realized there were 3 dice. I think generally I overthought this problem a lot and it was pretty easy looking back on it.
+
 # Day 22
 
 I originally had a different "subtract" method of dividing which I couldn't get to work. This one made it a lot simpler by considering the all the possible boxes resulting from the subtraction and removing the ones which were not valid.
@@ -89,3 +101,11 @@ I originally had a different "subtract" method of dividing which I couldn't get 
 # Day 23
 
 I initially thought it wouldn't be fast enough with pruning, but it got there eventually with a DFS and intelligent early stopping.
+
+# Day 24
+
+This was probably the trickiest problem of all. 
+
+# Day 25
+
+An easy end as always!
