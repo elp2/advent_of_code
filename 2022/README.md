@@ -1,6 +1,6 @@
 # 2022 Overview
 
-I'm also trying these early versions in GPT2.
+I'm also trying these early questions in GPT Chat (after I finish them honestly myself!)
 
 # Day 1
 GPT Chat was very quick to write this.
