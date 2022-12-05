@@ -14,3 +14,6 @@ Part 2 seemed to be confused about the splitting lines up rule, but was grouping
 
 # Day 4
 The easiest one this year IMHO. GPT Chat had almost no problem solving it as well.
+
+# Day 5
+Definitely trickier than yesterday, mostly on the parsing part. Once I had the arrays it was pretty simple. Parsing could have been pretty fast if I'd just gone column by column based on the char x, ys, rather than using the column identifiers.
