@@ -11,3 +11,6 @@ I could not get GPT Chat to properly handle the rules grid. Maybe it would have 
 # Day 3
 GPT worked great for part 1, once I told it to read from standard input. This actually even finished faster than my solution.
 Part 2 seemed to be confused about the splitting lines up rule, but was grouping the lines properly.
+
+# Day 4
+The easiest one this year IMHO. GPT Chat had almost no problem solving it as well.
