@@ -17,3 +17,6 @@ The easiest one this year IMHO. GPT Chat had almost no problem solving it as wel
 
 # Day 5
 Definitely trickier than yesterday, mostly on the parsing part. Once I had the arrays it was pretty simple. Parsing could have been pretty fast if I'd just gone column by column based on the char x, ys, rather than using the column identifiers.
+
+# Day 6
+First part was easy. Then I must have made a mistake copying the sample, and I had the right solution but it wouldn't match the expected sample output.
