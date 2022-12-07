@@ -20,3 +20,6 @@ Definitely trickier than yesterday, mostly on the parsing part. Once I had the a
 
 # Day 6
 First part was easy. Then I must have made a mistake copying the sample, and I had the right solution but it wouldn't match the expected sample output.
+
+# Day 7
+The pre-parsing of commands was a waste - I just parsed them so I could unpack them later. Same with saving the individual files and sizes, although you never know on Part 2!
