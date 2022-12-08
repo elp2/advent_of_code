@@ -23,3 +23,6 @@ First part was easy. Then I must have made a mistake copying the sample, and I h
 
 # Day 7
 The pre-parsing of commands was a waste - I just parsed them so I could unpack them later. Same with saving the individual files and sizes, although you never know on Part 2!
+
+# Day 8
+That was just much harder than it should have been. At least my parse through neighbors code was pretty reusable.
