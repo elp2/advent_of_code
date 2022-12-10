@@ -29,3 +29,6 @@ That was just much harder than it should have been. At least my parse through ne
 
 # Day 9
 This took way too long for Part 2. In the end, I was being way too tricky and I was missing some diagonal casees.
+
+# Day 10
+Intcode v2? My Part 2 had some bug printing the first line but it was legible enough to get the answer.
