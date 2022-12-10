@@ -45,6 +45,10 @@ def solve(raw):
     tx = 0
     ty = 0
 
+    ROPE_LEN = 2
+    rope = []
+    for _ in range(ROPE_LEN):
+        rope.append((0, 0))
     for l in parsed:
         d, num = l.split(" ")
         num = int(num)
@@ -58,16 +62,26 @@ def solve(raw):
             dy = -1
         elif d == "U":
             dy = 1
+
+
+
         for n in range(num):
-            hx += dx
-            hy += dy
+            hx, hy = rope[0]
+            rope[0] = (hx + dx, hy + dy)
+
+            for ri in range(len(rope) - 1):
+                hx, hy = rope[ri]
+                tx, ty = rope[ri + 1]
+
             thx = abs(hx - tx)
             thy = abs(hy - ty)
             if thx > 1 or thy > 1:
                 tx = hx - dx
                 ty = hy - dy
-            tail_visited.add((tx, ty))
-            # print(tail_visited)
+            rope[ri] = (hx, hy)
+            rope[ri + 1] = (tx, ty)            
+            if ri == len(rope) - 2:
+                tail_visited.add((tx, ty))
 
     # How many positions does the tail of the rope visit at least once?
     # print(tail_visited)

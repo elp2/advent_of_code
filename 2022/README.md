@@ -26,3 +26,6 @@ The pre-parsing of commands was a waste - I just parsed them so I could unpack t
 
 # Day 8
 That was just much harder than it should have been. At least my parse through neighbors code was pretty reusable.
+
+# Day 9
+This took way too long for Part 2. In the end, I was being way too tricky and I was missing some diagonal casees.
