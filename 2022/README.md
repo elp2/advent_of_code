@@ -32,3 +32,6 @@ This took way too long for Part 2. In the end, I was being way too tricky and I 
 
 # Day 10
 Intcode v2? My Part 2 had some bug printing the first line but it was legible enough to get the answer.
+
+# Day 11
+I really need to look up how Python class types work.
