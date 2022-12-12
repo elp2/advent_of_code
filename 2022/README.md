@@ -35,3 +35,6 @@ Intcode v2? My Part 2 had some bug printing the first line but it was legible en
 
 # Day 11
 I really need to look up how Python class types work.
+
+# Day 12
+I solved P1 pretty fast, and I was on a good track for P2 I think, but I got stuck on the conditional for going down. I needed to it to be just paths that involved jumps of 0/1, but I had the wrong conditions.
