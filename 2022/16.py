@@ -58,36 +58,42 @@ def parse_lines(raw, solve_row):
                 q.append((n, dist + 1))
         distances[i] = idists
 
-    return ret, distances
+    return ret, distances, order_mapping["AA"]
 
+START_SECONDS = 30
 def solve(raw, solve_row):
-    pipes, distances = parse_lines(raw, solve_row)
+    pipes, distances, start_index = parse_lines(raw, solve_row)
     flows = list(map(lambda p: p[1], pipes))
     bests = defaultdict(lambda: -1)
 
     max_flow = 0
-    q = deque([(0, tuple(flows), 30, 0)])
+
+    q = deque([(start_index, tuple(flows), START_SECONDS, 0)])
     i = 0
+    ats = [0] * len(pipes)
     while len(q):
         i += 1
-        if i % 10000 == 0:
-            print(i, len(q))
+        if i % 100000 == 0:
+            print(i, len(q), len(bests))
         # Get a next state off the queue
         at, state, secs, end_flow = q.popleft()
-        if secs == 0:
-            continue
+        ats[at] += 1
         max_flow = max(end_flow, max_flow)
 
         if bests[(at, state)] >= end_flow:
             continue
         bests[(at, state)] = end_flow
 
+        if secs == 0:
+            continue
+
+
         # Is this worse than we have already seen? Continue
         # Worse? Less flow, same opens
 
         # Try Options:
         # If the current room is not on and > 0 flow, start it on, put flow in for 30 - secs - 1 more
-        if state[at] > 0 and secs >= 2:
+        if state[at] > 0 and secs >= 1:
             lstate = list(state)
             newflow = end_flow + lstate[at] * (secs - 1)
             lstate[at] = 0
@@ -96,6 +102,8 @@ def solve(raw, solve_row):
         # Try going to any other room
         for d in pipes[at][2]:
             q.append((d, state, secs - 1, end_flow))
+    print(ats)
+    assert max_flow == max(bests.values())
     return max_flow
 
 if SAMPLE_EXPECTED != None:
@@ -107,5 +115,6 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-solved = solve(REAL, 2000000)
+solved = solve(REAL, 2000000) # 1457 too low
+assert solved != 1457
 print("SOLUTION: ", solved)
