@@ -6,18 +6,20 @@ import math
 from operator import add, mul, itemgetter, attrgetter
 import re
 
-DS = [[-1, 0], [1, 0], [0, 1], [0, -1]]
-DS8 = DS + [[-1, -1], [1, -1], [-1, 1], [1, 1]]
-def arounds_inside(x, y, diagonals, w, h):
+
+CHAR_TO_DS = {"^": 3, ">": 1, "<": 0, "v": 2}
+DS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+DS8 = DS + [(-1, -1), (1, -1), (-1, 1), (1, 1)]
+def arounds(x, y, diagonals):
     ret = []
     for dx, dy in DS8 if diagonals else DS:
         ret.append((x + dx, y + dy))
+    return ret
 
-
-CHALLENGE_DAY = "12"
+CHALLENGE_DAY = 
 REAL = open(CHALLENGE_DAY + ".txt").read()
 
-SAMPLE_EXPECTED = None
+SAMPLE_EXPECTED = 
 if SAMPLE_EXPECTED:
     SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
 
@@ -50,7 +52,3 @@ else:
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
-import pandas as pd
-df=pd.DataFrame([str(solved)])
-df.to_clipboard(index=False,header=False)
-print("COPIED TO CLIPBOARD")
