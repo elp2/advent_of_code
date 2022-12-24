@@ -1,9 +1,11 @@
 from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
+from functools import reduce
 import math
-import numpy as np
+# import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import re
+from sys import argv
 
 def flatten(t):
     return [item for sublist in t for item in sublist]
@@ -11,18 +13,42 @@ def flatten(t):
 ON_TEXT = '\u2588'
 OFF_TEXT = '\u2592'
 
-DAY = "13"
-REAL = open(DAY + ".in").read()
+CHAR_TO_DS = {"^": 3, ">": 1, "<": 0, "v": 2}
+DS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+DS8 = DS + [(-1, -1), (1, -1), (-1, 1), (1, 1)]
+def arounds(x, y, diagonals):
+    ret = []
+    for dx, dy in DS8 if diagonals else DS:
+        ret.append((x + dx, y + dy))
+    return ret
 
-SAMPLE_EXPECTED = None
+CHALLENGE_DAY = argv[0].split("/")[-1].replace(".py", "").replace("p2.py", "")
+print("Day: ", CHALLENGE_DAY)
+REAL = open(CHALLENGE_DAY + ".txt").read()
 
+SAMPLE_EXPECTED = TODO
+if SAMPLE_EXPECTED:
+    SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
+
+
+def parse_lines(raw):
+    # Groups.
+    # groups = raw.split("\n\n")
+    # return list(map(lambda group: group.split("\n"), groups))
+    # lines = raw.split("\n")
+    # return lines # raw
+    # return list(map(lambda l: l.split(" "), lines)) # words.
+    # return list(map(int, lines))
+    # return list(map(lambda l: l.strip(), lines)) # beware leading / trailing WS
+    1
 def solve(raw):
+    parsed = parse_lines(raw)
+    # Debug here to make sure parsing is good.
     ret = 0
 
     return ret
 
 if SAMPLE_EXPECTED != None:
-    SAMPLE = open(DAY + ".sample").read()
     sample = solve(SAMPLE)
     if sample != SAMPLE_EXPECTED:
         print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
@@ -31,16 +57,5 @@ if SAMPLE_EXPECTED != None:
 else:
     print("Skipping sample")
 
-part1 = solve(REAL)
-print("Part 1: ", part1)
-
-part2 = solve(REAL)
-print("Part 2: ", part2)
-
-try:
-    import pandas as pd
-    df=pd.DataFrame([str(solved)])
-    df.to_clipboard(index=False,header=False)
-    print("COPIED TO CLIPBOARD")
-except ModuleNotFoundError:
-    print("Pandas not installed.")
+solved = solve(REAL)
+print("SOLUTION: ", solved)
