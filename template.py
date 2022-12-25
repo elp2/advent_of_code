@@ -1,6 +1,6 @@
 from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
-from functools import reduce
+from functools import reduce, cmp_to_key
 import math
 # import numpy as np
 from operator import add, mul, itemgetter, attrgetter
@@ -9,6 +9,10 @@ from sys import argv
 
 def flatten(t):
     return [item for sublist in t for item in sublist]
+
+# Sorts with cmp. cmp < 0 for a < b, == 0 for a==b, > 0 for a > b.
+def elpsort(array, cmp):
+    return sorted(array, key=cmp_to_key(cmp))
 
 ON_TEXT = '\u2588'
 OFF_TEXT = '\u2592'
