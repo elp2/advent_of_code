@@ -67,14 +67,11 @@ def solve(raw):
 
     return ret
 
-if SAMPLE_EXPECTED != None:
-    sample = solve(SAMPLE)
-    if sample != SAMPLE_EXPECTED:
-        print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
-    assert sample == SAMPLE_EXPECTED
-    print("\n*** SAMPLE PASSED ***\n")
-else:
-    print("Skipping sample")
+sample = solve(SAMPLE)
+if sample != SAMPLE_EXPECTED:
+    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
+assert sample == SAMPLE_EXPECTED
+print("\n*** SAMPLE PASSED ***\n")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
