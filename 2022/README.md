@@ -74,3 +74,6 @@ Pretty straightforward, Part 2 flowed if Part 1 was efficient enough.
 
 # Day 24
 Fun. I missed some silly rules like it could stay still. I found the boundary conditions much harder until I just removed all the #'s and adjusted the height.
+
+# Day 25
+Complete! I wasted a lot of time converting them into ints, and then back, when actually just adding them was not that hard.
