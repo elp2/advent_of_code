@@ -4,6 +4,7 @@ from functools import reduce, cmp_to_key
 import math
 # import numpy as np
 from operator import add, mul, itemgetter, attrgetter
+import os
 import re
 from sys import argv
 
@@ -27,27 +28,41 @@ def arounds(x, y, diagonals):
     return ret
 
 CHALLENGE_DAY = argv[0].split("/")[-1].replace(".py", "").replace("p2.py", "")
-print("Day: ", CHALLENGE_DAY)
-REAL = open(CHALLENGE_DAY + ".txt").read()
+AOC_DIR = os.path.dirname(argv[0])
 
-SAMPLE_EXPECTED = TODO
-if SAMPLE_EXPECTED:
-    SAMPLE = open(CHALLENGE_DAY + ".s.txt").read()
+print("Day: ", CHALLENGE_DAY)
+
+######################
+SAMPLE_EXPECTED = None
+######################
+assert SAMPLE_EXPECTED != None
+
+try:
+    SAMPLE = open(os.path.join(AOC_DIR, CHALLENGE_DAY + ".s.txt")).read()
+except:
+    print("Did you create the sample file?")
+
+try:
+    REAL = open(os.path.join(AOC_DIR, CHALLENGE_DAY + ".txt")).read()
+except:
+    print("Did you create the solutions file?")
 
 
 def parse_lines(raw):
     # Groups.
     # groups = raw.split("\n\n")
     # return list(map(lambda group: group.split("\n"), groups))
-    # lines = raw.split("\n")
-    # return lines # raw
+    lines = raw.split("\n")
+    return lines # raw
     # return list(map(lambda l: l.split(" "), lines)) # words.
     # return list(map(int, lines))
     # return list(map(lambda l: l.strip(), lines)) # beware leading / trailing WS
-    1
+
+
 def solve(raw):
     parsed = parse_lines(raw)
-    # Debug here to make sure parsing is good.
+    print(parsed)
+
     ret = 0
 
     return ret
