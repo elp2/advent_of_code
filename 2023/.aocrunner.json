@@ -42,13 +42,13 @@
           "359239",
           "337386"
         ],
-        "time": 7.563046
+        "time": 7.148212
       },
       "part2": {
-        "solved": false,
-        "result": null,
+        "solved": true,
+        "result": "81997870",
         "attempts": [],
-        "time": null
+        "time": 5.205347
       }
     },
     {
