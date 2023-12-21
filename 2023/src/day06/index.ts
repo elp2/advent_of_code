@@ -11,6 +11,31 @@ const parseInput = (rawInput: string) => {
   return {"times": times, "distances": distances};
 };
 
+const parseInput2 = (rawInput: string) => {
+  let lines = rawInput.split("\n");
+  let time = parseInt(lines[0].split(":")[1].replace(/\s/g, ""));
+  let distance = parseInt(lines[1].split(":")[1].replace(/\s/g, ""));
+
+  return {"time": time, "distance": distance};
+};
+
+function bisect(f: (x: number) => boolean, low: number, high: number): number | null {
+  while (low < high) {
+    let mid = Math.floor(low + (high - low) / 2);
+    if (f(mid)) {
+      high = mid;
+    } else {
+      low = mid + 1;
+    }
+  }
+
+  if (low === high && f(low)) {
+    return low;
+  }
+
+  return null; // Indicate no change in behavior was found in the range
+}
+
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
   console.log(input);
@@ -42,9 +67,21 @@ const part1 = (rawInput: string) => {
 };
 
 const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  const input = parseInput2(rawInput);
+  console.log(input);
+  let t = input.time;
+  let d = input.distance;
 
-  return;
+  let makesIt = (holdTime: number) => {
+    return (input.time - holdTime) * holdTime > input.distance;
+  };
+
+  let low = bisect(makesIt, 1, input.time);
+  console.log("low: ", low);
+  let high = bisect((x: number) => {return !makesIt(x)}, low + 1, input.time);
+  console.log(high);
+
+  return high - low;
 };
 
 run({
@@ -60,10 +97,11 @@ Distance:  9  40  200`,
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `Time:      71530
+Distance:  940200`,
+        expected: 71503,
+      },
     ],
     solution: part2,
   },
