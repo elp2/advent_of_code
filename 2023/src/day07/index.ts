@@ -24,7 +24,7 @@ function parseCard(card: string) {
   if (card == "T") {
     return "10";
   } else if (card == "J") {
-    return "11";
+    return "1";
   } else if (card == "Q") {
     return "12";
   } else if (card == "K") {
@@ -38,6 +38,9 @@ function parseCard(card: string) {
 function handDict(cards: string) {
   let cdict = {};
   for (let c of cards) {
+    if (c == "J") {
+      continue;
+    }
     c = parseCard(c);
     if (c in cdict) {
       cdict[c] += 1;
@@ -52,19 +55,27 @@ const handType = (cards: string) => {
   let cdict = handDict(cards);
 
   let values = Object.values(cdict).sort();
-  if (values.length == 1) {
+  if (values.length <= 1) {
     return FIVE_OF_A_KIND;
-  } else if (arrEq(values, [1, 4])) {
+  } 
+  if (values.length == 2) {
+    if (values[0] == 1) {
       return FOUR_OF_A_KIND;
-  } else if (arrEq(values, [2, 3])) {
+    }
     return FULL_HOUSE;
-  } else if (arrEq(values, [1, 1, 3])) {
-    return THREE_OF_A_KIND;
-  } else if (arrEq(values, [1, 2, 2])) {
-    return TWO_PAIR;
-  } else if (arrEq(values, [1, 1, 1, 2])) {
+  }
+  if (values.length == 3) {
+    if (values[0] == 1 && values[1] == 1) {
+      return THREE_OF_A_KIND;
+    }
+
+    return TWO_PAIR; // ?
+  }
+  if (values.length == 4) {
     return ONE_PAIR;
-  } else if (arrEq(values, [1, 1, 1, 1, 1])) {
+  }
+
+  if (arrEq(values, [1, 1, 1, 1, 1])) {
     return HIGH_CARD;
   }
   console.log("shouldn't happen");
@@ -84,7 +95,6 @@ function winner(a, b) {
     } else if (bc > ac) {
       return -1;
     }
-    console.log(i, ac, bc);
   }
 
   console.log("shouldn't happen!!!", a, b);
@@ -96,7 +106,6 @@ const parseInput = (rawInput: string) => {
   let lines = rawInput.split("\n");
   let ret = [];
   for (let l of lines) {
-    // console.log(l);
     let hand = {};
     hand["cards"] = l.split(" ")[0];
     hand["bid"] = parseInt(l.split(" ")[1]);
@@ -109,9 +118,7 @@ const parseInput = (rawInput: string) => {
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  console.log(input);
   input.sort(winner);
-  console.log(input);
 
   let wins = 0;
   for (let i = 0; i < input.length; i++) {
@@ -124,11 +131,23 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  input.sort(winner);
+
+  let wins = 0;
+  for (let i = 0; i < input.length; i++) {
+    wins += (i + 1) * input[i].bid;
+  }
+
+  return wins;
 };
 
 run({
   part1: {
+    tests: [
+    ],
+    solution: part1,
+  },
+  part2: {
     tests: [
       {
         input: `32T3K 765
@@ -136,17 +155,8 @@ T55J5 684
 KK677 28
 KTJJT 220
 QQQJA 483`,
-        expected: 6440,
+        expected: 5905,
       },
-    ],
-    solution: part1,
-  },
-  part2: {
-    tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
     ],
     solution: part2,
   },
