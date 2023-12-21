@@ -108,7 +108,7 @@ const part2 = (rawInput: string) => {
     console.log(f + "-" + t, ranges);
   }
 
-  let lowest_location = input["seeds"][0] * 100;
+  let lowest_location = input["seeds"][0] * 1000;
   for (let r of ranges) {
     if (r[0] < lowest_location) {
       lowest_location = r[0];
@@ -201,5 +201,5 @@ humidity-to-location map:
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
