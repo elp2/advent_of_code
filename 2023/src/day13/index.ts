@@ -1,6 +1,6 @@
 import run from "aocrunner";
 
-const parseInput = (rawInput: string) => {
+const parseInput = (rawInput: string, expectedDelta: number) => {
   let ret = [];
 
   let squares = rawInput.split("\n\n");
@@ -14,28 +14,42 @@ const parseInput = (rawInput: string) => {
       }
       rotate.push(row);
     }
-
-    let rotatesAt = (sq: [string]) => {
+    let getDelta = (a, b) => {
+      let ret = 0;
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] != b[i]) {
+          ret += 1;
+        }
+      }
+      return ret;
+    };
+    let rotatesAt = (sq: [string], expectedDelta : number) => {
       for (let astart = 0; astart < sq.length - 1; astart++) {
+        let delta = 0;
         let a = astart;
         let b = astart + 1;
-        while (a >= 0 && b < sq.length && (sq[a] == sq[b])) {
+
+        while (a >= 0 && b < sq.length) {
+          delta += getDelta(sq[a], sq[b]);
+          if (delta > expectedDelta) {
+            break;
+          }
           a -= 1;
           b += 1;
         }
-        if (a < 0 || b >= sq.length) {
+        if ((a < 0 || b >= sq.length) && expectedDelta == delta) {
           return astart + 1; // 1 indexed
         }
       }
       return null;
     }
-    ret.push([orig, rotate, rotatesAt(orig), rotatesAt(rotate)]);
+    ret.push([orig, rotate, rotatesAt(orig, expectedDelta), rotatesAt(rotate, expectedDelta)]);
   }
   return ret;
 };
 
 const part1 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  const input = parseInput(rawInput, 0);
   // console.log(input);
 
   let ret = 0;
@@ -53,9 +67,21 @@ const part1 = (rawInput: string) => {
 };
 
 const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  const input = parseInput(rawInput, 1);
+  // console.log(input);
 
-  return;
+  let ret = 0;
+  for (let [o, r, oi, ri] of input) {
+    if (oi != null) {
+      ret += oi * 100;
+    } else if (ri != null) {
+      ret += ri;
+    } else {
+      console.log("???");
+    }
+  } 
+
+  return ret;
 };
 
 run({
@@ -84,10 +110,24 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+  {
+    input: `#.##..##.
+..#.##.#.
+##......#
+##......#
+..#.##.#.
+..##..##.
+#.#.##.#.
+
+#...##..#
+#....#..#
+..##..###
+#####.##.
+#####.##.
+..##..###
+#....#..#`,
+    expected: 400,
+  },
     ],
     solution: part2,
   },
