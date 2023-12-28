@@ -4,13 +4,13 @@ const parseInput = (rawInput: string) => {
   return rawInput.split("\n");
 };
 
-const energizedDirections = (board) => {
-  let queue = [[0, 0, 1, 0]];
+const energizedDirections = (board, queueStart) => {
   let ed = {};
   let edKey = (x, y, dx, dy) => {
     return x + "_" + y + "_" + dx + "_" + dy;
   };
   // console.log(board);
+  let queue = [queueStart];
   while (queue.length > 0) {
     let [x, y, dx, dy] = queue.shift();
     if (x < 0 || y < 0 || y >= board.length || x >= board[y].length ) {
@@ -84,27 +84,37 @@ const energizedDirections = (board) => {
     // console.log("Queue now: ", queue);
   }
 
-  return ed;
+
+  let ret = {};
+  for (let k of Object.keys(ed)) {
+    let [x, y, dx, dy] = k.split("_").map(x => parseInt(x));
+    ret[x + "_" + y] = true;
+  }
+
+  return Object.keys(ret).length;
 }
 
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  let energized = {};
-  let ed = energizedDirections(input);
-  // console.log(ed);
-  for (let k of Object.keys(ed)) {
-    let [x, y, dx, dy] = k.split("_").map(x => parseInt(x));
-    energized[x + "_" + y] = true;
-  }
-
-  return Object.keys(energized).length;
+  return energizedDirections(input, [0, 0, 1, 0]);
 };
 
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  let ret = 0;
+  for (let x = 0; x < input[0].length; x++) {
+    ret = Math.max(ret, energizedDirections(input, [x, 0, 0, 1]));
+    ret = Math.max(ret, energizedDirections(input, [x, input.length - 1, 0, -1]));
+  }
+
+  for (let y = 0; y < input.length; y++) {
+    ret = Math.max(ret, energizedDirections(input, [0, y, 1, 0]));
+    ret = Math.max(ret, energizedDirections(input, [input[0].length - 1, y,-1, 0]));
+  }
+
+  return ret;
 };
 
 run({
@@ -128,10 +138,19 @@ expected: 46,
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+{
+    input: `.|...\\....
+|.-.\\.....
+.....|-...
+........|.
+..........
+.........\\
+..../.\\\\..
+.-.-/..|..
+.|....-|.\\
+..//.|....`,
+expected: 51,
+  },
     ],
     solution: part2,
   },
