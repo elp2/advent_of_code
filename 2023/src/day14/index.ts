@@ -20,6 +20,11 @@ const parseInput = (rawInput: string) => {
 };
 
 const printRocks = (rocks, wx, wy) => {
+  console.log(getRocksString(rocks, wx, wy));
+};
+
+const getRocksString = (rocks, wx, wy) => {
+  let ret = "";
   for (let y = 0; y < wy; y++) {
     let row = "";
     for (let x = 0; x < wx; x++) {
@@ -31,8 +36,9 @@ const printRocks = (rocks, wx, wy) => {
         row += ".";
       }
     }
-    console.log(row);
+    ret += row + "\n";
   }
+  return ret;
 };
 
 let shiftRowCol = (rocks, shifted, dx, dy, sx, sy, wx, wy) => {
@@ -82,14 +88,16 @@ const shiftRocks = (rocks, dir, wx, wy) => {
   if (dir == "N") {
     dy = -1;
     sy = wy - 1;
-  } else {
-    assert;
+  } else if (dir == "E") {
+    dx = 1;
+    sx = 0;
+  } else if (dir == "S") {
+    dy = 1;
+    sy = 0;
+  } else if (dir == "W") {
+    dx = -1;
+    sx = wx - 1;
   }
-
-
-
-  console.log(dx, dy, sx, sy);
-
   let shifted = {};
 
   if (dy != 0) {
@@ -129,9 +137,36 @@ const part1 = (rawInput: string) => {
 };
 
 const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  let [rocks, wx, wy] = parseInput(rawInput);
 
-  return;
+  const totalTimes = 1000000000;
+
+  let t = 0;
+  let seens = {};
+  let dirs = ["N", "W", "S", "E"];
+  while (t < totalTimes) {
+    for (let dir of dirs) {
+      rocks = shiftRocks(rocks, dir, wx, wy);
+    }
+    if (t % 1000 == 0) {
+      console.log(t);
+    }
+    let here = getRocksString(rocks, wx, wy);
+    // console.log(t, " support = ", calculateSupport(rocks, wx, wy));
+    if (here in seens) {
+      let delta = t - seens[here];
+      console.log("Found previous for t = ", t, " at ", seens[here], " d = ", delta, calculateSupport(rocks, wx, wy));
+      while(t + delta < totalTimes) {
+        t += delta;
+      }
+      console.log("Now at ", t);
+    } else {
+      seens[here] = t;
+    }
+    t += 1;
+  }
+
+  return calculateSupport(rocks, wx, wy);
 };
 
 run({
@@ -155,10 +190,19 @@ O.#..O.#.#
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+{
+  input: `O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
+#....###..
+#OO..#....`,
+  expected: 64,
+},
     ],
     solution: part2,
   },
