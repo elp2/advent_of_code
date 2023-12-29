@@ -153,13 +153,45 @@ const part1 = (rawInput: string) => {
   return ret;
 };
 
+const keyify = (x : number, y : number) => {
+  return "" + x + "_" + y;
+}
+
+const printPipesAndSquares = (expanded, targetPipes, insides, outsides) => {
+  for (let ey = 0; ey < expanded.length; ey++) {
+    let row = "";
+    for (let ex = 0; ex < expanded[ey].length; ex++) {
+      if (expanded[ey][ex] == true) {
+        if (keyify(ex, ey) in targetPipes) {
+          row += "!";
+        } else {
+          row += "*";
+        }
+      } else {
+        if (keyify(ex, ey) in targetPipes) {
+          row += "?";
+        } else{
+          let centerSpace = ((ex - 1) % 3 == 0 && (ey - 1) % 3 == 0);
+          if (keyify(ex, ey) in insides) {
+            if (centerSpace) {
+              row += "I";
+            } else {
+              row += "i";
+            }
+          } else if (keyify(ex, ey) in outsides) {
+            row += centerSpace ? "O" : "o";
+          } else {
+            row += " ";
+          }
+        }
+      }
+    }
+    console.log(row);
+  }
+};
+
 const part2 = (rawInput: string) => {
   let [board, pipe] = fixedMapAndPipe(rawInput);
-
-  let keyify = (x : number, y : number) => {
-    return "" + x + "_" + y;
-  }
-
 
   let targetPipes = {};
   for (let [px, py, pdist] of pipe) {
@@ -193,25 +225,9 @@ const part2 = (rawInput: string) => {
   let visited = {};
   console.log("expanded size: ", expanded[0].length, " x ", expanded.length);
   console.log("---");
-  for (let ey = 0; ey < expanded.length; ey++) {
-    let row = "";
-    for (let ex = 0; ex < expanded[ey].length; ex++) {
-      if (expanded[ey][ex] == true) {
-        if (keyify(ex, ey) in targetPipes) {
-          row += "!";
-        } else {
-          row += "*";
-        }
-      } else {
-        if (keyify(ex, ey) in targetPipes) {
-          row += "?";
-        } else{ 
-          row += " ";
-        }
-      }
-    }
-    console.log(row);
-  }
+  let insides = {};
+  let outsidesSquares = {};
+  printPipesAndSquares(expanded, targetPipes, insides, outsidesSquares);
   console.log("---");
 
 
@@ -235,9 +251,9 @@ const part2 = (rawInput: string) => {
       let queue = [[ex, ey]];
       while (queue.length > 0) {
         let [x, y] = queue.shift();
-        if (x == 3 * 2 + 1 &&  y == 3 * 6 + 1) {
-          console.log("should be targety", x, y);
-        }
+        // if (x == 3 * 2 + 1 &&  y == 3 * 6 + 1) {
+        //   console.log("should be targety", x, y);
+        // }
         if (keyify(x, y) in visited) {
           continue;
         }
@@ -258,10 +274,14 @@ const part2 = (rawInput: string) => {
         } else {
           if (isTargetPipe(x, y)) {
             numTargetpipes += 1;
-          } else if (expanded[y][x]) {
-            otherpipes += 1;
           } else {
-            empties.push([x, y]);
+            if (expanded[y][x]) {
+              // Just go through the target pipes. If this gets us outside, then we know it's not constrained.
+              otherpipes += 1;
+              empties.push([x, y]);
+            } else {
+              empties.push([x, y]);
+            }
             for (let [dx, dy] of [[-1, 0], [1, 0], [0, 1], [0, -1]]) {
               let nx = dx + x;
               let ny = dy + y;
@@ -275,17 +295,26 @@ const part2 = (rawInput: string) => {
       
       // found all adjacents.
       console.log(ex, ey, "targets: ", numTargetpipes, "others: ", otherpipes, "outsides: ", outsides);
-      if (numTargetpipes >0 && otherpipes == 0 && outsides == 0) {
+      const wasInside = numTargetpipes >0 && /*otherpipes == 0 && */ outsides == 0;
+      if (wasInside) {
         for (let [goodx, goody] of empties) {
           if ((goodx - 1) % 3 == 0 && (goody - 1) % 3 == 0) {
             ret += 1;
           }
         }
       }
+      for (let [goodx, goody] of empties) {
+        if (wasInside) {
+          insides[keyify(goodx, goody)] = true;
+        } else {
+          outsidesSquares[keyify(goodx, goody)] = true;
+        }
+      }
       console.log("Ret now: ", ret);
     }
   }
-
+  // console.log(outsidesSquares);
+  printPipesAndSquares(expanded, targetPipes, insides, outsidesSquares);
 
   return ret;
 };
