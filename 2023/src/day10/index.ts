@@ -385,5 +385,5 @@ L7JLJL-JLJLJL--JLJ.L`,
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
