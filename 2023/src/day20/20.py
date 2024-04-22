@@ -106,7 +106,7 @@ def parse_lines(raw):
 def actions_for(from_name, node, pulse):
     if "type" not in node:
         return []
-    print("processing: ", from_name, "->", pulse, "->", node["name"])
+    # print("processing: ", from_name, "->", pulse, "->", node["name"])
     ret = []
     if node["type"] == BROADCASTER:
         for t in node["targets"]:
@@ -118,12 +118,7 @@ def actions_for(from_name, node, pulse):
         for t in node["targets"]:
             ret.append((node["name"], t, HIGH if node["state"] else LOW))
     elif node["type"] == CONJUNCTION:
-# Conjunction modules (prefix &) remember the type of the most recent pulse received from each of their connected 
-# input modules; they initially default to remembering a low pulse for each input. 
-
-# When a pulse is received, the conjunction module first updates its memory for that input. 
         node["memory"][from_name] = pulse
-        # Then, if it remembers high pulses for all inputs, it sends a low pulse; otherwise, it sends a high pulse.
         conj_send = LOW if all(m == HIGH for m in node["memory"].values()) else HIGH
         for t in node["targets"]:
             ret.append((node["name"], t, conj_send))
@@ -133,31 +128,28 @@ def actions_for(from_name, node, pulse):
 def solve(raw):
     graph = parse_lines(raw)
 
-    highs, lows = 0, 0
-    for presses in range(1000):
+    presses = 0
+    highats = {'xj':[], 'qs':[], 'kz':[], 'km':[]}
+    while True:
+        presses += 1
+        if presses % 10000 == 0:
+            print(presses, highats)
+            # LCM of 3733 4019 3911 4093 (periods of the inputs)
         q = deque()
         q.append(("button", BROADCASTER, LOW))
 
         while len(q):
             from_name, to_name, pulse = q.popleft()
             node = graph[to_name]
-            if pulse == LOW:
-                lows += 1
-            else:
-                highs += 1
+            if "gq" == to_name and any(HIGH == v for v in node["memory"].values()):
+                for k in node["memory"].keys():
+                    if node["memory"][k] == HIGH:
+                        highats[k].append(presses)
+
+
             actions = actions_for(from_name, node, pulse)
             for a in actions:
                 q.append(a)
-        print(lows, highs)
-
-    print("-------")
-    return highs * lows
-
-sample = solve(SAMPLE)
-if sample != SAMPLE_EXPECTED:
-    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
-assert sample == SAMPLE_EXPECTED
-print("\n*** SAMPLE PASSED ***\n")
 
 solved = solve(REAL)
 print("SOLUTION: ", solved)
