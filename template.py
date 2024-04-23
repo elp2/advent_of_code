@@ -23,7 +23,9 @@ UP = 1
 RIGHT = 2
 DOWN = 3
 CHAR_TO_DS = {"^": UP, ">": RIGHT, "<": LEFT, "v": DOWN}
-DS = [(-1, 0), (0, -1), (1, 0), (0, 1)]DS8 = DS + [(-1, -1), (1, -1), (-1, 1), (1, 1)]
+DS = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+DS8 = DS + [(-1, -1), (1, -1), (-1, 1), (1, 1)]
+
 def arounds(x, y, diagonals):
     ret = []
     for dx, dy in DS8 if diagonals else DS:
