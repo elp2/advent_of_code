@@ -37,7 +37,7 @@ AOC_DIR = os.path.dirname(argv[0])
 print("Day: ", CHALLENGE_DAY)
 
 ######################
-SAMPLE_EXPECTED = 5
+SAMPLE_EXPECTED = 7
 ######################
 assert SAMPLE_EXPECTED != None
 
@@ -80,6 +80,8 @@ def solve(raw):
     for c in cubes:
         z = c[0][2]
         tofall[z].append(c)
+
+    fallen_bottoms = defaultdict(lambda: [])
     
     supports = defaultdict(lambda: [])
     supportedby = defaultdict(lambda: [])
@@ -103,7 +105,8 @@ def solve(raw):
             falldistance = z1 - supportz - 1
             # fd supportz + 1 = z1 - 
             fellcube = ((x1, y1, z1 - falldistance), (x2, y2, z2 - falldistance))
-            print(cube, "->", fellcube)
+            # print(cube, "->", fellcube)
+            fallen_bottoms[fellcube[0][2]].append(fellcube)
             fallen[fellcube[1][2]].append(fellcube)
             supportedby[fellcube] = supportedby[fellcube]
             supports[fellcube] = supports[fellcube]
@@ -111,16 +114,30 @@ def solve(raw):
                 supportedby[fellcube].append(f)
                 supports[f].append(fellcube)
 
-    can_disintegrate = 0
+    sum_disintigrated = 0
+
+    def cubes_supported_only_by(cube):
+        removed = set([cube])
+        for z in sorted(fallen_bottoms.keys()):
+            if z <= cube[1][2]:
+                continue
+            for maybe_supported in fallen_bottoms[z]:
+                num_supporting = 0
+                for sup in supportedby[maybe_supported]:
+                    if sup not in removed:
+                        num_supporting += 1
+                if num_supporting == 0:
+                    removed.add(maybe_supported)
+            
+        
+        return removed
+
     for c in supports.keys():
-        cd = True
-        for mayfall in supports[c]:
-            if len(supportedby[mayfall]) == 1:
-                cd = False
-        if cd:
-            can_disintegrate += 1
+        here = cubes_supported_only_by(c) - set([c])
+        print("------\n", c, " -> (", len(here), ")", here)
+        sum_disintigrated += len(here) 
     
-    return can_disintegrate
+    return sum_disintigrated # 59502 too low
 
 sample = solve(SAMPLE)
 if sample != SAMPLE_EXPECTED:
