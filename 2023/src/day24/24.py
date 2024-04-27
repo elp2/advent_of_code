@@ -2,10 +2,13 @@ from collections import defaultdict, deque, Counter
 from itertools import combinations, combinations_with_replacement, permutations
 from functools import reduce, cmp_to_key
 import math
-# import numpy as np
+import numpy as np
 from operator import add, mul, itemgetter, attrgetter
 import os
 import re
+from sympy.geometry import Plane, Point3D, intersection, Line3D
+from sympy import symbols
+import sympy
 from sys import argv
 
 def flatten(t):
@@ -41,6 +44,7 @@ print("Day: ", CHALLENGE_DAY)
 SAMPLE_EXPECTED = 2
 ######################
 assert SAMPLE_EXPECTED != None
+SAMPLE_EXPECTED2 = 47
 
 try:
     SAMPLE = open(os.path.join(AOC_DIR, CHALLENGE_DAY + ".s.txt")).read()
@@ -75,7 +79,6 @@ def find_intersection(x1, y1, dx1, dy1, x2, y2, dx2, dy2):
     b = [x2 - x1, y2 - y1]
     
     # Use numpy for solving the linear system of equations
-    import numpy as np
     try:
         solution = np.linalg.solve(A, b)
         t, s = solution
@@ -92,6 +95,8 @@ def find_intersection(x1, y1, dx1, dy1, x2, y2, dx2, dy2):
 
 print("FIX", find_intersection(20, 25, -2, -2, 20, 19, 1, -5))
 # ((20, 25, 34), (-2, -2, -4)) ((20, 19, 15), (1, -5, -3))
+
+
 
 def solve(raw, ranges):
     min_range, max_range = ranges
@@ -118,11 +123,47 @@ def solve(raw, ranges):
 
     return ret # 13737 too high
 
-sample = solve(SAMPLE, (7, 27))
-if sample != SAMPLE_EXPECTED:
-    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED)
-assert sample == SAMPLE_EXPECTED
+
+
+def solve2(raw):
+    hailstones = parse_lines(raw)
+
+    # rpos + t * rdir = hpos + t * hdir
+    # rpos - hpos = t * (hdir - rdir)
+    # t = (rpos - hpos) / (hdir - rdir)
+    # (tx,ty,tz) are all equal
+    # tx = (rx - hx) / (hdx - rdx)
+    # ty = (ry - hy) / (hdy - rdy)
+    # (ry - hy) / (hdy - rdy) = (rx - hx) / (hdx - rdx)
+    # (ry - hy) *  (hdx - rdx) = (hdy - rdy) * (rx - hx)
+    # (ry - hy) *  (hdx - rdx) - hdy - rdy) * (rx - hx) = 0
+
+    rx, ry, rz, rdx, rdy, rdz = symbols("rx, ry, rz, rdx, rdy, rdz")
+
+
+
+    ints = []
+
+    for i in range(len(hailstones)):
+        (hx, hy, hz), (hdx, hdy, hdz) = hailstones[i]
+        ints.append((ry - hy) * (hdx - rdx) - (hdy - rdy) * (rx - hx))
+        ints.append((ry - hy) * (hdz - rdz) - (hdy - rdy) * (rz - hz))
+
+        
+    sols = sympy.solve(ints)[0]
+
+    return sols[rx] + sols[ry] + sols[rz]
+
+# p0 + t0 * d0 = p1 + t0 * d1
+# t0 * (d0 - d1) = p1 - p0
+# t2 * (d0 - d2) = p2 - p0
+
+
+sample = solve2(SAMPLE)
+if sample != SAMPLE_EXPECTED2:
+    print("SAMPLE FAILED: ", sample, " != ", SAMPLE_EXPECTED2)
+assert sample == SAMPLE_EXPECTED2
 print("\n*** SAMPLE PASSED ***\n")
 
-solved = solve(REAL, (200000000000000, 400000000000000))
-print("SOLUTION: ", solved) # Part1 11098
+solved = solve2(REAL)
+print("SOLUTION2: ", solved)
