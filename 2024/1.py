@@ -38,7 +38,7 @@ AOC_DIR = os.path.dirname(argv[0])
 print("Day: ", CHALLENGE_DAY)
 
 ######################
-SAMPLE_EXPECTED = 11
+SAMPLE_EXPECTED = 31
 ######################
 assert SAMPLE_EXPECTED != None
 
@@ -76,10 +76,15 @@ def solve(raw):
     aes, bes = parse_lines(raw)
     aes = sorted(aes)
     bes = sorted(bes)
+    rightcount = Counter()
+    for b in bes:
+        rightcount[b] += 1
+
+
     
     ret = 0
     for a, b in zip(aes, bes):
-        diff = abs(a - b)
+        diff = a * rightcount[a]
         ret += diff
         print(a,b, diff)
     return ret
