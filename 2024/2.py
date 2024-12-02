@@ -38,7 +38,7 @@ AOC_DIR = os.path.dirname(argv[0])
 print("Day: ", CHALLENGE_DAY)
 
 ######################
-SAMPLE_EXPECTED = 2
+SAMPLE_EXPECTED = 4
 ######################
 assert SAMPLE_EXPECTED != None
 
@@ -76,36 +76,99 @@ def solve(raw):
     print(parsed)
 
     ret = 0
-    # for y in range(len(parsed)):
-    #     for x in range(len(parsed[y])):
-    #         for ax, ay in arounds(x, y, True):
-    #             if 0 <= ax < len(parsed[0]) and 0 <= ay < len(parsed):
-    for report in parsed:
-        diffs = []
-        valid = True
-        incordec = None
-        for di in range(1, len(report)):
-            diff = report[di] - report[di - 1]
-            diffs.append(diff)
-            if 1 <= abs(diff) <= 3:
-                valid = True
-            else:
-                print("diffoff", diff)
-                valid = False
-                break
-            if incordec == None:
-                incordec = diff
-            else:
-                sameinc = (incordec < 0 and diff < 0) or (incordec > 0 and diff > 0)
-                print("notsame?", incordec, diff, sameinc)
-                valid = valid and sameinc
-                if not valid:
-                    break
-        
-        print(report, diffs, valid)
-        if valid:
-            ret += 1
 
+    results = {}
+
+    for rorig in parsed:
+        results[str(rorig)] = False
+
+    for rorig in parsed:
+        for roi in range(len(rorig)):
+            report = rorig[:]
+            report.pop(roi)
+            diffs = []
+            valid = True
+            incordec = None
+            for di in range(1, len(report)):
+                diff = report[di] - report[di - 1]
+                diffs.append(diff)
+                if 1 <= abs(diff) <= 3:
+                    valid = True
+                else:
+                    print("diffoff", diff)
+                    valid = False
+                    break
+                if incordec == None:
+                    incordec = diff
+                else:
+                    sameinc = (incordec < 0 and diff < 0) or (incordec > 0 and diff > 0)
+                    print("notsame?", incordec, diff, sameinc)
+                    valid = valid and sameinc
+                    if not valid:
+                        break
+            
+            print(report, diffs, valid)
+            if valid:
+                ret += 1
+                results[str(rorig)] = True
+                break
+        
+        print("------")
+        report = rorig[:]
+        def stepvalid(rep, i, i2, ab):
+            if i2 >= len(rep):
+                return True
+            diff = report[i] - report[i2]
+            if (diff < 0 and ab > 0) or (diff > 0 and ab < 0):
+                print("toolarge skip", diff, ab)
+                return False
+            
+            if 1 <= abs(diff) <= 3:
+                return True
+            else:
+                return False
+
+        def valid(rep):
+            skipped = False
+            ab = rep[0] - rep[1]
+            i = 0
+
+            if ab == 0:
+                ab = rep[1] - rep[2]
+                if ab == 0:
+                    return False
+                skipped = True
+            while i < len(report):
+                if stepvalid(rep, i, i + 1, ab):
+                    i += 1
+                else:
+                    if skipped:
+                        return False
+                    if stepvalid(rep, i, i + 2, ab):
+                        skipped = True
+                        i += 2
+                    else:
+                        print("Second chance no", i)
+                        return False
+            return True
+        
+        wouldadd = False
+        print(report)
+        if valid(report):
+            print("forwards valid")
+            wouldadd = True
+        else:
+            report.reverse()
+            print("round2 ", report)
+            if valid(report):
+                wouldadd = True
+                print("reverse valid")
+            report.reverse()
+
+        if wouldadd != results[str(report)]:
+            print("wa!=", wouldadd, report)
+        # print(ret)
+        print("------")
 
     return ret
 
@@ -116,4 +179,5 @@ assert sample == SAMPLE_EXPECTED
 print("\n*** SAMPLE PASSED ***\n")
 
 solved = solve(REAL)
+assert solved not in [576]
 print("SOLUTION: ", solved)
