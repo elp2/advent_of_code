@@ -19,13 +19,17 @@ def elpsort(array, cmp):
 ON_TEXT = '\u2588'
 OFF_TEXT = '\u2592'
 
-LEFT = 0
-UP = 1
-RIGHT = 2
-DOWN = 3
+LEFT = (-1, 0)
+UP = (0, -1)
+RIGHT = (1, 0)
+DOWN = (0, 1)
 CHAR_TO_DS = {"^": UP, ">": RIGHT, "<": LEFT, "v": DOWN}
-DS = [(-1, 0), (0, -1), (1, 0), (0, 1)]
-DS8 = DS + [(-1, -1), (1, -1), (-1, 1), (1, 1)]
+DS = [LEFT, UP, RIGHT, DOWN] # +IDX = TURN RIGHT
+UPLEFT = (-1, -1)
+UPRIGHT = (1, -1)
+DOWNRIGHT = (1, 1)
+DOWNLEFT = (-1, 1)
+DS8 = [LEFT, UPLEFT, UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT] # +IDX = TURN RIGHT
 
 def arounds(x, y, diagonals):
     ret = []
