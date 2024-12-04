@@ -39,7 +39,7 @@ AOC_DIR = os.path.dirname(argv[0])
 print("Day: ", CHALLENGE_DAY)
 
 ######################
-SAMPLE_EXPECTED = 18
+SAMPLE_EXPECTED = 9
 ######################
 assert SAMPLE_EXPECTED != None
 
@@ -87,14 +87,21 @@ def solve(raw):
         return None
     for y in range(len(parsed)):
         for x in range(len(parsed[y])):
-            if parsed[y][x] != "X":
+            if parsed[y][x] != "A":
                 continue
-            for dx, dy in DS8:
+
+            mases = []
+            for dx, dy in [(-1, -1), (-1, 1)]:
                 word = []
-                for t in range(4):
-                    word.append(at(x + dx * t, y + dy * t, parsed))
-                if word == ["X", "M", "A", "S"]:
-                    ret += 1
+                for t in range(-1, 2):
+                    nx, ny = x + dx * t, y + dy * t
+                    print(nx, ny)
+                    word.append(at(nx, ny, parsed))
+                if word == ["M", "A", "S"] or word == ["S", "A", "M"]:
+                    mases.append(word)
+            if len(mases) == 2:
+                ret += 1
+                print(x, y, mases)
 
     return ret
 
