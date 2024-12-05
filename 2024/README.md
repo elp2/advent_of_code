@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 5
+Part 1 was pretty straightforward. Initially separating out the validation into a separate function would have made Part 2 faster.
+
 ## Day 4
 Luckily we are not handling corruped memory IntCode (AOC 2019) style... yet.
 Part 1 went pretty quickly, and I would have had Part 2 momentarily afterwards if I hadn't put down -1, -1 / 1, 1 as my delta... that was just comparing the same lines!!!
