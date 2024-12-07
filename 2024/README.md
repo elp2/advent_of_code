@@ -1,5 +1,11 @@
 # Advent of Code Solutions 2024
 
+## Day 7
+The easiest one this cycle by far.
+
+## Day 6
+The trickiest part was that the obstacles could be placed diagonally to each other, which resulted in a non 90 degree turn. 
+
 ## Day 5
 Part 1 was pretty straightforward. Initially separating out the validation into a separate function would have made Part 2 faster.
 
