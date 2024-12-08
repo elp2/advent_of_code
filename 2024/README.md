@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 8
+Python combinations made quick work of this one. Other than the antennas now being automatic antinodes of themselves on Part 2 the Part 1 solution was mostly good enough.
+
 ## Day 7
 The easiest one this cycle by far.
 
