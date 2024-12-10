@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 10
+The problem was a bit hard to parse, I overcomplicated it in the beginning. Part 2 was actually more natural in some ways than Part 1, since you could use a deque the whole way, rather than needing to dedupe the next set of items.
+
 ## Day 9
 Not that hard, but in my defense I had some eggnog!
 
