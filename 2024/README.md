@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 11
+I way overcomplicated Part 1 with a Linked List assuming the positions would matter in the second round. Then I had to rewrite Part 2 to use Counters. I should be using Counters over defaultdicts any time there are integer values!
+
 ## Day 10
 The problem was a bit hard to parse, I overcomplicated it in the beginning. Part 2 was actually more natural in some ways than Part 1, since you could use a deque the whole way, rather than needing to dedupe the next set of items.
 
