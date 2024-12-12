@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 12
+The trick to Part 2 was to draw out the boxes and thought of what made a convex/concave corner.
+
 ## Day 11
 I way overcomplicated Part 1 with a Linked List assuming the positions would matter in the second round. Then I had to rewrite Part 2 to use Counters. I should be using Counters over defaultdicts any time there are integer values!
 

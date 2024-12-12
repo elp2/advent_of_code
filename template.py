@@ -18,11 +18,14 @@ assert SAMPLE_EXPECTED != None, "Must enter sample value"
 def parse_group(group):
     lines = group.split("\n")
     ret = []
-    for line in lines:
+    for y, line in enumerate(lines):
         line = line.strip()
         assert len(line) != 0
 
         split = line.split(" ")
+
+        for x, xc in enumerate(split):
+            pass
 
         assert len(split) != 0
         ret.append(split)
