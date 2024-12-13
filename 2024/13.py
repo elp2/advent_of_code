@@ -16,7 +16,7 @@ SAMPLE_EXPECTED = 480
 ######################
 assert SAMPLE_EXPECTED != None, "Must enter sample value"
 
-def parse_group(group):
+def parse_group(group, posdelta):
     lines = group.split("\n")
     ret = []
     # parse("{name:s} {height:d}", line) # Parse with field names
@@ -24,24 +24,23 @@ def parse_group(group):
     ax, ay = map(int, re.findall(r"\d+", lines[0]))
     bx, by = map(int, re.findall(r"\d+", lines[1]))
     px, py = map(int, re.findall(r"\d+", lines[2]))
-    # parse("Button A: X+{ax:d}, Y+{ay:d}", lines[0])
-    # parse("Button B: X+{bx:d}, Y+{by:d}", lines[1])
-    # parse("Prize: X={px:d}, Y={py:d}", lines[2])
+    px += posdelta
+    py += posdelta
     return ((ax, ay), (bx, by), (px, py))
 
 
-def parse_lines(raw):
+def parse_lines(raw, posdelta):
     # Groups.
     groups = raw.split("\n\n")
     ret = []
     for g in groups:
-        ret.append(parse_group(g))
+        ret.append(parse_group(g, posdelta))
     return ret
 
-def group_cost(g):
+def group_cost_slow(g):
     ((ax, ay), (bx, by), (px, py)) = g
 
-    poss = []
+    poss = set()
     for a in range(101):
         xrem = px - a * ax
         yrem = py - a * ay
@@ -53,7 +52,14 @@ def group_cost(g):
             if b > 100 or a > 100 or b < 0 or a < 0:
                 continue
             else:
-                poss.append(int(a * 3 + b))
+                assert (px - bx * b) / ax == a
+                assert (py - (ay * px - bx * b * ay) / ax) / by == b
+                assert (ax * py - ay * px + bx * b * ay == b * ax * by)
+                assert (ax * py - ay * px == b * ax * by - bx * b * ay)
+                assert (ax * py - ay * px == b * (ax * by - bx * ay))
+                assert ((ax * py - ay * px) / (ax * by - bx * ay) == b)
+
+                poss.add(int(a * 3 + b))
 
     for b in range(101):
         xrem = px - b * bx
@@ -68,7 +74,14 @@ def group_cost(g):
             if b > 100 or a > 100 or b < 0 or a < 0:
                 continue
             else:
-                poss.append(int(a * 3 + b))
+                print(a, b, px, py, ax, ay, bx, by)
+                assert (px - bx * b) / ax == a
+                assert (py - (ay * px - bx * b * ay) / ax) / by == b
+                assert (ax * py - ay * px + bx * b * ay == b * ax * by)
+                assert (ax * py - ay * px == b * ax * by - bx * b * ay)
+                assert ((ax * py - ay * px) / (ax * by - bx * ay) == b)
+
+                poss.add(int(a * 3 + b))
 
 
 
@@ -85,31 +98,59 @@ def group_cost(g):
     if len(poss) == 0:
         return 0
     else:
+        assert len(poss) == 1
         return min(poss)
 
+def group_cost_fast(g, max100=False):
+    ((ax, ay), (bx, by), (px, py)) = g
+    b = (ax * py - ay * px) / (ax * by - bx * ay)
+    if int(b) != b:
+        return 0
+    b = int(b)
+    xrem, yrem = px - b * bx, py - b * by
+    if xrem / ax == yrem / ay:
+        a = int(xrem / ax)
+        if max100 and (a > 100 or b > 100):
+            return 0
+        if a < 0 or b < 0:
+            return 0
+        return a * 3 + 1 * b
+    return 0
 
-def solve(raw):
-    groups = parse_lines(raw)
+def solve(raw, posdelta):
+    groups = parse_lines(raw, posdelta)
     print(groups)
 
     ret = 0
     for g in groups:
-        gc = group_cost(g)
-        print(g, gc)
-        ret += gc
+        if posdelta == 0:
+            gc = group_cost_slow(g)
+            gcf = group_cost_fast(g)
+            assert gc == gcf
+        else:
+            gcf = group_cost_fast(g)
+        print(g, gcf)
+        ret += gcf
     return ret
 
 if __name__ == "__main__":
     SAMPLE, REAL = get_raw_inputs(sys.argv)
 
-    sample = solve(SAMPLE)
+    sample = solve(SAMPLE, 0)
     assert sample == SAMPLE_EXPECTED, "Sample Result %s != %s expected" % (sample, SAMPLE_EXPECTED)
     print("\n*** SAMPLE PASSED ***\n")
 
-    solved = solve(REAL)
+    solved = solve(REAL, 0)
     assert solved < 69495
     assert solved != 27638
     assert solved != 30164
     assert solved != 29702
     assert solved != 25281
     print("SOLUTION: ", solved)
+
+    # sample = solve(SAMPLE, 10000000000000)
+    # assert sample == SAMPLE_EXPECTED, "Sample Result %s != %s expected" % (sample, SAMPLE_EXPECTED)
+    # print("\n*** SAMPLE PASSED ***\n")
+
+    solved = solve(REAL, 10000000000000)
+    print("SOLUTION2: ", solved)

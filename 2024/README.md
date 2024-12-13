@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 13
+The edge conditions for Part 1 were tricky for some reason. Maybe I was underestimating it. Part 2 was simple algebra.
+
 ## Day 12
 The trick to Part 2 was to draw out the boxes and thought of what made a convex/concave corner.
 
