@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 14
+My favorite one of the year so far. When I saw the prime number sizes, I thought we'd run to 10 million seconds or something, but this was a nice surprise.
+
 ## Day 13
 The edge conditions for Part 1 were tricky for some reason. Maybe I was underestimating it. Part 2 was simple algebra.
 
