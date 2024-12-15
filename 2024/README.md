@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 15
+Overall a fun one. There seem to be a lot of problems about things moving around this year.
+
 ## Day 14
 My favorite one of the year so far. When I saw the prime number sizes, I thought we'd run to 10 million seconds or something, but this was a nice surprise.
 
