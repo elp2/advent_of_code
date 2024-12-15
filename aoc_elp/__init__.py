@@ -1,4 +1,5 @@
 from .utils import elpsort, ON_CHAR, OFF_CHAR, LEFT, UP, RIGHT, DOWN, CHAR_TO_DS, DS, TURN_LEFT45, TURN_LEFT90, TURN_RIGHT45, TURN_RIGHT90, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT, arounds, get_raw_inputs
+from .board import Board, Pos, Vel
 
 __version__ = "0.0.1"
 __author__ = "Edward Palmer"
