@@ -2,7 +2,7 @@ import os, sys
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, root_dir)
 
-from aoc_elp.utils import CHAR_TO_DS
+from aoc_elp.utils import CHAR_TO_DS, DS, TURN_LEFT90, TURN_RIGHT90
 
 class Vel:
     def __init__(self, vx, vy):
@@ -10,6 +10,23 @@ class Vel:
     
     def __repr__(self):
         return f"Vel({self.vx},{self.vy})"
+
+    def __eq__(self, other):
+            if isinstance(other, Vel):
+                return self.vx == other.vx and self.vy == other.vy
+            return False
+    
+    def __hash__(self):
+        return hash((self.vx, self.vy))
+
+    def leftdir(self):
+        left = TURN_LEFT90((self.vx, self.vy))
+        return Vel(left[0], left[1])
+
+    def rightdir(self):
+        right = TURN_RIGHT90((self.vx, self.vy))
+        return Vel(right[0], right[1])
+
 
 def VelFromChar(char):
     vx, vy = CHAR_TO_DS[char]
@@ -22,6 +39,14 @@ class Pos:
 
     def __repr__(self):
         return f"Pos({self.x},{self.y})"
+
+    def __eq__(self, other):
+            if isinstance(other, Pos):
+                return self.x == other.x and self.y == other.y
+            return False
+
+    def __hash__(self):
+        return hash((self.x, self.y))
 
     def step(self, v: Vel):
         self.x += v.vx
