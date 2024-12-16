@@ -55,11 +55,11 @@ def solve(raw):
     board, moves = parse_lines(raw)
 
     def get_neighbor(pos):
-        assert board.atpos(pos) in "[]"
+        assert board[pos] in "[]"
 
-        if board.atpos(pos) == "]":
+        if board[pos] == "]":
             return pos.add(Vel(-1, 0))
-        elif board.atpos(pos) == "[":
+        elif board[pos] == "[":
             return pos.add(Vel(1, 0))
         else:
             assert False
@@ -71,7 +71,7 @@ def solve(raw):
         v = VelFromChar(m)
 
         moved = board.mover().add(v)
-        mat = board.atpos(moved)
+        mat = board[moved]
         if mat == "#":
             continue
         if mat == ".":
@@ -90,12 +90,12 @@ def solve(raw):
             while len(q):
                 moving = q.popleft()
                 next = moving.add(v)
-                if board.atpos(next) == "#":
+                if board[next] == "#":
                     valid = False
                     break
-                transactions.append((moving, next, (".", board.atpos(moving))))
+                transactions.append((moving, next, (".", board[moving])))
 
-                if board.atpos(next) == ".":
+                if board[next] == ".":
                     continue
                 neighbor = get_neighbor(next)
                 q.append(next)
@@ -113,14 +113,14 @@ def solve(raw):
             while len(q):
                 moving = q.popleft()
                 after = moving.add(v).add(v)
-                if board.atpos(after) == "#":
+                if board[after] == "#":
                     valid = False
                     break
                 neighbor = get_neighbor(moving)
-                transactions.append((moving, moving.add(v), (".", board.atpos(moving))))
-                transactions.append((neighbor, neighbor.add(v), (".", board.atpos(neighbor))))
+                transactions.append((moving, moving.add(v), (".", board[moving])))
+                transactions.append((neighbor, neighbor.add(v), (".", board[neighbor])))
 
-                if board.atpos(after) == ".":
+                if board[after] == ".":
                     continue
                 else:                    
                     q.append(after)

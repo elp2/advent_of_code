@@ -53,6 +53,12 @@ class Board:
         self.width = len(self.board[0])
         self.height = len(self.board)
 
+    def __getitem__(self, key):        
+        return self.at(key.x, key.y, off_board=IndexError)
+    
+    def __setitem__(self, key, value):
+        self.board[key.y][key.x] = value
+
     def mover(self) -> Pos:
         assert len(self.movers) == 1
         return self.movers[0]
@@ -72,10 +78,7 @@ class Board:
                 raise IndexError
             else:
                 return off_board
-        return self.board[y][x]
-    
-    def atpos(self, p: Pos, off_board= IndexError) -> str:
-        return self.at(p.x, p.y, off_board=off_board)
+        return self.board[y][x]    
 
     def validpos(self, p: Pos) -> bool:
         return self.valid(p.x, p.y)
@@ -100,7 +103,7 @@ class Board:
 
     def apply_transactions(self, transactions):
         for (opos, npos, (oat, nat)) in transactions:
-            self.board[opos.y][opos.x] = oat
+            self[opos] = oat
         for (opos, npos, (oat, nat)) in transactions:
-            self.board[npos.y][npos.x] = nat
+            self[npos] = nat
         
