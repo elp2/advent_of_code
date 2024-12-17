@@ -1,5 +1,11 @@
 # Advent of Code Solutions 2024
 
+## Day 17
+There were a lot of rules to parse. Once I started exploring the space and looking at the program, it became clear that we could just keep track of the prefixes that worked and Part 2 fell quickly. A pretty fun question and a nice break from 2D land.
+
+## Day 16
+As of right now it seems like I'm finding pretty much everything, but I must be missing one path.
+
 ## Day 15
 Overall a fun one. There seem to be a lot of problems about things moving around this year.
 
