@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 18
+Back to 2D land I guess. I thought that they were going to fall in one by one and we'd have to navigate around them, which would have been interesting. But it ultimately was just "Run Part 1 in a loop".
+
 ## Day 17
 There were a lot of rules to parse. Once I started exploring the space and looking at the program, it became clear that we could just keep track of the prefixes that worked and Part 2 fell quickly. A pretty fun question and a nice break from 2D land.
 
