@@ -16,6 +16,11 @@ class Vel:
                 return self.vx == other.vx and self.vy == other.vy
             return False
     
+    def __lt__(self, other):
+            if isinstance(other, Vel):
+                return (self.vx, other.vx) < (self.vy, other.vy)
+            return False
+    
     def __hash__(self):
         return hash((self.vx, self.vy))
 
@@ -47,6 +52,11 @@ class Pos:
 
     def __hash__(self):
         return hash((self.x, self.y))
+
+    def __lt__(self, other):
+            if isinstance(other, Vel):
+                return (self.x, other.x) < (self.y, other.y)
+            return False
 
     def step(self, v: Vel):
         self.x += v.vx
@@ -87,11 +97,9 @@ class Board:
     def mover(self) -> Pos:
         assert len(self.movers) == 1
         return self.movers[0]
-    
 
     def valid(self, x: int, y: int) -> bool:
         return 0 <= x < self.width and 0 <= y < self.height
-
 
     def at(self, x: int, y: int, off_board= IndexError) -> str:
         """Returns what is on the board at this position, ignoring movers.
