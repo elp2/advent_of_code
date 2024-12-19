@@ -1,5 +1,8 @@
 # Advent of Code Solutions 2024
 
+## Day 19
+This didn't seem like a Day 19 from previous years in terms of difficulty? Most of my time here was spent on a stupid error in my cache which always returned True :).
+
 ## Day 18
 Back to 2D land I guess. I thought that they were going to fall in one by one and we'd have to navigate around them, which would have been interesting. But it ultimately was just "Run Part 1 in a loop".
 

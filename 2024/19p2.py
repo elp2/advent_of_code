@@ -11,7 +11,7 @@ sys.path.insert(0, root_dir)
 from aoc_elp import *
 
 ######################
-SAMPLE_EXPECTED = 6
+SAMPLE_EXPECTED = 16
 ######################
 assert SAMPLE_EXPECTED != None, "Must enter sample value"
 
@@ -67,12 +67,11 @@ def can_make(pattern, towels):
 def solve(raw):
     towels, patterns = parse_lines(raw)
     
-
     ret = 0
     for p in patterns:
-        if can_make(p, towels):
-            print("made ", p)
-            ret += 1
+        made = can_make(p, towels)
+        if made: print(p, "made ", made)
+        ret += made
     return ret
 
 if __name__ == "__main__":
