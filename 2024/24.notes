@@ -1,0 +1,159 @@
+                                   09876543210
+0000000000000000000000000000000000001100100101
+0000000000000000000000000000000000001000100101
+                                     *        
+No overflow, results in flipped z08
+
+
+
+Day:  24
+['z07', '<XOR-stm', '<XOR-x07']
+['z07', '<XOR-stm', '<XOR-y07']
+['z07', '<XOR-gdp', '<OR-dqs', '<AND-x06']
+['z07', '<XOR-gdp', '<OR-dqs', '<AND-y06']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-vnm', '<XOR-x06']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-vnm', '<XOR-y06']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-hns', '<AND-x05']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-hns', '<AND-y05']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-cph', '<XOR-x05']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-cph', '<XOR-y05']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-jsj', '<AND-x04']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-jsj', '<AND-y04']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-vbj', '<XOR-x04']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-vbj', '<XOR-y04']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-wgg', '<AND-x03']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-wgg', '<AND-y03']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-kbg', '<XOR-y03']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-kbg', '<XOR-x03']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-gws', '<AND-x02']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-gws', '<AND-y02']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-dkg', '<XOR-y02']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-dkg', '<XOR-x02']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-nqm', '<AND-y01']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-nqm', '<AND-x01']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-whj', '<AND-wwc', '<XOR-x01']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-whj', '<AND-wwc', '<XOR-y01']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-whj', '<AND-nvv', '<AND-y00']
+['z07', '<XOR-gdp', '<OR-rrh', '<AND-mtg', '<OR-bqd', '<AND-qqd', '<OR-kqr', '<AND-chb', '<OR-jcf', '<AND-ggg', '<OR-nwp', '<AND-ghb', '<OR-whj', '<AND-nvv', '<AND-x00']
+ups
+
+ACTUALLY GOOD
+GOOD:  ['x07', 'XOR->stm', 'XOR->z07']
+GOOD:  ['y07', 'XOR->stm', 'XOR->z07']
+GOOD:  ['x07', 'AND->dsf', 'OR->mjm', 'XOR->z08']
+GOOD:  ['y07', 'AND->dsf', 'OR->mjm', 'XOR->z08']
+GOOD:  ['x07', 'XOR->stm', 'AND->qgv', 'OR->mjm', 'XOR->z08']
+GOOD:  ['y07', 'XOR->stm', 'AND->qgv', 'OR->mjm', 'XOR->z08']
+
+-----
+
+downs: f13
+GOOD:  ['x13', 'XOR->mnv', 'XOR->z13'] *
+GOOD:  ['y13', 'XOR->mnv', 'XOR->z13'] *
+GOOD:  ['x13', 'AND->rsq', 'OR->tpv', 'XOR->z14'] *
+GOOD:  ['y13', 'AND->rsq', 'OR->tpv', 'XOR->z14'] *
+GOOD:  ['x13', 'XOR->mnv', 'AND->cfk', 'OR->tpv', 'XOR->z14'] *
+GOOD:  ['y13', 'XOR->mnv', 'AND->cfk', 'OR->tpv', 'XOR->z14'] *
+
+
+downs: f14
+GOOD:  ['x14', 'XOR->drk', 'XOR->z14'] *
+GOOD:  ['y14', 'XOR->drk', 'XOR->z14'] *
+
+------------
+
+downs: f15
+GOOD:  ['x15', 'AND->z15']
+GOOD:  ['y15', 'AND->z15']
+GOOD:  ['x15', 'XOR->rgt', 'AND->rfj', 'OR->bst', 'XOR->z16']
+GOOD:  ['y15', 'XOR->rgt', 'AND->rfj', 'OR->bst', 'XOR->z16']
+GOOD:  ['y15', 'XOR->rgt', 'XOR->jgc', 'OR->bst', 'XOR->z16']
+GOOD:  ['x15', 'XOR->rgt', 'XOR->jgc', 'OR->bst', 'XOR->z16']
+
+
+downs: f16
+GOOD:  ['x16', 'XOR->pkj', 'XOR->z16']
+GOOD:  ['y16', 'XOR->pkj', 'XOR->z16']
+GOOD:  ['x16', 'AND->tqq', 'OR->tpn', 'XOR->z17']
+GOOD:  ['y16', 'AND->tqq', 'OR->tpn', 'XOR->z17']
+GOOD:  ['x16', 'XOR->pkj', 'AND->jjc', 'OR->tpn', 'XOR->z17']
+GOOD:  ['y16', 'XOR->pkj', 'AND->jjc', 'OR->tpn', 'XOR->z17']
+------------
+
+
+4321098765432109876543210098765432109876543210
+0000000000000000000001000110001111100000101001
+0000000000000000000001010110001111100000101001
+                       *                     
+
+
+GOOD:  ['x07', 'XOR->stm', 'XOR->z07']
+GOOD:  ['y07', 'XOR->stm', 'XOR->z07']
+GOOD:  ['x07', 'AND->dsf', 'OR->mjm', 'XOR->z08']
+GOOD:  ['y07', 'AND->dsf', 'OR->mjm', 'XOR->z08']
+GOOD:  ['x07', 'XOR->stm', 'AND->qgv', 'OR->mjm', 'XOR->z08']
+GOOD:  ['y07', 'XOR->stm', 'AND->qgv', 'OR->mjm', 'XOR->z08']
+
+downs: f20
+GOOD:  ['x20', 'XOR->jtn', 'XOR->z20']
+GOOD:  ['y20', 'XOR->jtn', 'XOR->z20']
+GOOD:  ['x20', 'AND->mrq', 'OR->wst', 'XOR->z21']
+GOOD:  ['y20', 'AND->mrq', 'OR->wst', 'XOR->z21']
+GOOD:  ['x20', 'XOR->jtn', 'AND->wqs', 'OR->wst', 'XOR->z21']
+GOOD:  ['y20', 'XOR->jtn', 'AND->wqs', 'OR->wst', 'XOR->z21']
+
+
+downs: f21
+GOOD:  ['x21', 'XOR->jhm', 'XOR->z21']
+GOOD:  ['y21', 'XOR->jhm', 'XOR->z21']
+GOOD:  ['x21', 'AND->mvd', 'OR->hwm', 'AND->z22']
+GOOD:  ['y21', 'AND->mvd', 'OR->hwm', 'AND->z22']
+GOOD:  ['x21', 'XOR->jhm', 'AND->dvs', 'OR->hwm', 'AND->z22']
+GOOD:  ['y21', 'XOR->jhm', 'AND->dvs', 'OR->hwm', 'AND->z22']
+
+
+downs: f22
+GOOD:  ['x22', 'XOR->tdc', 'AND->z22'] xxx
+GOOD:  ['y22', 'XOR->tdc', 'AND->z22'] xxx
+GOOD:  ['x22', 'XOR->tdc', 'XOR->drg', 'OR->nbc', 'XOR->z23'] xxx
+GOOD:  ['y22', 'XOR->tdc', 'XOR->drg', 'OR->nbc', 'XOR->z23'] xxx
+------------
+
+4321098765432109876543210098765432109876543210
+0100011100100011010011110001001111100000110011
+0100011101000011010011110001001111100000110011
+         **                                   
+
+downs: f33
+GOOD:  ['x33', 'XOR->jbr', 'XOR->z33'] *
+GOOD:  ['y33', 'XOR->jbr', 'XOR->z33'] *
+GOOD:  ['x33', 'AND->qgm', 'OR->cqg', 'XOR->z34']
+GOOD:  ['y33', 'AND->qgm', 'OR->cqg', 'XOR->z34']
+GOOD:  ['x33', 'XOR->jbr', 'AND->mvb', 'OR->cqg', 'XOR->z34']
+GOOD:  ['y33', 'XOR->jbr', 'AND->mvb', 'OR->cqg', 'XOR->z34']
+
+
+GOOD:  ['x34', 'XOR->cbc', 'XOR->z34'] *
+GOOD:  ['y34', 'XOR->cbc', 'XOR->z34'] *
+GOOD:  ['x34', 'AND->sck', 'OR->dtj', 'AND->qrg', 'OR->z35']
+GOOD:  ['y34', 'AND->sck', 'OR->dtj', 'AND->qrg', 'OR->z35']
+GOOD:  ['x34', 'XOR->cbc', 'AND->rbm', 'OR->dtj', 'AND->qrg', 'OR->z35']
+GOOD:  ['y34', 'XOR->cbc', 'AND->rbm', 'OR->dtj', 'AND->qrg', 'OR->z35']
+
+
+downs: f35
+GOOD:  ['x35', 'AND->ppf', 'OR->z35'] x 
+GOOD:  ['y35', 'AND->ppf', 'OR->z35'] x
+GOOD:  ['x35', 'XOR->vcs', 'XOR->jbp', 'XOR->z36']
+GOOD:  ['x35', 'XOR->vcs', 'AND->qrg', 'OR->z35']
+GOOD:  ['y35', 'XOR->vcs', 'XOR->jbp', 'XOR->z36']
+GOOD:  ['y35', 'XOR->vcs', 'AND->qrg', 'OR->z35']
+
+
+downs: f36
+GOOD:  ['x36', 'XOR->grd', 'XOR->z36']
+GOOD:  ['y36', 'XOR->grd', 'XOR->z36']
+GOOD:  ['x36', 'AND->jms', 'OR->hvn', 'XOR->z37']
+GOOD:  ['y36', 'AND->jms', 'OR->hvn', 'XOR->z37']
+GOOD:  ['x36', 'XOR->grd', 'AND->tcw', 'OR->hvn', 'XOR->z37']
+GOOD:  ['y36', 'XOR->grd', 'AND->tcw', 'OR->hvn', 'XOR->z37']
