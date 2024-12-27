@@ -1,5 +1,27 @@
 # Advent of Code Solutions 2024
 
+## Summary
+Overall, this year seemed relatively easy and 2D puzzle heavy. 
+My favorites were: 24, 21, 17, 15, 14.
+
+## Day 25
+Straightforward to the end! I feel overly smart about my lock flipping strategy lol.
+
+## Day 24
+I liked this one. I did a combination of manual finding for the first few, and then built something that swapped all the potentially troublesome pairs until math started working. I wonder how much harder it would have been if they were not swapped adjacent/in the same path to the end? Also, if they didn't follow a true adder but had some decoy nodes in there.
+
+## Day 23
+Part 2 flowed from part 1 to just keep merging the 3 groups until you couldn't merge any more.
+
+## Day 22
+A breeze after 21. Part 2 really flowed naturally from Part 1, more of a part 1.5.
+
+## Day 21
+I think this was the hardest puzzle of the bunch. The indirections made the reasoning harder for me.
+
+## Day 20
+I actually ended up solving this one last. My intuition of just going everywhere manhattan distance away was right, but I forgot my best map had starting walls in it for some reason.
+
 ## Day 19
 This didn't seem like a Day 19 from previous years in terms of difficulty? Most of my time here was spent on a stupid error in my cache which always returned True :).
 
