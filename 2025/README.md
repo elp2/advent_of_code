@@ -3,6 +3,9 @@
 ## Summary
 Just 12 days this time, better than 0!
 
+## Day 3
+Lazy cache and mp FTW.
+
 ## Day 2
 Again, my AOC instincts said it was not going to be brute-forcable but it was!
 
