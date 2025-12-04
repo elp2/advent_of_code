@@ -37,43 +37,17 @@ def parse_lines(raw):
 
     return parse_group(raw)
 
-def bankval(CACHE, bank, i, picked, sofar):
-    if (i, picked) in CACHE and CACHE[(i, picked)] >= sofar:
-        return 0
-    CACHE[(i, picked)] = sofar
-    if picked == 12:
-        return sofar
-    if i == len(bank):
-        return 0
-    pickat = sofar * 10 + bank[i]
-    pbv = bankval(CACHE, bank, i + 1, picked + 1, pickat)
+def bankval(bank):
+    stack = []
+    candrop = len(bank) - 12
 
-    skip = bankval(CACHE, bank, i + 1, picked, sofar)
-    return max(pbv, skip)
+    for b in bank:
+        while len(stack) > 0 and candrop > 0 and stack[-1] < b:
+            stack.pop()
+            candrop -= 1
+        stack.append(b)
 
-    # ons = [False] * len(bank)
-    # for _ in range(12):
-    #     maxi, maxv = -1, -1
-    #     for i in range(len(bank)):
-    #         if ons[i]:
-    #             continue
-    #         if bank[i] > maxv:
-    #             maxi = i
-    #             maxv = bank[i]
-    #     ons[maxi] = True
-    
-    # num = ""
-    # for i, b, in enumerate(bank):
-    #     if ons[i]:
-    #         num += str(b)
-    # assert len(num) == 12
-    # return int(num)
-
-def sbank(bank):
-    CACHE = {}
-    bv = bankval(CACHE, bank, 0, 0, 0)
-    print("done")
-    return bv
+    return int("".join(map(str, stack[:12])))
 
 
 
@@ -84,7 +58,7 @@ def solve(raw):
     ret = 0
 
     with mp.Pool(processes=16) as pool:
-        results = pool.map(sbank, parsed)
+        results = pool.map(bankval, parsed)
 
 
     return sum(results)
