@@ -3,6 +3,10 @@
 ## Summary
 Just 12 days this time, better than 0!
 
+## Day 4
+Oh man wasted a lot of time with the "fewer than four rolls of paper in the eight adjacent positions."... I thought it was about from the perspective of the forklift.
+In fact the forklift was kind of a red herring. Final answer was kinda simple with just a queue.
+
 ## Day 3
 Lazy cache and mp FTW.
 
