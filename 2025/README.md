@@ -3,6 +3,9 @@
 ## Summary
 Just 12 days this time, better than 0!
 
+## Day 7
+Pretty easy again. No real 2d puzzles yet this year?
+
 ## Day 6
 Handel's Messiah and then back home for AoC. Part 2 threw me because I was expecting it to be right aligned, rather than based on the actual padding of the input.
 Looking at this again, it might have been much easier to just go up from the "+-" and then do the right thing to capture all the nums, and rest on the space?
