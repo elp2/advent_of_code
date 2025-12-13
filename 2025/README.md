@@ -3,6 +3,9 @@
 ## Summary
 Just 12 days this time, better than 0!
 
+## Day 10
+Some criminal z3 usage saved the day on part 2!
+
 ## Day 8
 I missed it wasn't Manhattan distance! D'oh :P
 
