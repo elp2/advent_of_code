@@ -3,6 +3,9 @@
 ## Summary
 Just 12 days this time, better than 0!
 
+## Day 11
+My good friend topological sort for the win!
+
 ## Day 10
 Some criminal z3 usage saved the day on part 2!
 
