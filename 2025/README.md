@@ -1,7 +1,10 @@
 # Advent of Code Solutions 2025
 
 ## Summary
-Just 12 days this time, better than 0!
+Just 12 days this time, better than 0! No time for massive map traversals this year. Maybe next time!
+
+## Day 12
+I'm surprised that the dfs ran as quickly as it did given such minimal pruning, and then the third example hangs.
 
 ## Day 11
 My good friend topological sort for the win!
